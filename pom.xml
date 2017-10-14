@@ -2,8 +2,8 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
     <modelVersion>4.0.0</modelVersion>
-    <groupId>org.vaadin.crudui</groupId>
-    <artifactId>crudui</artifactId>
+    <groupId>org.vaadin</groupId>
+    <artifactId>VaadinCrudUi</artifactId>
     <packaging>jar</packaging>
     <version>2.1.1</version>
     <name>Crud UI Add-on</name>
@@ -29,20 +29,20 @@
     </properties>
 
     <organization>
-        <name>Alejandro Duarte</name>
-        <url>https://github.com/alejandro-du</url>
+        <name>Dmitrij Colautti</name>
+        <url>https://github.com/dmicol</url>
     </organization>
 
     <scm>
-        <url>https://github.com/alejandro-du/crudui.git</url>
-        <connection>scm:git:https://github.com/alejandro-du/crudui.git</connection>
-        <developerConnection>scm:git:https://github.com/alejandro-du/crudui.git</developerConnection>
+        <url>https://github.com/dmicol/VaadinCrudUI.git</url>
+        <connection>scm:git:https://github.com/dmicol/VaadinCrudUI.git</connection>
+        <developerConnection>scm:git:https://github.com/dmicol/VaadinCrudUI.git</developerConnection>
         <tag>Crud UI add-on for Vaadin</tag>
     </scm>
 
     <issueManagement>
         <system>GitHub</system>
-        <url>https://github.com/alejandro-du/crudui/issues</url>
+        <url>scm:git:https://github.com/dmicol/VaadinCrudUI/issues</url>
     </issueManagement>
 
     <licenses>
