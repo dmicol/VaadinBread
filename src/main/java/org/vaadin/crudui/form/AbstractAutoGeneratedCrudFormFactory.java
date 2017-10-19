@@ -1,31 +1,10 @@
 package org.vaadin.crudui.form;
 
-import com.vaadin.data.BeanValidationBinder;
-import com.vaadin.data.Binder;
-import com.vaadin.data.HasValue;
-import com.vaadin.data.converter.*;
-import com.vaadin.data.util.BeanUtil;
-import com.vaadin.icons.VaadinIcons;
-import com.vaadin.server.Resource;
-import com.vaadin.shared.util.SharedUtil;
-import com.vaadin.ui.AbstractComponent;
-import com.vaadin.ui.AbstractField;
-import com.vaadin.ui.AbstractTextField;
-import com.vaadin.ui.Button;
-import com.vaadin.ui.Component;
-import com.vaadin.ui.HorizontalLayout;
-import com.vaadin.ui.Layout;
-import com.vaadin.ui.Notification;
-import com.vaadin.ui.themes.ValoTheme;
-import org.vaadin.crudui.crud.CrudOperation;
-import org.vaadin.crudui.form.impl.DefaultFieldProvider;
-import org.vaadin.data.converter.*;
-
 import java.beans.IntrospectionException;
 import java.beans.PropertyDescriptor;
 import java.math.BigDecimal;
 import java.math.BigInteger;
-import java.time.*;
+import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
@@ -34,6 +13,34 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.stream.Collectors;
+
+import org.vaadin.crudui.crud.CrudOperation;
+import org.vaadin.crudui.form.impl.field.provider.DefaultFieldProvider;
+import org.vaadin.data.converter.StringToByteConverter;
+import org.vaadin.data.converter.StringToCharacterConverter;
+
+import com.vaadin.data.BeanValidationBinder;
+import com.vaadin.data.Binder;
+import com.vaadin.data.HasValue;
+import com.vaadin.data.converter.LocalDateTimeToDateConverter;
+import com.vaadin.data.converter.StringToBigDecimalConverter;
+import com.vaadin.data.converter.StringToBigIntegerConverter;
+import com.vaadin.data.converter.StringToDoubleConverter;
+import com.vaadin.data.converter.StringToFloatConverter;
+import com.vaadin.data.converter.StringToIntegerConverter;
+import com.vaadin.data.converter.StringToLongConverter;
+import com.vaadin.data.util.BeanUtil;
+import com.vaadin.icons.VaadinIcons;
+import com.vaadin.server.Resource;
+import com.vaadin.shared.util.SharedUtil;
+import com.vaadin.ui.AbstractComponent;
+import com.vaadin.ui.AbstractTextField;
+import com.vaadin.ui.Button;
+import com.vaadin.ui.Component;
+import com.vaadin.ui.HorizontalLayout;
+import com.vaadin.ui.Layout;
+import com.vaadin.ui.Notification;
+import com.vaadin.ui.themes.ValoTheme;
 
 /**
  * @author Alejandro Duarte.

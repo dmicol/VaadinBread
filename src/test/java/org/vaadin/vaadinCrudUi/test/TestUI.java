@@ -11,6 +11,7 @@ import com.vaadin.ui.TabSheet;
 import com.vaadin.ui.UI;
 import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.renderers.DateRenderer;
+import com.vaadin.ui.renderers.LocalDateRenderer;
 import com.vaadin.ui.renderers.TextRenderer;
 import com.vaadin.ui.themes.ValoTheme;
 import org.vaadin.crudui.crud.CrudComponent;
@@ -21,7 +22,6 @@ import org.vaadin.crudui.form.impl.GridLayoutCrudFormFactory;
 import org.vaadin.crudui.layout.impl.HorizontalSplitCrudLayout;
 import org.vaadin.jetty.VaadinJettyServer;
 
-import java.sql.Date;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.Collection;
@@ -50,7 +50,7 @@ public class TestUI extends UI implements CrudListener<User> {
             users.add(new User(
                     nextId.get(),
                     "User " + nextId,
-                    Date.from(LocalDate.now().atStartOfDay(ZoneId.systemDefault()).toInstant()),
+                    LocalDate.now(),
                     "email" + nextId + "@test.com",
                     nextId.intValue() * 101001,
                     "password" + nextId,
@@ -125,7 +125,7 @@ public class TestUI extends UI implements CrudListener<User> {
 
         crud.getGrid().setColumns("name", "birthDate", "email", "phoneNumber", "mainGroup", "active");
         crud.getGrid().getColumn("mainGroup").setRenderer(group -> group == null ? "" : ((Group) group).getName(), new TextRenderer());
-        ((Grid.Column<User, Date>) crud.getGrid().getColumn("birthDate")).setRenderer(new DateRenderer("%1$tY-%1$tm-%1$te"));
+        ((Grid.Column<User, LocalDate>) crud.getGrid().getColumn("birthDate")).setRenderer(new LocalDateRenderer("yyyy-MM-dd"));
 
         formFactory.setFieldType("password", PasswordField.class);
         formFactory.setFieldCreationListener("birthDate", field -> ((DateField) field).setDateFormat("yyyy-MM-dd"));

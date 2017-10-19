@@ -4,6 +4,8 @@ import org.apache.bval.constraints.Email;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Past;
 
+import java.math.BigDecimal;
+import java.math.BigInteger;
 import java.time.LocalDate;
 import java.util.Date;
 import java.util.HashSet;
@@ -34,6 +36,20 @@ public class User {
     private String password;
 
     private Boolean active = true;
+    
+    private boolean testBool;
+    private int testInt;
+    private long testLong;
+    private float testFloat;
+    private double testDouble;
+    private char testChar;
+    private Integer testIntObj;
+    private Long testLongObj;
+    private Float testFloatObj;
+    private Double testDoubleObj;
+    private BigInteger testBigInteger;
+    private BigDecimal testBigDecimal;
+    
 
     private Group mainGroup;
 
@@ -126,5 +142,101 @@ public class User {
     public void setGroups(Set<Group> groups) {
         this.groups = groups;
     }
+
+	public boolean isTestBool() {
+		return testBool;
+	}
+
+	public void setTestBool(boolean testBool) {
+		this.testBool = testBool;
+	}
+
+	public int getTestInt() {
+		return testInt;
+	}
+
+	public void setTestInt(int testInt) {
+		this.testInt = testInt;
+	}
+
+	public long getTestLong() {
+		return testLong;
+	}
+
+	public void setTestLong(long testLong) {
+		this.testLong = testLong;
+	}
+
+	public float getTestFloat() {
+		return testFloat;
+	}
+
+	public void setTestFloat(float testFloat) {
+		this.testFloat = testFloat;
+	}
+
+	public double getTestDouble() {
+		return testDouble;
+	}
+
+	public void setTestDouble(double testDouble) {
+		this.testDouble = testDouble;
+	}
+
+	public char getTestChar() {
+		return testChar;
+	}
+
+	public void setTestChar(char testChar) {
+		this.testChar = testChar;
+	}
+
+	public Integer getTestIntObj() {
+		return testIntObj;
+	}
+
+	public void setTestIntObj(Integer testIntObj) {
+		this.testIntObj = testIntObj;
+	}
+
+	public Long getTestLongObj() {
+		return testLongObj;
+	}
+
+	public void setTestLongObj(Long testLongObj) {
+		this.testLongObj = testLongObj;
+	}
+
+	public Float getTestFloatObj() {
+		return testFloatObj;
+	}
+
+	public void setTestFloatObj(Float testFloatObj) {
+		this.testFloatObj = testFloatObj;
+	}
+
+	public Double getTestDoubleObj() {
+		return testDoubleObj;
+	}
+
+	public void setTestDoubleObj(Double testDoubleObj) {
+		this.testDoubleObj = testDoubleObj;
+	}
+
+	public BigInteger getTestBigInteger() {
+		return testBigInteger;
+	}
+
+	public void setTestBigInteger(BigInteger testBigInteger) {
+		this.testBigInteger = testBigInteger;
+	}
+
+	public BigDecimal getTestBigDecimal() {
+		return testBigDecimal;
+	}
+
+	public void setTestBigDecimal(BigDecimal testBigDecimal) {
+		this.testBigDecimal = testBigDecimal;
+	}
 
 }

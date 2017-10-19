@@ -6,6 +6,7 @@ import com.vaadin.ui.Composite;
 import com.vaadin.ui.CssLayout;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
+import com.vaadin.ui.Panel;
 import com.vaadin.ui.UI;
 import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.Window;
@@ -109,12 +110,15 @@ public class WindowBasedCrudLayout extends Composite implements CrudLayout {
     }
 
     private void showWindow(String caption, Component form) {
-        VerticalLayout windowLayout = new VerticalLayout(form);
-        windowLayout.setWidth("100%");
-        windowLayout.setMargin(false);
+    	CssLayout footer = new CssLayout();
+    	CssLayout body = new CssLayout(form);
+    	CssLayout parent = new CssLayout();
+    	
+    	parent.addComponents(body, footer);
 
-        formWindow = new Window(caption, windowLayout);
+        formWindow = new Window(caption, parent);
         formWindow.setWidth(formWindowWidth);
+//        formWindow.setHeight("80%");
         formWindow.setModal(true);
         formWindow.center();
         UI.getCurrent().addWindow(formWindow);
