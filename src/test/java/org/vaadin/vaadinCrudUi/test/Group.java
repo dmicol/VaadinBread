@@ -1,3 +1,4 @@
+package org.vaadin.vaadinCrudUi.test;
 /**
  * @author Alejandro Duarte.
  */

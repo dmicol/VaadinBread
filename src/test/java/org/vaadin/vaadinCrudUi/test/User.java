@@ -1,7 +1,10 @@
+package org.vaadin.vaadinCrudUi.test;
 import org.apache.bval.constraints.Email;
 
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Past;
+
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
@@ -18,7 +21,7 @@ public class User {
     private String name;
 
     @Past
-    private Date birthDate;
+    private LocalDate birthDate;
 
     @NotNull
     private Integer phoneNumber;
@@ -39,7 +42,7 @@ public class User {
     public User() {
     }
 
-    public User(Long id, String name, Date birthDate, String email, Integer phoneNumber , String password, Boolean active, Group mainGroup, Set<Group> groups) {
+    public User(Long id, String name, LocalDate birthDate, String email, Integer phoneNumber , String password, Boolean active, Group mainGroup, Set<Group> groups) {
         this();
         this.id = id;
         this.name = name;
@@ -68,11 +71,11 @@ public class User {
         this.name = name;
     }
 
-    public Date getBirthDate() {
+    public LocalDate getBirthDate() {
         return birthDate;
     }
 
-    public void setBirthDate(Date birthDate) {
+    public void setBirthDate(LocalDate birthDate) {
         this.birthDate = birthDate;
     }
 
