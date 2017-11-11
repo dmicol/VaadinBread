@@ -5,6 +5,8 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.function.Consumer;
 
+import javax.persistence.metamodel.ManagedType;
+
 import org.vaadin.crudui.crud.CrudOperation;
 
 import com.vaadin.data.HasValue;
@@ -86,6 +88,16 @@ public abstract class AbstractCrudFormFactory<T> implements CrudFormFactory<T> {
     @Override
     public void setUseBeanValidation(boolean useBeanValidation) {
         Arrays.stream(CrudOperation.values()).forEach(operation -> setUseBeanValidation(operation, useBeanValidation));
+    }
+
+    @Override
+    public void setJpaTypeForJpaValidation(CrudOperation operation, ManagedType<?> managedType) {
+        getConfiguration(operation).setJpaTypeForJpaValidation(managedType);
+    }
+
+    @Override
+    public void setJpaTypeForJpaValidation(ManagedType<?> managedType) {
+        Arrays.stream(CrudOperation.values()).forEach(operation -> setJpaTypeForJpaValidation(operation, managedType));
     }
 
     @Override

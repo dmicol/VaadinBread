@@ -1,6 +1,7 @@
 package org.vaadin.crudui.crud.impl;
 
 import java.util.Collection;
+import java.util.LinkedHashMap;
 
 import org.vaadin.crudui.crud.AbstractCrud;
 import org.vaadin.crudui.crud.CrudListener;
@@ -11,8 +12,11 @@ import org.vaadin.crudui.form.impl.form.factory.VerticalCrudFormFactory;
 import org.vaadin.crudui.layout.CrudLayout;
 import org.vaadin.crudui.layout.impl.WindowBasedCrudLayout;
 
+import com.vaadin.data.provider.DataProvider;
 import com.vaadin.data.provider.Query;
 import com.vaadin.icons.VaadinIcons;
+import com.vaadin.server.FileDownloader;
+import com.vaadin.server.FontAwesome;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Component;
 import com.vaadin.ui.Grid;
@@ -33,30 +37,23 @@ public class GridCrud<T> extends AbstractCrud<T> {
     protected Button deleteButton;
     protected Grid<T> grid;
 
+    protected LinkedHashMap<String, Button> exporterButtons = new LinkedHashMap<>();
     protected Collection<T> items;
 
     public GridCrud(Class<T> domainType) {
-        this(domainType, new WindowBasedCrudLayout(), new VerticalCrudFormFactory<>(domainType), null);
+        this(domainType, new WindowBasedCrudLayout(), new VerticalCrudFormFactory<>(domainType));
     }
 
     public GridCrud(Class<T> domainType, CrudLayout crudLayout) {
-        this(domainType, crudLayout, new VerticalCrudFormFactory<>(domainType), null);
+        this(domainType, crudLayout, new VerticalCrudFormFactory<>(domainType));
     }
 
     public GridCrud(Class<T> domainType, CrudFormFactory<T> crudFormFactory) {
-        this(domainType, new WindowBasedCrudLayout(), crudFormFactory, null);
-    }
-
-    public GridCrud(Class<T> domainType, CrudListener<T> crudListener) {
-        this(domainType, new WindowBasedCrudLayout(), new VerticalCrudFormFactory<>(domainType), crudListener);
+        this(domainType, new WindowBasedCrudLayout(), crudFormFactory);
     }
 
     public GridCrud(Class<T> domainType, CrudLayout crudLayout, CrudFormFactory<T> crudFormFactory) {
-        this(domainType, crudLayout, crudFormFactory, null);
-    }
-
-    public GridCrud(Class<T> domainType, CrudLayout crudLayout, CrudFormFactory<T> crudFormFactory, CrudListener<T> crudListener) {
-        super(domainType, crudLayout, crudFormFactory, crudListener);
+        super(domainType, crudLayout, crudFormFactory);
         initLayout();
     }
 
@@ -65,7 +62,7 @@ public class GridCrud<T> extends AbstractCrud<T> {
         findAllButton.setDescription("Refresh list");
         findAllButton.setIcon(VaadinIcons.REFRESH);
         crudLayout.addToolbarComponent(findAllButton);
-
+        
         addButton = new Button("", e -> addButtonClicked());
         addButton.setDescription("Add");
         addButton.setIcon(VaadinIcons.PLUS);
@@ -85,6 +82,10 @@ public class GridCrud<T> extends AbstractCrud<T> {
         grid.setSizeFull();
         grid.addSelectionListener(e -> gridSelectionChanged());
         crudLayout.setMainComponent(grid);
+        
+        Button btn = new Button(FontAwesome.FILE_EXCEL_O.getHtml());
+        btn.setCaptionAsHtml(true);
+        addExporterMenu("EXCEL", btn);
 
         updateButtons();
     }
@@ -116,8 +117,13 @@ public class GridCrud<T> extends AbstractCrud<T> {
     }
 
     public void refreshGrid() {
-        items = findAllOperation.findAll();
-        grid.setItems(items);
+    	dataProvider.refreshAll();
+    }
+    
+    @Override
+    public void setDataProvider(DataProvider<T, ?> dataProvider) {
+    	super.setDataProvider(dataProvider);
+    	grid.setDataProvider(dataProvider);
     }
 
     protected void updateButtons() {
@@ -250,9 +256,20 @@ public class GridCrud<T> extends AbstractCrud<T> {
     public void setSavedMessage(String savedMessage) {
         this.savedMessage = savedMessage;
     }
-
+    
     public void setDeletedMessage(String deletedMessage) {
         this.deletedMessage = deletedMessage;
     }
+    
+    public Button getExporterMenu(String name) {
+    	return exporterButtons.get(name);
+    }
 
+    public GridCrud<T> addExporterMenu(String name, Button exporterButton) {
+    	exporterButtons.put(name, exporterButton);
+    	new FileDownloader(getExporter(name)).extend(exporterButton);
+        crudLayout.addToolbarComponent(exporterButton);
+
+    	return this;
+    }
 }

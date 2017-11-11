@@ -1,15 +1,13 @@
 package org.vaadin.vaadinCrudUi.test;
-import org.apache.bval.constraints.Email;
-
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Past;
-
 import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.time.LocalDate;
-import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
+
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Past;
 
 /**
  * @author Alejandro Duarte
