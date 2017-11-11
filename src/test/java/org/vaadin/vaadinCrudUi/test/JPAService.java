@@ -1,14 +1,13 @@
-package org.vaadin.crudui.app;
+package org.vaadin.vaadinCrudUi.test;
+
+import java.time.LocalDate;
+import java.util.Set;
+import java.util.function.Function;
+import java.util.stream.Collectors;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
-import java.sql.Date;
-import java.time.LocalDate;
-import java.time.ZoneId;
-import java.util.Set;
-import java.util.function.Function;
-import java.util.stream.Collectors;
 
 /**
  * @author Alejandro Duarte
@@ -39,7 +38,7 @@ public class JPAService {
         for (int i = 1; i <= 50; i++) {
             User user = new User();
             user.setName("User " + i);
-            user.setBirthDate(Date.from(LocalDate.now().atStartOfDay(ZoneId.systemDefault()).toInstant()));
+            user.setBirthDate(LocalDate.now());
             user.setEmail("email" + i + "@test.com");
             user.setPhoneNumber(i * 101001);
             user.setPassword("password" + i);

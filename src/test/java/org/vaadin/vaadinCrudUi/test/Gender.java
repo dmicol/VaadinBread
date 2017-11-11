@@ -1,4 +1,4 @@
-package org.vaadin.crudui.app;
+package org.vaadin.vaadinCrudUi.test;
 
 /**
  * @author Alejandro Duarte

@@ -1,7 +1,8 @@
-package org.vaadin.crudui.app;
+package org.vaadin.vaadinCrudUi.test;
 
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
+
 import java.util.List;
 
 /**
