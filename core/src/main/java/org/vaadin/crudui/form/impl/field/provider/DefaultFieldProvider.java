@@ -1,16 +1,17 @@
 package org.vaadin.crudui.form.impl.field.provider;
 
+import java.time.LocalDate;
+import java.util.Collection;
+import java.util.Date;
+
+import org.vaadin.crudui.form.FieldProvider;
+
 import com.vaadin.data.HasValue;
 import com.vaadin.ui.CheckBox;
 import com.vaadin.ui.CheckBoxGroup;
 import com.vaadin.ui.ComboBox;
 import com.vaadin.ui.DateField;
 import com.vaadin.ui.TextField;
-import org.vaadin.crudui.form.FieldProvider;
-
-import java.time.LocalDate;
-import java.util.Collection;
-import java.util.Date;
 
 /**
  * @author Alejandro Duarte.

@@ -1,5 +1,7 @@
 package org.vaadin.vaadinCrudUi.example.demo;
 
+import java.util.List;
+
 import org.vaadin.crudui.crud.Crud;
 import org.vaadin.crudui.crud.CrudListener;
 import org.vaadin.crudui.crud.CrudOperation;
@@ -46,6 +48,7 @@ public class DemoUI extends UI implements CrudListener<User> {
         addCrud(getDefaultCrud(), "Default");
         addCrud(getDefaultCrudWithFixes(), "Default (with fixes)");
         addCrud(getConfiguredCrud(), "Configured");
+        tabSheet.setSelectedTab(2);
     }
 
     private void addCrud(Crud<User> crud, String caption) {
@@ -80,7 +83,7 @@ public class DemoUI extends UI implements CrudListener<User> {
         formFactory.setUseBeanValidation(true);
         formFactory.setJpaTypeForJpaValidation(JPAService.getFactory().getMetamodel().managedType(User.class));
 
-        formFactory.setErrorListener(e -> Notification.show("Custom error message (simulated error)", Notification.Type.ERROR_MESSAGE));
+        formFactory.setErrorListener((e) -> {e.printStackTrace(); Notification.show("ERROR: " + e.getLocalizedMessage(), Notification.Type.ERROR_MESSAGE);});
 
         formFactory.setVisibleProperties(CrudOperation.READ, "id", "name", "birthDate", "email", "phoneNumber", "groups", "active", "mainGroup");
         formFactory.setVisibleProperties(CrudOperation.ADD, "name", "birthDate", "email", "phoneNumber", "groups", "password", "mainGroup", "active");
@@ -127,7 +130,10 @@ public class DemoUI extends UI implements CrudListener<User> {
     @Override
     public DataProvider<User, ?> getDataProvider() {
     	return DataProvider.fromCallbacks(
-    			q -> UserRepository.findAll().subList(q.getOffset(), q.getOffset()+q.getLimit()).stream()
+    			q -> {
+    				List<User> list = UserRepository.findAll();
+    				return list.subList(q.getOffset(), Math.min(q.getOffset()+q.getLimit(), list.size())).stream();
+    			}
     			, q -> UserRepository.findAll().size()
     			);
     }

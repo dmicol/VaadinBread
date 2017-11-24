@@ -1,15 +1,17 @@
 package org.vaadin.crudui.form.impl.field.provider;
 
+import java.util.Collection;
+
+import org.vaadin.crudui.form.FieldProvider;
+
 import com.vaadin.data.HasValue;
 import com.vaadin.ui.AbstractListing;
 import com.vaadin.ui.ItemCaptionGenerator;
-import org.vaadin.crudui.form.FieldProvider;
-
-import java.util.Collection;
 
 /**
  * @author Alejandro Duarte
  */
+@SuppressWarnings("rawtypes")
 public abstract class AbstractListingProvider<F extends AbstractListing, T> implements FieldProvider {
 
     protected String caption;
@@ -32,7 +34,8 @@ public abstract class AbstractListingProvider<F extends AbstractListing, T> impl
         this.itemCaptionGenerator = itemCaptionGenerator;
     }
 
-    @Override
+    @SuppressWarnings("unchecked")
+	@Override
     public HasValue buildField() {
         F field = buildAbstractListing();
         field.setCaption(caption);

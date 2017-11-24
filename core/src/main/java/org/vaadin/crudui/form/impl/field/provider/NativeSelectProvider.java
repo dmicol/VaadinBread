@@ -1,9 +1,9 @@
 package org.vaadin.crudui.form.impl.field.provider;
 
+import java.util.Collection;
+
 import com.vaadin.ui.ItemCaptionGenerator;
 import com.vaadin.ui.NativeSelect;
-
-import java.util.Collection;
 
 /**
  * @author Alejandro Duarte

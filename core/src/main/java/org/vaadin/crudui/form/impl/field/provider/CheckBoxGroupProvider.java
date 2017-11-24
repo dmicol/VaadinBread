@@ -1,9 +1,9 @@
 package org.vaadin.crudui.form.impl.field.provider;
 
+import java.util.Collection;
+
 import com.vaadin.ui.CheckBoxGroup;
 import com.vaadin.ui.ItemCaptionGenerator;
-
-import java.util.Collection;
 
 /**
  * @author Alejandro Duarte

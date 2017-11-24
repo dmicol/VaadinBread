@@ -55,13 +55,11 @@
 			<groupId>org.hibernate</groupId>
 			<artifactId>hibernate-core</artifactId>
 			<version>5.2.10.Final</version>
-			<scope>test</scope>
 		</dependency>
 		<dependency>
 			<groupId>org.hibernate.validator</groupId>
 			<artifactId>hibernate-validator</artifactId>
 			<version>6.0.3.Final</version>
-			<scope>test</scope>
 		</dependency>
 		<dependency>
 			<groupId>org.glassfish</groupId>
@@ -78,44 +76,102 @@
 			<scope>test</scope>
 		</dependency>
 
-		<dependency>
-			<groupId>org.seleniumhq.selenium</groupId>
-			<artifactId>selenium-java</artifactId>
-			<version>2.53.1</version>
-			<scope>test</scope>
-		</dependency>
-		<dependency>
-			<groupId>org.seleniumhq.selenium</groupId>
-			<artifactId>selenium-server</artifactId>
-			<version>2.53.1</version>
-			<scope>test</scope>
-		</dependency>
-		<dependency>
-			<groupId>net.sourceforge.htmlunit</groupId>
-			<artifactId>htmlunit</artifactId>
-			<version>2.23</version>
-			<scope>test</scope>
-		</dependency>
+				<dependency>
+					<groupId>org.seleniumhq.selenium</groupId>
+					<artifactId>selenium-java</artifactId>
+					<version>2.53.1</version>
+					<scope>test</scope>
+				</dependency>
+				<dependency>
+					<groupId>org.seleniumhq.selenium</groupId>
+					<artifactId>selenium-server</artifactId>
+					<version>2.53.1</version>
+					<scope>test</scope>
+				</dependency>
+				<dependency>
+					<groupId>net.sourceforge.htmlunit</groupId>
+					<artifactId>htmlunit</artifactId>
+					<version>2.23</version>
+					<scope>test</scope>
+				</dependency>
 	</dependencies>
 
-	<build>
-		<plugins>
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-failsafe-plugin</artifactId>
-				<version>2.20.1</version>
-				<executions>
-                    <execution>
-                        <goals>
-                            <goal>integration-test</goal>
-                            <goal>verify</goal>
-                        </goals>
-                    </execution>
-                </executions>
-				<configuration>
-					<skipTests>false</skipTests>
-				</configuration>
-			</plugin>
-		</plugins>
-	</build>
+
+	<profiles>
+		<profile>
+			<id>IT</id>
+
+			<properties>
+				<maven.javadoc.skip>true</maven.javadoc.skip>
+			</properties>
+			<dependencies>
+			</dependencies>
+
+			<build>
+				<plugins>
+					<!-- Enable ITs -->
+					<plugin>
+						<groupId>org.apache.maven.plugins</groupId>
+						<artifactId>maven-failsafe-plugin</artifactId>
+						<version>2.20.1</version>
+						<configuration>
+							<skipTests>false</skipTests>
+						</configuration>
+				        <executions>
+				          <execution>
+				            <id>integration-test</id>
+				            <goals>
+				              <goal>integration-test</goal>
+				            </goals>
+				          </execution>
+				          <execution>
+				            <id>verify</id>
+				            <goals>
+				              <goal>verify</goal>
+				            </goals>
+				          </execution>
+				        </executions>
+					</plugin>
+
+					<!-- Run jetty container before IT and stop after -->
+					<plugin>
+
+						<groupId>org.eclipse.jetty</groupId>
+						<artifactId>jetty-maven-plugin</artifactId>
+						<version>9.4.6.v20170531</version>
+						<configuration>
+							<stopPort>8005</stopPort>
+							<stopKey>STOP</stopKey>
+						</configuration>
+						<executions>
+
+				          <execution>
+				            <id>start-jetty</id>
+				            <phase>pre-integration-test</phase>
+				            <goals>
+				              <goal>start</goal>
+				            </goals>
+				            <configuration>
+				              <scanIntervalSeconds>0</scanIntervalSeconds>
+				              <daemon>true</daemon>
+				            </configuration>
+				          </execution>
+				          <execution>
+				            <id>stop-jetty</id>
+				            <phase>post-integration-test</phase>
+				            <goals>
+				              <goal>stop</goal>
+				            </goals>
+				          </execution>
+
+						</executions>
+					</plugin>
+
+
+				</plugins>
+			</build>
+
+
+		</profile>
+	</profiles>
 </project>

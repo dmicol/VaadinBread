@@ -15,7 +15,6 @@ import com.vaadin.data.provider.DataProvider;
 import com.vaadin.data.provider.Query;
 import com.vaadin.icons.VaadinIcons;
 import com.vaadin.server.FileDownloader;
-import com.vaadin.server.FontAwesome;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Component;
 import com.vaadin.ui.Grid;
@@ -24,6 +23,7 @@ import com.vaadin.ui.Notification;
 /**
  * @author Alejandro Duarte
  */
+@SuppressWarnings("deprecation")
 public class GridCrud<T> extends AbstractCrud<T> {
 
     protected String rowCountCaption = "%d items(s) found";
@@ -83,7 +83,7 @@ public class GridCrud<T> extends AbstractCrud<T> {
         crudLayout.setMainComponent(grid);
         
         @SuppressWarnings("deprecation")
-		Button btn = new Button(FontAwesome.FILE_EXCEL_O.getHtml());
+		Button btn = new Button(com.vaadin.server.FontAwesome.FILE_EXCEL_O.getHtml());
         btn.setCaptionAsHtml(true);
         addExporterMenu("EXCEL", btn);
 
@@ -160,10 +160,8 @@ public class GridCrud<T> extends AbstractCrud<T> {
                 try {
                     T addedObject = addOperation.perform(domainObject);
                     refreshGrid();
-                    if (items.contains(addedObject)) {
-                        grid.asSingleSelect().setValue(addedObject);
-                        // TODO: grid.scrollTo(addedObject);
-                    }
+                    grid.asSingleSelect().setValue(addedObject);
+                    // TODO: grid.scrollTo(addedObject);
                 } catch (CrudOperationException e1) {
                     refreshGrid();
                 } catch (Exception e2) {
@@ -183,10 +181,8 @@ public class GridCrud<T> extends AbstractCrud<T> {
                 T updatedObject = updateOperation.perform(domainObject);
                 grid.asSingleSelect().clear();
                 refreshGrid();
-                if (items.contains(updatedObject)) {
-                    grid.asSingleSelect().setValue(updatedObject);
-                    // TODO: grid.scrollTo(updatedObject);
-                }
+                grid.asSingleSelect().setValue(updatedObject);
+                // TODO: grid.scrollTo(updatedObject);
             } catch (CrudOperationException e1) {
                 refreshGrid();
             } catch (Exception e2) {
