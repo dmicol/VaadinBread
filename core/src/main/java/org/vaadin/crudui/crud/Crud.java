@@ -1,9 +1,10 @@
 package org.vaadin.crudui.crud;
 
+import org.vaadin.crudui.form.FormFactory;
+import org.vaadin.crudui.layout.CrudLayout;
+
 import com.vaadin.data.provider.DataProvider;
 import com.vaadin.ui.Component;
-import org.vaadin.crudui.form.CrudFormFactory;
-import org.vaadin.crudui.layout.CrudLayout;
 
 /**
  * @author Alejandro Duarte
@@ -18,9 +19,9 @@ public interface Crud<T> extends Component {
 
     void setFindAllOperationVisible(boolean visible);
 
-    CrudFormFactory<T> getCrudFormFactory();
+    FormFactory<T> getCrudFormFactory();
 
-    void setCrudFormFactory(CrudFormFactory<T> crudFormFactory);
+    void setCrudFormFactory(FormFactory<T> crudFormFactory);
 
     void setDataProvider(DataProvider<T, ?> dataProvider);
 

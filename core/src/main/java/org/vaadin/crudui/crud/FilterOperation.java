@@ -1,12 +1,15 @@
+/**
+ * 
+ */
 package org.vaadin.crudui.crud;
 
 /**
- * @author Alejandro Duarte.
+ * @author Dmitrij Colautti
+ *
  */
-public enum CrudOperation implements Operation {
-
-    CANCEL, READ, ADD, UPDATE, DELETE;
-
+public enum FilterOperation implements Operation {
+	EMPTY, APPLY;
+	
 	/* (non-Javadoc)
 	 * @see org.vaadin.crudui.crud.Operation#getOperationName()
 	 */
@@ -15,5 +18,4 @@ public enum CrudOperation implements Operation {
 		// TODO Auto-generated method stub
 		return name();
 	}
-
 }

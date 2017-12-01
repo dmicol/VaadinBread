@@ -1,7 +1,5 @@
 package org.vaadin.crudui.form;
 
-import com.vaadin.data.HasValue;
-
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -10,10 +8,15 @@ import java.util.Map;
 
 import javax.persistence.metamodel.ManagedType;
 
+import org.vaadin.crudui.crud.Operation;
+
+import com.vaadin.data.HasValue;
+import com.vaadin.ui.Button;
+
 /**
  * @author Alejandro Duarte.
  */
-public class CrudFormConfiguration implements Serializable {
+public class FormConfiguration implements Serializable {
 
     protected List<String> visibleProperties = new ArrayList<>();
     protected List<String> disabledProperties = new ArrayList<>();
@@ -21,9 +24,19 @@ public class CrudFormConfiguration implements Serializable {
     protected Map<Object, Class<? extends HasValue>> fieldTypes = new HashMap<>();
     protected Map<Object, FieldCreationListener> fieldCreationListeners = new HashMap<>();
     protected Map<Object, FieldProvider> fieldProviders = new HashMap<>();
+    protected Map<Operation, Button.ClickListener> operationListeners = new HashMap<>();
     protected boolean useBeanValidation;
     protected ManagedType<?> jpaTypeForJpaValidation;
 
+
+    public void setOperationListener(Operation operation, Button.ClickListener operationButtonClickListener) {
+    	operationListeners.put(operation, operationButtonClickListener);
+    }
+    
+    public Button.ClickListener getOperationListener(Operation operation) {
+    	return operationListeners.get(operation);
+    }
+    
     public List<String> getVisibleProperties() {
         return visibleProperties;
     }

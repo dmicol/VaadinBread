@@ -5,9 +5,10 @@ import java.util.LinkedHashMap;
 
 import org.vaadin.crudui.crud.AbstractCrud;
 import org.vaadin.crudui.crud.CrudOperation;
-import org.vaadin.crudui.crud.CrudOperationException;
-import org.vaadin.crudui.form.CrudFormFactory;
-import org.vaadin.crudui.form.impl.form.factory.VerticalCrudFormFactory;
+import org.vaadin.crudui.crud.OperationException;
+import org.vaadin.crudui.form.FormConfiguration;
+import org.vaadin.crudui.form.FormFactory;
+import org.vaadin.crudui.form.impl.form.factory.VerticalFormFactory;
 import org.vaadin.crudui.layout.CrudLayout;
 import org.vaadin.crudui.layout.impl.WindowBasedCrudLayout;
 
@@ -40,18 +41,18 @@ public class GridCrud<T> extends AbstractCrud<T> {
     protected Collection<T> items;
 
     public GridCrud(Class<T> domainType) {
-        this(domainType, new WindowBasedCrudLayout(), new VerticalCrudFormFactory<>(domainType));
+        this(domainType, new WindowBasedCrudLayout(), new VerticalFormFactory<>(domainType, CrudOperation.values()));
     }
 
     public GridCrud(Class<T> domainType, CrudLayout crudLayout) {
-        this(domainType, crudLayout, new VerticalCrudFormFactory<>(domainType));
+        this(domainType, crudLayout, new VerticalFormFactory<>(domainType, CrudOperation.values()));
     }
 
-    public GridCrud(Class<T> domainType, CrudFormFactory<T> crudFormFactory) {
+    public GridCrud(Class<T> domainType, FormFactory<T> crudFormFactory) {
         this(domainType, new WindowBasedCrudLayout(), crudFormFactory);
     }
 
-    public GridCrud(Class<T> domainType, CrudLayout crudLayout, CrudFormFactory<T> crudFormFactory) {
+    public GridCrud(Class<T> domainType, CrudLayout crudLayout, FormFactory<T> crudFormFactory) {
         super(domainType, crudLayout, crudFormFactory);
         initLayout();
     }
@@ -137,9 +138,10 @@ public class GridCrud<T> extends AbstractCrud<T> {
         T domainObject = grid.asSingleSelect().getValue();
 
         if (domainObject != null) {
-            Component form = crudFormFactory.buildNewForm(CrudOperation.READ, domainObject, true, null, event -> {
+        	crudFormFactory.getConfiguration(CrudOperation.READ).setOperationListener(CrudOperation.READ, event -> {
                 grid.asSingleSelect().clear();
             });
+            Component form = crudFormFactory.buildNewForm(CrudOperation.READ, domainObject, true);
 
             crudLayout.showForm(CrudOperation.READ, form);
         } else {
@@ -162,7 +164,7 @@ public class GridCrud<T> extends AbstractCrud<T> {
                     refreshGrid();
                     grid.asSingleSelect().setValue(addedObject);
                     // TODO: grid.scrollTo(addedObject);
-                } catch (CrudOperationException e1) {
+                } catch (OperationException e1) {
                     refreshGrid();
                 } catch (Exception e2) {
                     refreshGrid();
@@ -183,7 +185,7 @@ public class GridCrud<T> extends AbstractCrud<T> {
                 refreshGrid();
                 grid.asSingleSelect().setValue(updatedObject);
                 // TODO: grid.scrollTo(updatedObject);
-            } catch (CrudOperationException e1) {
+            } catch (OperationException e1) {
                 refreshGrid();
             } catch (Exception e2) {
                 refreshGrid();
@@ -199,7 +201,7 @@ public class GridCrud<T> extends AbstractCrud<T> {
                 deleteOperation.perform(domainObject);
                 refreshGrid();
                 grid.asSingleSelect().clear();
-            } catch (CrudOperationException e1) {
+            } catch (OperationException e1) {
                 refreshGrid();
             } catch (Exception e2) {
                 refreshGrid();
@@ -209,18 +211,19 @@ public class GridCrud<T> extends AbstractCrud<T> {
     }
 
     protected void showForm(CrudOperation operation, T domainObject, boolean readOnly, String successMessage, Button.ClickListener buttonClickListener) {
-        Component form = crudFormFactory.buildNewForm(operation, domainObject, readOnly,
-                cancelClickEvent -> {
+    	FormConfiguration config = crudFormFactory.getConfiguration(operation);
+    	config.setOperationListener(operation, operationPerformedClickEvent -> {
+            crudLayout.hideForm();
+            buttonClickListener.buttonClick(operationPerformedClickEvent);
+            Notification.show(successMessage);
+        });
+    	config.setOperationListener(CrudOperation.CANCEL, cancelClickEvent -> {
                     T selected = grid.asSingleSelect().getValue();
                     crudLayout.hideForm();
                     grid.asSingleSelect().clear();
                     grid.asSingleSelect().setValue(selected);
-                },
-                operationPerformedClickEvent -> {
-                    crudLayout.hideForm();
-                    buttonClickListener.buttonClick(operationPerformedClickEvent);
-                    Notification.show(successMessage);
                 });
+        Component form = crudFormFactory.buildNewForm(operation, domainObject, readOnly);
 
         crudLayout.showForm(operation, form);
     }

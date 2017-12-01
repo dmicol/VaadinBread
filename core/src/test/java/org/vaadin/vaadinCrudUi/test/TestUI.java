@@ -20,7 +20,7 @@ import org.vaadin.crudui.crud.impl.EditableGridCrud;
 import org.vaadin.crudui.crud.impl.GridCrud;
 import org.vaadin.crudui.form.impl.field.provider.CheckBoxGroupProvider;
 import org.vaadin.crudui.form.impl.field.provider.ComboBoxProvider;
-import org.vaadin.crudui.form.impl.form.factory.GridLayoutCrudFormFactory;
+import org.vaadin.crudui.form.impl.form.factory.GridLayoutFormFactory;
 import org.vaadin.crudui.layout.impl.HorizontalSplitCrudLayout;
 import org.vaadin.jetty.VaadinJettyServer;
 import org.vaadin.vaadinCrudUi.test.repo.Group;
@@ -83,7 +83,7 @@ public class TestUI extends UI implements CrudListener<User> {
         GridCrud<User> crud = new GridCrud<>(User.class, new HorizontalSplitCrudLayout());
         crud.setCrudListener(this);
 
-        GridLayoutCrudFormFactory<User> formFactory = new GridLayoutCrudFormFactory<>(User.class, 2, 2);
+        GridLayoutFormFactory<User, CrudOperation> formFactory = new GridLayoutFormFactory<>(User.class, CrudOperation.values(), 2, 2);
         crud.setCrudFormFactory(formFactory);
 
         formFactory.setUseBeanValidation(true);

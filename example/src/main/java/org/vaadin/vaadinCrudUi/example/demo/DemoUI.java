@@ -5,10 +5,12 @@ import java.util.List;
 import org.vaadin.crudui.crud.Crud;
 import org.vaadin.crudui.crud.CrudListener;
 import org.vaadin.crudui.crud.CrudOperation;
+import org.vaadin.crudui.crud.FilterOperation;
 import org.vaadin.crudui.crud.impl.GridCrud;
 import org.vaadin.crudui.form.impl.field.provider.CheckBoxGroupProvider;
 import org.vaadin.crudui.form.impl.field.provider.ComboBoxProvider;
 import org.vaadin.crudui.form.impl.form.factory.GridLayoutCrudFormFactory;
+import org.vaadin.crudui.form.impl.form.factory.GridLayoutFormFactory;
 import org.vaadin.crudui.layout.impl.HorizontalSplitCrudLayout;
 import org.vaadin.jetty.VaadinJettyServer;
 import org.vaadin.vaadinCrudUi.example.repo.Group;
@@ -19,6 +21,7 @@ import org.vaadin.vaadinCrudUi.example.repo.UserRepository;
 
 import com.vaadin.data.provider.DataProvider;
 import com.vaadin.server.VaadinRequest;
+import com.vaadin.ui.Component;
 import com.vaadin.ui.DateField;
 import com.vaadin.ui.Notification;
 import com.vaadin.ui.PasswordField;
@@ -74,8 +77,20 @@ public class DemoUI extends UI implements CrudListener<User> {
     }
 
     private Crud<User> getConfiguredCrud() {
-        GridCrud<User> crud = new GridCrud<>(User.class, new HorizontalSplitCrudLayout());
+    	User filterBean = new User();
+        GridLayoutFormFactory<User, FilterOperation> filterFormFactory = new GridLayoutFormFactory<>(User.class, FilterOperation.values(), 4, 2);
+        filterFormFactory.setVisibleProperties(FilterOperation.APPLY, "id", "name", "birthDate", "email", "phoneNumber", "active", "mainGroup");
+        Component filterForm = filterFormFactory.buildNewForm(FilterOperation.APPLY, filterBean, true);
+        
+        GridCrud<User> crud = new GridCrud<User>(User.class, new HorizontalSplitCrudLayout()) {
+        	@Override
+        	public void refreshGrid() {
+//        		grid.getDataProvider().fetch(query)
+        		super.refreshGrid();
+        	}
+        };
         crud.setCrudListener(this);
+        crud.getCrudLayout().addFilterComponent(filterForm);
 
         GridLayoutCrudFormFactory<User> formFactory = new GridLayoutCrudFormFactory<>(User.class, 2, 2);
         crud.setCrudFormFactory(formFactory);
@@ -104,7 +119,7 @@ public class DemoUI extends UI implements CrudListener<User> {
 
         formFactory.setButtonCaption(CrudOperation.ADD, "Add new user");
         crud.setRowCountCaption("%d user(s) found");
-
+        
         return crud;
     }
 

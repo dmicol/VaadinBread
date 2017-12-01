@@ -1,11 +1,10 @@
 package org.vaadin.crudui.crud;
 
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
-import org.vaadin.crudui.form.CrudFormFactory;
+import org.vaadin.crudui.form.FormFactory;
 import org.vaadin.crudui.layout.CrudLayout;
 import org.vaadin.crudui.support.BeanExcelBuilder;
 import org.vaadin.crudui.support.ExcelOnDemandStreamResource;
@@ -28,12 +27,13 @@ public abstract class AbstractCrud<T> extends Composite implements Crud<T> {
     protected Map<String, Resource> exportOperations = new HashMap<>();
 
     protected CrudLayout crudLayout;
-    protected CrudFormFactory<T> crudFormFactory;
+    protected FormFactory<T> crudFormFactory;
 
-    public AbstractCrud(Class<T> domainType, CrudLayout crudLayout, CrudFormFactory<T> crudFormFactory) {
+    public AbstractCrud(Class<T> domainType, CrudLayout crudLayout, FormFactory<T> crudFormFactory) {
         this.domainType = domainType;
         this.crudLayout = crudLayout;
         this.crudFormFactory = crudFormFactory;
+                
         exportOperations.put("EXCEL", new ExcelOnDemandStreamResource() {
 			
 			@Override
@@ -56,7 +56,7 @@ public abstract class AbstractCrud<T> extends Composite implements Crud<T> {
     }
 
     @Override
-    public void setCrudFormFactory(CrudFormFactory<T> crudFormFactory) {
+    public void setCrudFormFactory(FormFactory<T> crudFormFactory) {
         this.crudFormFactory = crudFormFactory;
     }
     
@@ -89,7 +89,7 @@ public abstract class AbstractCrud<T> extends Composite implements Crud<T> {
     }
 
     @Override
-    public CrudFormFactory<T> getCrudFormFactory() {
+    public FormFactory<T> getCrudFormFactory() {
         return crudFormFactory;
     }
 

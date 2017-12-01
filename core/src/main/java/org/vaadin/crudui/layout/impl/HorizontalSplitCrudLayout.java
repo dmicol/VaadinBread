@@ -1,5 +1,11 @@
 package org.vaadin.crudui.layout.impl;
 
+import java.util.HashMap;
+import java.util.Map;
+
+import org.vaadin.crudui.crud.CrudOperation;
+import org.vaadin.crudui.layout.CrudLayout;
+
 import com.vaadin.icons.VaadinIcons;
 import com.vaadin.shared.ui.MarginInfo;
 import com.vaadin.ui.Component;
@@ -10,11 +16,6 @@ import com.vaadin.ui.HorizontalSplitPanel;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.themes.ValoTheme;
-import org.vaadin.crudui.crud.CrudOperation;
-import org.vaadin.crudui.layout.CrudLayout;
-
-import java.util.HashMap;
-import java.util.Map;
 
 /**
  * @author Alejandro Duarte.
