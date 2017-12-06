@@ -25,6 +25,8 @@ public interface Crud<T> extends Component {
 
     void setDataProvider(DataProvider<T, ?> dataProvider);
 
+	DataProvider<T, ?> getDataProvider();
+
     void setAddOperation(AddOperationListener<T> addOperation);
 
     void setUpdateOperation(UpdateOperationListener<T> updateOperation);

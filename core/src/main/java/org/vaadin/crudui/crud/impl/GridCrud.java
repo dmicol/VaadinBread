@@ -83,8 +83,7 @@ public class GridCrud<T> extends AbstractCrud<T> {
         grid.addSelectionListener(e -> gridSelectionChanged());
         crudLayout.setMainComponent(grid);
         
-        @SuppressWarnings("deprecation")
-		Button btn = new Button(com.vaadin.server.FontAwesome.FILE_EXCEL_O.getHtml());
+        Button btn = new Button(com.vaadin.server.FontAwesome.FILE_EXCEL_O.getHtml());
         btn.setCaptionAsHtml(true);
         addExporterMenu("EXCEL", btn);
 

@@ -112,4 +112,8 @@ public abstract class AbstractCrud<T> extends Composite implements Crud<T> {
     public Resource getExporter(String name) {
     	return exportOperations.get(name);
     }
+
+	public DataProvider<T, ?> getDataProvider() {
+		return dataProvider;
+	}
 }

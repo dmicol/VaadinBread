@@ -1,7 +1,5 @@
 package org.vaadin.vaadinCrudUi.example.demo;
 
-import java.util.List;
-
 import org.vaadin.crudui.crud.Crud;
 import org.vaadin.crudui.crud.CrudListener;
 import org.vaadin.crudui.crud.CrudOperation;
@@ -17,9 +15,13 @@ import org.vaadin.vaadinCrudUi.example.repo.Group;
 import org.vaadin.vaadinCrudUi.example.repo.GroupRepository;
 import org.vaadin.vaadinCrudUi.example.repo.JPAService;
 import org.vaadin.vaadinCrudUi.example.repo.User;
+import org.vaadin.vaadinCrudUi.example.repo.UserFilter;
 import org.vaadin.vaadinCrudUi.example.repo.UserRepository;
 
+import com.vaadin.data.provider.CallbackDataProvider;
+import com.vaadin.data.provider.ConfigurableFilterDataProvider;
 import com.vaadin.data.provider.DataProvider;
+import com.vaadin.data.provider.Query;
 import com.vaadin.server.VaadinRequest;
 import com.vaadin.ui.Component;
 import com.vaadin.ui.DateField;
@@ -76,51 +78,9 @@ public class DemoUI extends UI implements CrudListener<User> {
         return crud;
     }
 
-    private Crud<User> getConfiguredCrud() {
-    	User filterBean = new User();
-        GridLayoutFormFactory<User, FilterOperation> filterFormFactory = new GridLayoutFormFactory<>(User.class, FilterOperation.values(), 4, 2);
-        filterFormFactory.setVisibleProperties(FilterOperation.APPLY, "id", "name", "birthDate", "email", "phoneNumber", "active", "mainGroup");
-        Component filterForm = filterFormFactory.buildNewForm(FilterOperation.APPLY, filterBean, true);
-        
-        GridCrud<User> crud = new GridCrud<User>(User.class, new HorizontalSplitCrudLayout()) {
-        	@Override
-        	public void refreshGrid() {
-//        		grid.getDataProvider().fetch(query)
-        		super.refreshGrid();
-        	}
-        };
-        crud.setCrudListener(this);
-        crud.getCrudLayout().addFilterComponent(filterForm);
-
-        GridLayoutCrudFormFactory<User> formFactory = new GridLayoutCrudFormFactory<>(User.class, 2, 2);
-        crud.setCrudFormFactory(formFactory);
-
-        formFactory.setUseBeanValidation(true);
-        formFactory.setJpaTypeForJpaValidation(JPAService.getFactory().getMetamodel().managedType(User.class));
-
-        formFactory.setErrorListener((e) -> {e.printStackTrace(); Notification.show("ERROR: " + e.getLocalizedMessage(), Notification.Type.ERROR_MESSAGE);});
-
-        formFactory.setVisibleProperties(CrudOperation.READ, "id", "name", "birthDate", "email", "phoneNumber", "groups", "active", "mainGroup");
-        formFactory.setVisibleProperties(CrudOperation.ADD, "name", "birthDate", "email", "phoneNumber", "groups", "password", "mainGroup", "active");
-        formFactory.setVisibleProperties(CrudOperation.UPDATE, "id", "name", "birthDate", "email", "phoneNumber", "password", "groups", "active", "mainGroup");
-        formFactory.setVisibleProperties(CrudOperation.DELETE, "name", "email", "phoneNumber");
-
-        formFactory.setDisabledProperties("id");
-
-        crud.getGrid().setColumns("name", "birthDate", "email", "phoneNumber", "mainGroup", "active");
-        crud.getGrid().getColumn("mainGroup").setRenderer(group -> group == null ? "" : ((Group) group).getName(), new TextRenderer());
-//        ((Grid.Column<User, Date>) crud.getGrid().getColumn("birthDate")).setRenderer(new DateRenderer("%1$tY-%1$tm-%1$te"));
-
-        formFactory.setFieldType("password", PasswordField.class);
-        formFactory.setFieldCreationListener("birthDate", field -> ((DateField) field).setDateFormat("yyyy-MM-dd"));
-
-        formFactory.setFieldProvider("groups", new CheckBoxGroupProvider<Group>("Groups", GroupRepository.findAll(), Group::getName));
-        formFactory.setFieldProvider("mainGroup", new ComboBoxProvider<Group>("Main Group", GroupRepository.findAll(), Group::getName));
-
-        formFactory.setButtonCaption(CrudOperation.ADD, "Add new user");
-        crud.setRowCountCaption("%d user(s) found");
-        
-        return crud;
+	private Crud<User> getConfiguredCrud() {
+    	
+    	return new ConfiguredCrud();
     }
 
     @Override
@@ -131,9 +91,6 @@ public class DemoUI extends UI implements CrudListener<User> {
 
     @Override
     public User update(User user) {
-        if (user.getId().equals(5l)) {
-            throw new RuntimeException("A simulated error has occurred");
-        }
         return UserRepository.save(user);
     }
 
@@ -143,11 +100,11 @@ public class DemoUI extends UI implements CrudListener<User> {
     }
 
     @Override
-    public DataProvider<User, ?> getDataProvider() {
-    	return DataProvider.fromCallbacks(
+    public CallbackDataProvider<User, UserFilter> getDataProvider() {
+    	
+    	return new CallbackDataProvider<User, UserFilter>(
     			q -> {
-    				List<User> list = UserRepository.findAll();
-    				return list.subList(q.getOffset(), Math.min(q.getOffset()+q.getLimit(), list.size())).stream();
+    				return UserRepository.findAll().stream();
     			}
     			, q -> UserRepository.findAll().size()
     			);

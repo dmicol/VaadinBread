@@ -16,12 +16,6 @@ import com.vaadin.ui.Layout;
  */
 public class GridLayoutCrudFormFactory<T> extends GridLayoutFormFactory<T, CrudOperation> {
 
-	/**
-	 * @param domainType
-	 * @param operations
-	 * @param columns
-	 * @param rows
-	 */
 	public GridLayoutCrudFormFactory(Class<T> domainType, int columns, int rows) {
 		super(domainType, CrudOperation.values(), columns, rows);
 		
