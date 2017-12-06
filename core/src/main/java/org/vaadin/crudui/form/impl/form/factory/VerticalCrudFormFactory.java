@@ -29,8 +29,8 @@ public class VerticalCrudFormFactory<T> extends VerticalFormFactory<T, CrudOpera
     protected Layout buildFooter(Operation operation, T domainObject, Button.ClickListener operationButtonClickListener) {
     	HorizontalLayout footerLayout = (HorizontalLayout) super.buildFooter(operation, domainObject, operationButtonClickListener);
     	
-        Button cancelButton = buildCancelButton(configurations.get(operation).getOperationListener(CrudOperation.CANCEL));
-
+        Button cancelButton = buildOperationButton(CrudOperation.CANCEL, null, configurations.get(operation).getOperationListener(CrudOperation.CANCEL)); 
+        
         if (cancelButton != null) {
             footerLayout.addComponent(cancelButton);
         }
