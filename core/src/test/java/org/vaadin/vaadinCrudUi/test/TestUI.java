@@ -13,15 +13,15 @@ import com.vaadin.ui.renderers.DateRenderer;
 import com.vaadin.ui.renderers.TextRenderer;
 
 import org.apache.commons.lang3.StringUtils;
-import org.vaadin.crudui.crud.Crud;
-import org.vaadin.crudui.crud.CrudListener;
-import org.vaadin.crudui.crud.CrudOperation;
-import org.vaadin.crudui.crud.impl.EditableGridCrud;
-import org.vaadin.crudui.crud.impl.GridCrud;
-import org.vaadin.crudui.form.impl.field.provider.CheckBoxGroupProvider;
-import org.vaadin.crudui.form.impl.field.provider.ComboBoxProvider;
-import org.vaadin.crudui.form.impl.form.factory.GridLayoutFormFactory;
-import org.vaadin.crudui.layout.impl.HorizontalSplitCrudLayout;
+import org.vaadin.bread.ui.crud.Crud;
+import org.vaadin.bread.ui.crud.CrudListener;
+import org.vaadin.bread.ui.crud.CrudOperation;
+import org.vaadin.bread.ui.crud.impl.EditableGridCrud;
+import org.vaadin.bread.ui.crud.impl.GridCrud;
+import org.vaadin.bread.ui.form.impl.field.provider.CheckBoxGroupProvider;
+import org.vaadin.bread.ui.form.impl.field.provider.ComboBoxProvider;
+import org.vaadin.bread.ui.form.impl.form.factory.GridLayoutFormFactory;
+import org.vaadin.bread.ui.layout.impl.HorizontalSplitCrudLayout;
 import org.vaadin.jetty.VaadinJettyServer;
 import org.vaadin.vaadinCrudUi.test.repo.Group;
 import org.vaadin.vaadinCrudUi.test.repo.GroupRepository;
@@ -89,7 +89,7 @@ public class TestUI extends UI implements CrudListener<User> {
         formFactory.setUseBeanValidation(true);
         formFactory.setJpaTypeForJpaValidation(JPAService.getFactory().getMetamodel().managedType(User.class));
 
-        formFactory.setErrorListener(e -> Notification.show("Custom error message (simulated error)", Notification.Type.ERROR_MESSAGE));
+        formFactory.setErrorListener((op, obj, e) -> Notification.show("Custom error message (simulated error)", Notification.Type.ERROR_MESSAGE));
 
         formFactory.setVisibleProperties(CrudOperation.READ, "id", "name", "birthDate", "email", "phoneNumber", "groups", "active", "mainGroup");
         formFactory.setVisibleProperties(CrudOperation.ADD, "name", "birthDate", "email", "phoneNumber", "groups", "password", "mainGroup", "active");

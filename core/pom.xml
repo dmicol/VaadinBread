@@ -2,11 +2,11 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<parent>
-		<groupId>it.colautti.vaadinCrudUi</groupId>
-		<artifactId>vaadinCrudUi</artifactId>
-		<version>2.1.1</version>
+		<groupId>org.vaadin</groupId>
+		<artifactId>bread</artifactId>
+		<version>0.1</version>
 	</parent>
-	<artifactId>core</artifactId>
+	<artifactId>bread-core</artifactId>
 
 	<dependencies>
 		<dependency>
