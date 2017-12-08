@@ -1,26 +1,27 @@
-# CRUD UI add-on for Vaadin
+# BREAD (CRUD + Browse) UI add-on for Vaadin
 
-[Crud UI Add-on](https://vaadin.com/directory#!addon/crud-ui-add-on) provides an API to automatically generate CRUD-like UIs for any Java Bean at runtime.
+[Bread UI Add-on](https://vaadin.com/directory#!addon/crud-ui-add-on) provides an API to automatically generate CRUD-like UIs for any Java Bean at runtime.
+BREAD stand for Browse Read Edit Add Delete.
 
 
 ## API
 
 The API is defined through 4 interfaces:
 
-* `CrudComponent`: A Vaadin `Component` that can be added into any `ComponentContainer`. This is the actual CRUD final users will see on the browser.
+* `BreadComponent`: A Vaadin `Component` that can be added into any `ComponentContainer`. This is the actual CRUD final users will see on the browser.
 
-* `CrudListener`: Encapsulates the CRUD operations. You can implement this interface to delegate CRUD operations to your back-end.
+* `BreadListener`: Encapsulates the BREAD operations. You can implement this interface to delegate BREAD operations to your back-end.
 
-* `CrudLayout`: Encapsulates layout-related behaviour.
+* `BreadLayout`: Encapsulates layout-related behaviour.
 
 * `CrudFormFactory`: Builds the forms required by the CRUD UI.
 
-Crud UI Add-on includes atnleast one implementation for each of these interfaces (except `CrudListener` which is an optional "connection point" to your application.
+Bread UI Add-on includes at least one implementation for each of these interfaces (except `BreadListener` which is an optional "connection point" to your application.
 
 
 ## Basic sage
 
-Create a new CrudComponent and add it to a layout (currently, Crud UI Add-on provides only one implementation of the `CrudComponent` interface: `GridBasedCrudComponent`):
+Create a new BreadComponent and add it to a layout (currently, Bread UI Add-on provides only one implementation of the `Bread` interface: `GridBread`):
 
 ```
 GridBasedCrudComponent<User> crud = new GridBasedCrudComponent<>(User.class);
