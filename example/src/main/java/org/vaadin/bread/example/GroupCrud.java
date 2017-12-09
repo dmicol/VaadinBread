@@ -52,8 +52,9 @@ public class GroupCrud extends GridCrud<Group> implements CrudListener<Group> {
 
         formFactory.setUseBeanValidation(true);
         formFactory.setJpaTypeForJpaValidation(JPAService.getFactory().getMetamodel().managedType(Group.class));
-        formFactory.setVisibleProperties("id", "name", "admin");
-        formFactory.setDisabledProperties("id");
+        formFactory.buildSensitiveDefaults();
+//        formFactory.setVisibleProperties("id", "name", "admin");
+//        formFactory.setDisabledProperties("id");
 
         getGrid().setColumns("id", "name", "admin");
         

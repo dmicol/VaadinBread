@@ -116,6 +116,10 @@ public abstract class AbstractFormFactory<T> implements FormFactory<T> {
     public void setErrorListener(ErrorListener<T> errorListener) {
         this.errorListener = errorListener;
     }
+    
+	public void buildSensitiveDefaults(Class<?> clazz) {
+        Arrays.stream(operations).forEach(operation -> getConfiguration(operation).buildSensitiveDefaults(clazz));
+	}
 
     public FormConfiguration getConfiguration(Operation operation) {
         configurations.putIfAbsent(operation, new FormConfiguration());
