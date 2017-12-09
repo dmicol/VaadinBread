@@ -1,4 +1,4 @@
-package org.vaadin.bread.example.repo;
+package org.vaadin.bread.example.base.repo;
 
 import java.time.LocalDate;
 import java.util.Set;
@@ -8,6 +8,9 @@ import java.util.stream.Collectors;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
+
+import org.vaadin.bread.example.model.Group;
+import org.vaadin.bread.example.model.User;
 
 
 /**
@@ -49,6 +52,7 @@ public class JPAService {
 
             UserRepository.save(user);
         }
+        JPAService.getFactory().getCache().evictAll();
     }
 
     public static void close() {

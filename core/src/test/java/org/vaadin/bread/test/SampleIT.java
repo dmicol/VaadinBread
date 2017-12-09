@@ -1,4 +1,4 @@
-package org.vaadin.vaadinCrudUi.test;
+package org.vaadin.bread.test;
 
 import org.junit.Test;
 

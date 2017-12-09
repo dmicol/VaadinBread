@@ -1,4 +1,4 @@
-package org.vaadin.bread.example.repo;
+package org.vaadin.bread.example.model;
 
 import javax.annotation.Generated;
 import javax.persistence.metamodel.SingularAttribute;

@@ -1,4 +1,4 @@
-package org.vaadin.vaadinCrudUi.test;
+package org.vaadin.bread.test;
 
 import com.vaadin.data.provider.DataProvider;
 import com.vaadin.server.VaadinRequest;
@@ -13,6 +13,11 @@ import com.vaadin.ui.renderers.DateRenderer;
 import com.vaadin.ui.renderers.TextRenderer;
 
 import org.apache.commons.lang3.StringUtils;
+import org.vaadin.bread.test.repo.Group;
+import org.vaadin.bread.test.repo.GroupRepository;
+import org.vaadin.bread.test.repo.JPAService;
+import org.vaadin.bread.test.repo.User;
+import org.vaadin.bread.test.repo.UserRepository;
 import org.vaadin.bread.ui.crud.Crud;
 import org.vaadin.bread.ui.crud.CrudListener;
 import org.vaadin.bread.ui.crud.CrudOperation;
@@ -23,11 +28,6 @@ import org.vaadin.bread.ui.form.impl.field.provider.ComboBoxProvider;
 import org.vaadin.bread.ui.form.impl.form.factory.GridLayoutFormFactory;
 import org.vaadin.bread.ui.layout.impl.HorizontalSplitCrudLayout;
 import org.vaadin.jetty.VaadinJettyServer;
-import org.vaadin.vaadinCrudUi.test.repo.Group;
-import org.vaadin.vaadinCrudUi.test.repo.GroupRepository;
-import org.vaadin.vaadinCrudUi.test.repo.JPAService;
-import org.vaadin.vaadinCrudUi.test.repo.User;
-import org.vaadin.vaadinCrudUi.test.repo.UserRepository;
 
 import java.sql.Date;
 import java.util.Collection;

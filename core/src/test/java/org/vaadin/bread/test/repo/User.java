@@ -1,4 +1,4 @@
-package org.vaadin.vaadinCrudUi.test.repo;
+package org.vaadin.bread.test.repo;
 import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.time.LocalDate;

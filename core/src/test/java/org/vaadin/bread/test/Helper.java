@@ -1,4 +1,4 @@
-package org.vaadin.vaadinCrudUi.test;
+package org.vaadin.bread.test;
 
 import java.util.concurrent.TimeUnit;
 import java.util.logging.Level;

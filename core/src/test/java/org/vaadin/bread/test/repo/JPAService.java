@@ -1,4 +1,4 @@
-package org.vaadin.vaadinCrudUi.test.repo;
+package org.vaadin.bread.test.repo;
 
 import java.time.LocalDate;
 import java.util.Set;
