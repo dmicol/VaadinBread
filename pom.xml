@@ -6,7 +6,7 @@
     <artifactId>bread</artifactId>
     <packaging>pom</packaging>
     <version>0.1</version>
-    <name>Crud UI Add-on</name>
+    <name>Bread UI Vaadin Add-on</name>
 
     <prerequisites>
         <maven>3</maven>
@@ -34,15 +34,15 @@
     </organization>
 
     <scm>
-        <url>https://github.com/dmicol/VaadinCrudUI.git</url>
-        <connection>scm:git:https://github.com/dmicol/VaadinCrudUI.git</connection>
-        <developerConnection>scm:git:https://github.com/dmicol/VaadinCrudUI.git</developerConnection>
+        <url>https://github.com/dmicol/VaadinBread.git</url>
+        <connection>scm:git:https://github.com/dmicol/VaadinBread.git</connection>
+        <developerConnection>scm:git:https://github.com/dmicol/VaadinBread.git</developerConnection>
         <tag>BREAD UI add-on for Vaadin</tag>
     </scm>
 
     <issueManagement>
         <system>GitHub</system>
-        <url>scm:git:https://github.com/dmicol/VaadinCrudUI/issues</url>
+        <url>scm:git:https://github.com/dmicol/VaadinBread/issues</url>
     </issueManagement>
 
     <licenses>
