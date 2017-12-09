@@ -1,9 +1,10 @@
-package org.vaadin.bread.example.repo;
+package org.vaadin.bread.example.model;
 import java.time.LocalDate;
 import java.util.HashSet;
 import java.util.Set;
 
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
@@ -49,17 +50,14 @@ public class User {
 	@ManyToOne
     private Group mainGroup;
 
-    @ManyToMany
-    @Fetch(FetchMode.JOIN)
+    @ManyToMany()
     private Set<Group> groups = new HashSet<>();
 
     private Gender gender;
-
-    public User() {
-    }
-
+    
+    public User() {}
+    
     public User(Long id, String name, LocalDate birthDate, String email, Integer phoneNumber , String password, Boolean active, Group mainGroup, Set<Group> groups) {
-        this();
         this.id = id;
         this.name = name;
         this.birthDate = birthDate;
@@ -149,6 +147,14 @@ public class User {
     public void setMainGroup(Group mainGroup) {
         this.mainGroup = mainGroup;
     }
+    
+    public Gender getGender() {
+    	return gender;
+    }
+    
+    public void setGender(Gender gender) {
+    	this.gender = gender;
+    }
 
     public Set<Group> getGroups() {
         return groups;
@@ -157,12 +163,19 @@ public class User {
     public void setGroups(Set<Group> groups) {
         this.groups = groups;
     }
+    
 
-    public Gender getGender() {
-        return gender;
+	public Group addGroup(Group group) {
+		getGroups().add(group);
+		group.addOtherUser(this);
+
+		return group;
 	}
 
-    public void setGender(Gender gender) {
-        this.gender = gender;
-    }
+	public Group removeGroup(Group group) {
+		getGroups().remove(group);
+		group.removeOtherUser(this);
+
+		return group;
+	}
 }

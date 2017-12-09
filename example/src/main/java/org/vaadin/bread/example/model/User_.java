@@ -1,4 +1,4 @@
-package org.vaadin.bread.example.repo;
+package org.vaadin.bread.example.model;
 
 import java.time.LocalDate;
 import javax.annotation.Generated;
