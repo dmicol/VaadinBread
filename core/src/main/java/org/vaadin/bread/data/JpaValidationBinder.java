@@ -12,6 +12,8 @@ import java.util.ResourceBundle;
 
 import javax.persistence.Basic;
 import javax.persistence.Column;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
 import javax.persistence.metamodel.Attribute;
 import javax.persistence.metamodel.ManagedType;
 import javax.persistence.metamodel.SingularAttribute;
@@ -64,9 +66,11 @@ public class JpaValidationBinder<BEAN> extends BeanValidationBinder<BEAN> {
     	Attribute<? super BEAN, ?> attribute = managedType.getAttribute(definition.getName());
     	
     	Member javaMember = attribute.getJavaMember();
-    	
+
+		AnnotatedElement annotated = null;
+		
     	if (attribute.getJavaMember() instanceof AnnotatedElement) {
-    		AnnotatedElement annotated = (AnnotatedElement)attribute.getJavaMember();
+    		annotated = (AnnotatedElement)attribute.getJavaMember();
     		
     		
     		Column column = annotated.getAnnotation(Column.class);
@@ -92,14 +96,13 @@ public class JpaValidationBinder<BEAN> extends BeanValidationBinder<BEAN> {
 		if (attribute instanceof SingularAttribute) {
 			SingularAttribute<?, ?> singAtt = (SingularAttribute<?, ?>)attribute;
 			
-			if (!singAtt.isOptional()) {
+			if (!singAtt.isOptional() && (annotated==null || annotated.getAnnotation(GeneratedValue.class)==null)) {
 				MessageInterpolator dd = Validation.byDefaultProvider().configure().getDefaultMessageInterpolator();
 				binding.withValidator((v)-> v!=null, dd.interpolate("{javax.validation.constraints.NotNull.message}", null, UI.getCurrent().getLocale()));
 				
 				binding.getField().setRequiredIndicatorVisible(true);
 			}
 		}
-
     }
 
     
