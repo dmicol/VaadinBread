@@ -1,14 +1,14 @@
 /**
  * 
  */
-package org.vaadin.bread.example.demo;
+package org.vaadin.bread.example;
 
-import org.vaadin.bread.example.repo.Group;
-import org.vaadin.bread.example.repo.GroupRepository;
-import org.vaadin.bread.example.repo.JPAService;
-import org.vaadin.bread.example.repo.User;
-import org.vaadin.bread.example.repo.UserFilter;
-import org.vaadin.bread.example.repo.UserRepository;
+import org.vaadin.bread.example.base.repo.GroupRepository;
+import org.vaadin.bread.example.base.repo.JPAService;
+import org.vaadin.bread.example.base.repo.UserRepository;
+import org.vaadin.bread.example.model.Group;
+import org.vaadin.bread.example.model.User;
+import org.vaadin.bread.example.model.UserFilter;
 import org.vaadin.bread.ui.crud.CrudListener;
 import org.vaadin.bread.ui.crud.CrudOperation;
 import org.vaadin.bread.ui.crud.FilterOperation;
@@ -31,11 +31,11 @@ import com.vaadin.ui.renderers.TextRenderer;
  * @author Dmitrij Colautti
  *
  */
-public class ConfiguredCrud extends GridCrud<User> implements CrudListener<User> {
+public class UserCrud extends GridCrud<User> implements CrudListener<User> {
 
     private UserFilter filterBean = new UserFilter();
     
-	public ConfiguredCrud() {
+	public UserCrud() {
 		super(User.class, new HorizontalSplitCrudLayout());
 		
 		// build filter

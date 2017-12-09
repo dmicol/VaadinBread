@@ -1,10 +1,8 @@
-package org.vaadin.bread.example.base;
+package org.vaadin.bread.example.springJpa;
 
-import org.vaadin.bread.example.GroupCrud;
 import org.vaadin.bread.example.UserCrud;
 import org.vaadin.bread.example.base.repo.JPAService;
 import org.vaadin.bread.example.base.repo.UserRepository;
-import org.vaadin.bread.example.model.Group;
 import org.vaadin.bread.example.model.User;
 import org.vaadin.bread.example.model.UserFilter;
 import org.vaadin.bread.ui.crud.Crud;
@@ -20,11 +18,11 @@ import com.vaadin.ui.VerticalLayout;
 /**
  * @author Dmitrij Colautti
  */
-public class BaseUI extends UI {
+public class SpringJpaBasedUI extends UI implements CrudListener<User> {
 
     public static void main(String[] args) throws Exception {
         JPAService.init();
-        VaadinJettyServer server = new VaadinJettyServer(8080, BaseUI.class);
+        VaadinJettyServer server = new VaadinJettyServer(8080, SpringJpaBasedUI.class);
         server.start();
     }
 
@@ -35,25 +33,47 @@ public class BaseUI extends UI {
         tabSheet.setSizeFull();
         setContent(tabSheet);
 
-        addCrud(getUserCrud(), "User");
-        addCrud(getGroupCrud(), "Group");
+        addCrud(getConfiguredCrud(), "Configured");
+        tabSheet.setSelectedTab(2);
     }
 
-    private void addCrud(Crud<?> crud, String caption) {
+    private void addCrud(Crud<User> crud, String caption) {
         VerticalLayout layout = new VerticalLayout(crud);
         layout.setSizeFull();
         layout.setMargin(true);
         tabSheet.addTab(layout, caption);
     }
 
-	private Crud<User> getUserCrud() {
+	private Crud<User> getConfiguredCrud() {
     	
     	return new UserCrud();
     }
 
-	private Crud<Group> getGroupCrud() {
+    @Override
+    public User add(User user) {
+        UserRepository.save(user);
+        return user;
+    }
+
+    @Override
+    public User update(User user) {
+        return UserRepository.save(user);
+    }
+
+    @Override
+    public void delete(User user) {
+        UserRepository.delete(user);
+    }
+
+    @Override
+    public CallbackDataProvider<User, UserFilter> getDataProvider() {
     	
-    	return new GroupCrud();
+    	return new CallbackDataProvider<User, UserFilter>(
+    			q -> {
+    				return UserRepository.findAll().stream();
+    			}
+    			, q -> UserRepository.findAll().size()
+    			);
     }
 
 }
