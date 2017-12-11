@@ -9,6 +9,7 @@ import org.vaadin.bread.example.base.repo.GroupRepository;
 import org.vaadin.bread.example.base.repo.JPAService;
 import org.vaadin.bread.example.base.repo.UserRepository;
 import org.vaadin.bread.example.model.Group;
+import org.vaadin.bread.example.model.GroupFilter;
 import org.vaadin.bread.example.model.User;
 import org.vaadin.bread.example.model.UserFilter;
 import org.vaadin.bread.ui.crud.CrudListener;
@@ -17,9 +18,8 @@ import org.vaadin.bread.ui.crud.FilterOperation;
 import org.vaadin.bread.ui.crud.OperationAction;
 import org.vaadin.bread.ui.crud.OperationMode;
 import org.vaadin.bread.ui.crud.impl.GridCrud;
-import org.vaadin.bread.ui.form.impl.field.provider.CheckBoxGroupProvider;
 import org.vaadin.bread.ui.form.impl.field.provider.ComboBoxProvider;
-import org.vaadin.bread.ui.form.impl.form.factory.GridLayoutCrudFormFactory;
+import org.vaadin.bread.ui.form.impl.form.factory.FormFactoryBuilder;
 import org.vaadin.bread.ui.form.impl.form.factory.GridLayoutFormFactory;
 import org.vaadin.bread.ui.layout.impl.HorizontalSplitCrudLayout;
 
@@ -44,8 +44,11 @@ public class UserCrud extends GridCrud<User> implements CrudListener<User> {
 		super(User.class, new HorizontalSplitCrudLayout());
 		
 		// build filter
-        GridLayoutFormFactory<UserFilter, FilterOperation> filterFormFactory = new GridLayoutFormFactory<>(UserFilter.class
-        		, new OperationMode[] {FilterOperation.APPLY}, 4, 2);
+        GridLayoutFormFactory<UserFilter> filterFormFactory = 
+        		new FormFactoryBuilder<UserFilter, GridLayoutFormFactory<UserFilter>>()
+        		.gridLayoutFilter(UserFilter.class, 4, 2)
+        		.build();
+        
         filterFormFactory.getConfiguration(FilterOperation.APPLY).setOperationActions(Arrays.asList(FilterOperation.values()));
         filterFormFactory.getConfiguration(FilterOperation.APPLY).setOperationActionListener(FilterOperation.APPLY, (e)-> {
         	refreshGrid();
@@ -64,7 +67,8 @@ public class UserCrud extends GridCrud<User> implements CrudListener<User> {
         getCrudLayout().addFilterComponent(filterForm);
 
         // build form
-        GridLayoutCrudFormFactory<User> formFactory = new GridLayoutCrudFormFactory<>(User.class, 2, 2);
+        GridLayoutFormFactory<User> formFactory = new FormFactoryBuilder<User, GridLayoutFormFactory<User>>()
+        		.gridLayoutBread(User.class, 2, 2).build();
         setCrudFormFactory(formFactory);
 
         formFactory.setJpaTypeForJpaValidation(JPAService.getFactory().getMetamodel().managedType(User.class));

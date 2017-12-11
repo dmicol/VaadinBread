@@ -12,7 +12,7 @@ import org.vaadin.bread.ui.crud.OperationAction;
 import org.vaadin.bread.ui.crud.OperationException;
 import org.vaadin.bread.ui.form.FormConfiguration;
 import org.vaadin.bread.ui.form.FormFactory;
-import org.vaadin.bread.ui.form.impl.form.factory.VerticalCrudFormFactory;
+import org.vaadin.bread.ui.form.impl.form.factory.FormFactoryBuilder;
 import org.vaadin.bread.ui.layout.CrudLayout;
 import org.vaadin.bread.ui.layout.impl.WindowBasedCrudLayout;
 
@@ -48,11 +48,12 @@ public class GridCrud<T> extends AbstractCrud<T> {
     private boolean clickRowToUpdate;
 
     public GridCrud(Class<T> domainType) {
-        this(domainType, new WindowBasedCrudLayout(), new VerticalCrudFormFactory<>(domainType));
+        this(domainType, new WindowBasedCrudLayout(), 
+        		new FormFactoryBuilder().formLayoutBread(domainType).build());
     }
 
     public GridCrud(Class<T> domainType, CrudLayout crudLayout) {
-        this(domainType, crudLayout, new VerticalCrudFormFactory<>(domainType));
+        this(domainType, crudLayout, new FormFactoryBuilder().formLayoutBread(domainType).build());
     }
 
     public GridCrud(Class<T> domainType, FormFactory<T> crudFormFactory) {

@@ -15,14 +15,13 @@ import org.vaadin.bread.ui.crud.FilterOperation;
 import org.vaadin.bread.ui.crud.OperationAction;
 import org.vaadin.bread.ui.crud.OperationMode;
 import org.vaadin.bread.ui.crud.impl.GridCrud;
-import org.vaadin.bread.ui.form.impl.form.factory.GridLayoutCrudFormFactory;
+import org.vaadin.bread.ui.form.impl.form.factory.FormFactoryBuilder;
 import org.vaadin.bread.ui.form.impl.form.factory.GridLayoutFormFactory;
 import org.vaadin.bread.ui.layout.impl.HorizontalSplitCrudLayout;
 
 import com.vaadin.data.provider.CallbackDataProvider;
 import com.vaadin.data.provider.ConfigurableFilterDataProvider;
 import com.vaadin.ui.Component;
-import com.vaadin.ui.Notification;
 
 /**
  * @author Dmitrij Colautti
@@ -36,9 +35,11 @@ public class GroupCrud extends GridCrud<Group> implements CrudListener<Group> {
 		super(Group.class, new HorizontalSplitCrudLayout());
 		
 		// build filter
-        GridLayoutFormFactory<GroupFilter, FilterOperation> filterFormFactory = new GridLayoutFormFactory<>(GroupFilter.class
-        		, new OperationMode[] {FilterOperation.APPLY}
-        		, 4, 2);
+        GridLayoutFormFactory<GroupFilter> filterFormFactory = 
+        		new FormFactoryBuilder<GroupFilter, GridLayoutFormFactory<GroupFilter>>()
+        		.gridLayoutFilter(GroupFilter.class, 4, 2)
+        		.build();
+        
         filterFormFactory.getConfiguration(FilterOperation.APPLY).setOperationActions(Arrays.asList(FilterOperation.values()));
         filterFormFactory.getConfiguration(FilterOperation.APPLY).setOperationActionListener(FilterOperation.APPLY, (e)-> {
         	refreshGrid();
@@ -57,7 +58,8 @@ public class GroupCrud extends GridCrud<Group> implements CrudListener<Group> {
         getCrudLayout().addFilterComponent(filterForm);
 
         // build form
-        GridLayoutCrudFormFactory<Group> formFactory = new GridLayoutCrudFormFactory<>(Group.class, 2, 2);
+        GridLayoutFormFactory<Group> formFactory = new FormFactoryBuilder<Group, GridLayoutFormFactory<Group>>()
+        		.gridLayoutBread(Group.class, 2, 2).build();
         setCrudFormFactory(formFactory);
 
         formFactory.setJpaTypeForJpaValidation(JPAService.getFactory().getMetamodel().managedType(Group.class));

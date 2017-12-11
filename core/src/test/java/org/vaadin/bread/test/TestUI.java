@@ -1,18 +1,5 @@
 package org.vaadin.bread.test;
 
-import com.vaadin.data.provider.DataProvider;
-import com.vaadin.server.VaadinRequest;
-import com.vaadin.ui.DateField;
-import com.vaadin.ui.Grid;
-import com.vaadin.ui.Notification;
-import com.vaadin.ui.PasswordField;
-import com.vaadin.ui.TabSheet;
-import com.vaadin.ui.UI;
-import com.vaadin.ui.VerticalLayout;
-import com.vaadin.ui.renderers.DateRenderer;
-import com.vaadin.ui.renderers.TextRenderer;
-
-import org.apache.commons.lang3.StringUtils;
 import org.vaadin.bread.test.repo.Group;
 import org.vaadin.bread.test.repo.GroupRepository;
 import org.vaadin.bread.test.repo.JPAService;
@@ -21,7 +8,6 @@ import org.vaadin.bread.test.repo.UserRepository;
 import org.vaadin.bread.ui.crud.Crud;
 import org.vaadin.bread.ui.crud.CrudListener;
 import org.vaadin.bread.ui.crud.CrudOperation;
-import org.vaadin.bread.ui.crud.impl.EditableGridCrud;
 import org.vaadin.bread.ui.crud.impl.GridCrud;
 import org.vaadin.bread.ui.form.impl.field.provider.CheckBoxGroupProvider;
 import org.vaadin.bread.ui.form.impl.field.provider.ComboBoxProvider;
@@ -29,10 +15,15 @@ import org.vaadin.bread.ui.form.impl.form.factory.GridLayoutFormFactory;
 import org.vaadin.bread.ui.layout.impl.HorizontalSplitCrudLayout;
 import org.vaadin.jetty.VaadinJettyServer;
 
-import java.sql.Date;
-import java.util.Collection;
-import java.util.Set;
-import java.util.stream.Collectors;
+import com.vaadin.data.provider.DataProvider;
+import com.vaadin.server.VaadinRequest;
+import com.vaadin.ui.DateField;
+import com.vaadin.ui.Notification;
+import com.vaadin.ui.PasswordField;
+import com.vaadin.ui.TabSheet;
+import com.vaadin.ui.UI;
+import com.vaadin.ui.VerticalLayout;
+import com.vaadin.ui.renderers.TextRenderer;
 
 /**
  * @author Alejandro Duarte
@@ -83,7 +74,7 @@ public class TestUI extends UI implements CrudListener<User> {
         GridCrud<User> crud = new GridCrud<>(User.class, new HorizontalSplitCrudLayout());
         crud.setCrudListener(this);
 
-        GridLayoutFormFactory<User, CrudOperation> formFactory = new GridLayoutFormFactory<>(User.class, CrudOperation.values(), 2, 2);
+        GridLayoutFormFactory<User> formFactory = new GridLayoutFormFactory<>(User.class, CrudOperation.values(), 2, 2);
         crud.setCrudFormFactory(formFactory);
 
         formFactory.setUseBeanValidation(true);
