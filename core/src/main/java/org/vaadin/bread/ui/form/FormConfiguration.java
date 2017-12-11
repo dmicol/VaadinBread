@@ -1,78 +1,39 @@
 package org.vaadin.bread.ui.form;
 
-import java.beans.IntrospectionException;
-import java.beans.PropertyDescriptor;
 import java.io.Serializable;
-import java.lang.reflect.AnnotatedElement;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
 
-import javax.persistence.GeneratedValue;
-import javax.persistence.metamodel.Attribute;
-import javax.persistence.metamodel.ManagedType;
-
+import org.vaadin.bread.ui.crud.OperationAction;
 import org.vaadin.bread.ui.crud.Operation;
-import org.vaadin.bread.ui.form.impl.field.provider.DefaultFieldProvider;
 
 import com.vaadin.data.HasValue;
-import com.vaadin.data.util.BeanUtil;
-import com.vaadin.shared.util.SharedUtil;
 import com.vaadin.ui.Button;
 
 /**
  * @author Alejandro Duarte.
  */
+@SuppressWarnings("serial")
 public class FormConfiguration implements Serializable {
 
     protected List<String> visibleProperties = new ArrayList<>();
     protected List<String> disabledProperties = new ArrayList<>();
     protected List<String> fieldCaptions = new ArrayList<>();
-    protected Map<Object, Class<? extends HasValue>> fieldTypes = new HashMap<>();
+    @SuppressWarnings("rawtypes")
+	protected Map<Object, Class<? extends HasValue>> fieldTypes = new HashMap<>();
     protected Map<Object, FieldCreationListener> fieldCreationListeners = new HashMap<>();
     protected Map<Object, FieldProvider> fieldProviders = new HashMap<>();
-    protected Map<Operation, Button.ClickListener> operationListeners = new HashMap<>();
-    protected boolean useBeanValidation = true;
-    protected ManagedType<?> jpaTypeForJpaValidation;
-
-    public void buildSensitiveDefaults(Class<?> clazz) {
-        try {
-            List<PropertyDescriptor> descriptors = BeanUtil.getBeanPropertyDescriptors(clazz);
-            descriptors.stream()
-            	.filter(d -> !d.getName().equals("class"))
-            	.forEach(pd -> {
-            		Class<?> propertyType = pd.getPropertyType();
-            		if (!(propertyType.isArray() || Collection.class.isAssignableFrom(propertyType))) {
-            			visibleProperties.add(pd.getName());
-            			fieldCaptions.add(SharedUtil.propertyIdToHumanFriendly(pd.getName()));
-            			
-            			if (jpaTypeForJpaValidation!=null) {
-            				Attribute<?, ?> attribute = jpaTypeForJpaValidation.getAttribute(pd.getName());
-            				if (attribute.getJavaMember() instanceof AnnotatedElement) {
-            					AnnotatedElement annotated = (AnnotatedElement)attribute.getJavaMember();
-            					if (annotated!=null && annotated.getAnnotation(GeneratedValue.class)!=null) {
-            						disabledProperties.add(pd.getName());
-            					}
-            				}
-            			}
-            			fieldProviders.put(pd.getName(), new DefaultFieldProvider(pd.getPropertyType()));            		
-            		}
-            	});
-            
-        } catch (IntrospectionException e) {
-            throw new RuntimeException(e);
-        }
+    protected Map<OperationAction, Button.ClickListener> actionListeners = new HashMap<>();
+    protected List<OperationAction> operationActions = new ArrayList<>();
+    
+    public void setOperationActionListener(OperationAction operation, Button.ClickListener operationButtonClickListener) {
+    	actionListeners.put(operation, operationButtonClickListener);
     }
     
-    public void setOperationListener(Operation operation, Button.ClickListener operationButtonClickListener) {
-    	operationListeners.put(operation, operationButtonClickListener);
-    }
-    
-    public Button.ClickListener getOperationListener(Operation operation) {
-    	return operationListeners.get(operation);
+    public Button.ClickListener getOperationActionListener(OperationAction operation) {
+    	return actionListeners.get(operation);
     }
     
     public List<String> getVisibleProperties() {
@@ -123,20 +84,12 @@ public class FormConfiguration implements Serializable {
         this.fieldProviders = fieldProviders;
     }
 
-    public boolean isUseBeanValidation() {
-        return useBeanValidation;
-    }
-
-    public void setUseBeanValidation(boolean useBeanValidation) {
-        this.useBeanValidation = useBeanValidation;
-    }
-
-	public ManagedType<?> getJpaTypeForJpaValidation() {
-		return jpaTypeForJpaValidation;
+	public List<OperationAction> getOperationActions() {
+		return operationActions;
 	}
 
-	public void setJpaTypeForJpaValidation(ManagedType<?> jpaTypeForJpaValidation) {
-		this.jpaTypeForJpaValidation = jpaTypeForJpaValidation;
+	public void setOperationActions(List<OperationAction> operations) {
+		this.operationActions = operations;
 	}
 
 }

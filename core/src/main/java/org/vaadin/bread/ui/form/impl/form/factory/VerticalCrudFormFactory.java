@@ -5,6 +5,8 @@ package org.vaadin.bread.ui.form.impl.form.factory;
 
 import org.vaadin.bread.ui.crud.CrudOperation;
 import org.vaadin.bread.ui.crud.Operation;
+import org.vaadin.bread.ui.crud.OperationAction;
+import org.vaadin.bread.ui.crud.OperationMode;
 
 import com.vaadin.ui.Button;
 import com.vaadin.ui.HorizontalLayout;
@@ -26,14 +28,10 @@ public class VerticalCrudFormFactory<T> extends VerticalFormFactory<T, CrudOpera
 	}
 
 
-    protected Layout buildFooter(Operation operation, T domainObject, Button.ClickListener operationButtonClickListener) {
-    	HorizontalLayout footerLayout = (HorizontalLayout) super.buildFooter(operation, domainObject, operationButtonClickListener);
-    	
-        Button cancelButton = buildOperationButton(CrudOperation.CANCEL, null, configurations.get(operation).getOperationListener(CrudOperation.CANCEL)); 
-        
-        if (cancelButton != null) {
-            footerLayout.addComponent(cancelButton);
-        }
+    protected Layout buildFooter(CrudOperation operationMode, T domainObject) {
+    	HorizontalLayout footerLayout = (HorizontalLayout) super.buildFooter(operationMode
+    			, new OperationAction[] {operationMode, CrudOperation.CANCEL}
+    			, domainObject);
 
         return footerLayout;
     }

@@ -3,7 +3,8 @@
  */
 package org.vaadin.bread.ui.form;
 
-import org.vaadin.bread.ui.crud.Operation;
+import org.vaadin.bread.ui.crud.OperationAction;
+import org.vaadin.bread.ui.crud.OperationMode;
 
 /**
  * @author Dmitrij Colautti
@@ -11,5 +12,5 @@ import org.vaadin.bread.ui.crud.Operation;
  */
 public interface ErrorListener<T> {
 
-	void onError(Operation operation, T domainObject, Exception e);
+	void onError(OperationMode operationMode, OperationAction operationAction, T domainObject, Exception e);
 }

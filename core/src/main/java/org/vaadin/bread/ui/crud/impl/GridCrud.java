@@ -1,10 +1,14 @@
 package org.vaadin.bread.ui.crud.impl;
 
+import java.beans.IntrospectionException;
+import java.beans.PropertyDescriptor;
 import java.util.Collection;
 import java.util.LinkedHashMap;
+import java.util.List;
 
 import org.vaadin.bread.ui.crud.AbstractCrud;
 import org.vaadin.bread.ui.crud.CrudOperation;
+import org.vaadin.bread.ui.crud.OperationAction;
 import org.vaadin.bread.ui.crud.OperationException;
 import org.vaadin.bread.ui.form.FormConfiguration;
 import org.vaadin.bread.ui.form.FormFactory;
@@ -14,6 +18,7 @@ import org.vaadin.bread.ui.layout.impl.WindowBasedCrudLayout;
 
 import com.vaadin.data.provider.DataProvider;
 import com.vaadin.data.provider.Query;
+import com.vaadin.data.util.BeanUtil;
 import com.vaadin.icons.VaadinIcons;
 import com.vaadin.server.FileDownloader;
 import com.vaadin.server.FontAwesome;
@@ -83,6 +88,22 @@ public class GridCrud<T> extends AbstractCrud<T> {
         grid = new Grid<>(domainType);
         grid.setSizeFull();
         grid.addSelectionListener(e -> gridSelectionChanged());
+        
+		try {
+			grid.removeAllColumns();
+			List<PropertyDescriptor> descriptors;
+			descriptors = BeanUtil.getBeanPropertyDescriptors(domainType);
+			descriptors.stream()
+			.filter(d -> !d.getName().equals("class"))
+			.forEach(pd -> {
+				Class<?> propertyType = pd.getPropertyType();
+				if (!(propertyType.isArray() || Collection.class.isAssignableFrom(propertyType))) {        			
+					grid.addColumn(pd.getName());
+				}
+			});
+		} catch (IntrospectionException e1) {
+			throw new RuntimeException(e1);
+		}
         crudLayout.setMainComponent(grid);
         
         Button btn = new Button(FontAwesome.FILE_EXCEL_O.getHtml());
@@ -143,10 +164,12 @@ public class GridCrud<T> extends AbstractCrud<T> {
         T domainObject = grid.asSingleSelect().getValue();
 
         if (domainObject != null) {
-        	crudFormFactory.getConfiguration(CrudOperation.READ).setOperationListener(CrudOperation.READ, event -> {
+        	crudFormFactory.getConfiguration(CrudOperation.READ).setOperationActionListener(CrudOperation.READ, event -> {
                 grid.asSingleSelect().clear();
             });
-            Component form = crudFormFactory.buildNewForm(CrudOperation.READ, domainObject, true);
+            Component form = crudFormFactory.buildNewForm(CrudOperation.READ
+            		, new OperationAction[] {CrudOperation.READ}
+            		, domainObject, true);
 
             crudLayout.showForm(CrudOperation.READ, form);
 
@@ -222,12 +245,12 @@ public class GridCrud<T> extends AbstractCrud<T> {
 
     protected void showForm(CrudOperation operation, T domainObject, boolean readOnly, String successMessage, Button.ClickListener buttonClickListener) {
     	FormConfiguration config = crudFormFactory.getConfiguration(operation);
-    	config.setOperationListener(operation, operationPerformedClickEvent -> {
+    	config.setOperationActionListener(operation, operationPerformedClickEvent -> {
             crudLayout.hideForm();
             buttonClickListener.buttonClick(operationPerformedClickEvent);
             Notification.show(successMessage);
         });
-    	config.setOperationListener(CrudOperation.CANCEL, cancelClickEvent -> {
+    	config.setOperationActionListener(CrudOperation.CANCEL, cancelClickEvent -> {
 	            if (clickRowToUpdate) {
 	                grid.asSingleSelect().clear();
 	            } else {
@@ -237,7 +260,9 @@ public class GridCrud<T> extends AbstractCrud<T> {
                     grid.asSingleSelect().setValue(selected);
             	}
                 });
-        Component form = crudFormFactory.buildNewForm(operation, domainObject, readOnly);
+        Component form = crudFormFactory.buildNewForm(operation
+        		, new OperationAction[] {operation, CrudOperation.CANCEL}
+        		, domainObject, readOnly);
 
         crudLayout.showForm(operation, form);
     }

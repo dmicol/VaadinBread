@@ -3,6 +3,8 @@
  */
 package org.vaadin.bread.example;
 
+import java.util.Arrays;
+
 import org.vaadin.bread.example.base.repo.GroupRepository;
 import org.vaadin.bread.example.base.repo.JPAService;
 import org.vaadin.bread.example.base.repo.UserRepository;
@@ -12,6 +14,8 @@ import org.vaadin.bread.example.model.UserFilter;
 import org.vaadin.bread.ui.crud.CrudListener;
 import org.vaadin.bread.ui.crud.CrudOperation;
 import org.vaadin.bread.ui.crud.FilterOperation;
+import org.vaadin.bread.ui.crud.OperationAction;
+import org.vaadin.bread.ui.crud.OperationMode;
 import org.vaadin.bread.ui.crud.impl.GridCrud;
 import org.vaadin.bread.ui.form.impl.field.provider.CheckBoxGroupProvider;
 import org.vaadin.bread.ui.form.impl.field.provider.ComboBoxProvider;
@@ -31,6 +35,7 @@ import com.vaadin.ui.renderers.TextRenderer;
  * @author Dmitrij Colautti
  *
  */
+@SuppressWarnings("serial")
 public class UserCrud extends GridCrud<User> implements CrudListener<User> {
 
     private UserFilter filterBean = new UserFilter();
@@ -39,18 +44,22 @@ public class UserCrud extends GridCrud<User> implements CrudListener<User> {
 		super(User.class, new HorizontalSplitCrudLayout());
 		
 		// build filter
-        GridLayoutFormFactory<UserFilter, FilterOperation> filterFormFactory = new GridLayoutFormFactory<>(UserFilter.class, FilterOperation.values(), 4, 2);
-        filterFormFactory.setVisibleProperties(FilterOperation.APPLY, "name", "birthDateFrom", "birthDateTo");
-        filterFormFactory.setUseBeanValidation(true);
-        filterFormFactory.getConfiguration(FilterOperation.APPLY).setOperationListener(FilterOperation.APPLY, (e)-> {
+        GridLayoutFormFactory<UserFilter, FilterOperation> filterFormFactory = new GridLayoutFormFactory<>(UserFilter.class
+        		, new OperationMode[] {FilterOperation.APPLY}, 4, 2);
+        filterFormFactory.getConfiguration(FilterOperation.APPLY).setOperationActions(Arrays.asList(FilterOperation.values()));
+        filterFormFactory.getConfiguration(FilterOperation.APPLY).setOperationActionListener(FilterOperation.APPLY, (e)-> {
         	refreshGrid();
         });
-        filterFormFactory.getConfiguration(FilterOperation.APPLY).setOperationListener(FilterOperation.EMPTY, (e)-> {
+        filterFormFactory.getConfiguration(FilterOperation.APPLY).setOperationActionListener(FilterOperation.EMPTY, (e)-> {
         	filterBean.clear();
+        	filterFormFactory.getBinder().readBean(filterBean);
         	refreshGrid();
         });
+        filterFormFactory.buildSensitiveDefaults();
         
-        Component filterForm = filterFormFactory.buildNewForm(FilterOperation.APPLY, filterBean, false);
+        Component filterForm = filterFormFactory.buildNewForm(FilterOperation.APPLY
+        		, new OperationAction[] {FilterOperation.APPLY, FilterOperation.EMPTY}
+        		, filterBean, false);
         setCrudListener(this);
         getCrudLayout().addFilterComponent(filterForm);
 
@@ -58,29 +67,22 @@ public class UserCrud extends GridCrud<User> implements CrudListener<User> {
         GridLayoutCrudFormFactory<User> formFactory = new GridLayoutCrudFormFactory<>(User.class, 2, 2);
         setCrudFormFactory(formFactory);
 
-        formFactory.setUseBeanValidation(true);
         formFactory.setJpaTypeForJpaValidation(JPAService.getFactory().getMetamodel().managedType(User.class));
-
-        formFactory.setErrorListener((op, obj, e) -> {e.printStackTrace(); Notification.show("ERROR: " + e.getLocalizedMessage(), Notification.Type.ERROR_MESSAGE);});
-
-        formFactory.setVisibleProperties(CrudOperation.READ, "id", "name", "birthDate", "email", "phoneNumber", "active", "mainGroup");
-        formFactory.setVisibleProperties(CrudOperation.ADD, "name", "birthDate", "email", "phoneNumber", "password", "mainGroup", "active");
-        formFactory.setVisibleProperties(CrudOperation.UPDATE, "id", "name", "birthDate", "email", "phoneNumber", "password", "active", "mainGroup");
+        formFactory.buildSensitiveDefaults();
+        
+        formFactory.setErrorListener((opm, opa, obj, e) -> {e.printStackTrace(); Notification.show("ERROR: " + e.getLocalizedMessage(), Notification.Type.ERROR_MESSAGE);});
         formFactory.setVisibleProperties(CrudOperation.DELETE, "name", "email", "phoneNumber");
-
-        formFactory.setDisabledProperties("id");
-
-        getGrid().setColumns("name", "birthDate", "email", "phoneNumber", "mainGroup", "active");
-        getGrid().getColumn("mainGroup").setRenderer(group -> group == null ? "" : ((Group) group).getName(), new TextRenderer());
-//        ((Grid.Column<User, Date>) crud.getGrid().getColumn("birthDate")).setRenderer(new DateRenderer("%1$tY-%1$tm-%1$te"));
 
         formFactory.setFieldType("password", PasswordField.class);
         formFactory.setFieldCreationListener("birthDate", field -> ((DateField) field).setDateFormat("yyyy-MM-dd"));
-
-        formFactory.setFieldProvider("groups", new CheckBoxGroupProvider<Group>("Groups", GroupRepository.findAll(), Group::getName));
         formFactory.setFieldProvider("mainGroup", new ComboBoxProvider<Group>("Main Group", GroupRepository.findAll(), Group::getName));
 
         formFactory.setButtonCaption(CrudOperation.ADD, "Add new user");
+
+        
+        getGrid().setColumns("name", "birthDate", "email", "phoneNumber", "mainGroup", "active");
+        getGrid().getColumn("mainGroup").setRenderer(group -> group == null ? "" : ((Group) group).getName(), new TextRenderer());
+//        ((Grid.Column<User, Date>) crud.getGrid().getColumn("birthDate")).setRenderer(new DateRenderer("%1$tY-%1$tm-%1$te"));
         setRowCountCaption("%d user(s) found");
 
 	};
@@ -112,7 +114,8 @@ public class UserCrud extends GridCrud<User> implements CrudListener<User> {
     			q -> {
     				return UserRepository.findAll(q.getFilter().orElse(null), q.getOffset(), q.getLimit()).stream();
     			}
-    			, q -> UserRepository.findAll(q.getFilter().orElse(null), q.getOffset(), q.getLimit()).size()
+    			, q -> 
+    				UserRepository.findAll(q.getFilter().orElse(null), q.getOffset(), q.getLimit()).size()
     			);
     	
     	ConfigurableFilterDataProvider<User, Void, UserFilter> everythingConfigurable = dp.withConfigurableFilter();

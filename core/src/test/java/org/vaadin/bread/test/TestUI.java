@@ -89,7 +89,7 @@ public class TestUI extends UI implements CrudListener<User> {
         formFactory.setUseBeanValidation(true);
         formFactory.setJpaTypeForJpaValidation(JPAService.getFactory().getMetamodel().managedType(User.class));
 
-        formFactory.setErrorListener((op, obj, e) -> Notification.show("Custom error message (simulated error)", Notification.Type.ERROR_MESSAGE));
+        formFactory.setErrorListener((opm, opa, obj, e) -> Notification.show("Custom error message (simulated error)", Notification.Type.ERROR_MESSAGE));
 
         formFactory.setVisibleProperties(CrudOperation.READ, "id", "name", "birthDate", "email", "phoneNumber", "groups", "active", "mainGroup");
         formFactory.setVisibleProperties(CrudOperation.ADD, "name", "birthDate", "email", "phoneNumber", "groups", "password", "mainGroup", "active");

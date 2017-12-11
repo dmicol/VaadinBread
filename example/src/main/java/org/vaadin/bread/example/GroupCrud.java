@@ -3,6 +3,8 @@
  */
 package org.vaadin.bread.example;
 
+import java.util.Arrays;
+
 import org.vaadin.bread.example.base.repo.GroupRepository;
 import org.vaadin.bread.example.base.repo.JPAService;
 import org.vaadin.bread.example.model.Group;
@@ -10,6 +12,8 @@ import org.vaadin.bread.example.model.GroupFilter;
 import org.vaadin.bread.ui.crud.CrudListener;
 import org.vaadin.bread.ui.crud.CrudOperation;
 import org.vaadin.bread.ui.crud.FilterOperation;
+import org.vaadin.bread.ui.crud.OperationAction;
+import org.vaadin.bread.ui.crud.OperationMode;
 import org.vaadin.bread.ui.crud.impl.GridCrud;
 import org.vaadin.bread.ui.form.impl.form.factory.GridLayoutCrudFormFactory;
 import org.vaadin.bread.ui.form.impl.form.factory.GridLayoutFormFactory;
@@ -32,17 +36,23 @@ public class GroupCrud extends GridCrud<Group> implements CrudListener<Group> {
 		super(Group.class, new HorizontalSplitCrudLayout());
 		
 		// build filter
-        GridLayoutFormFactory<GroupFilter, FilterOperation> filterFormFactory = new GridLayoutFormFactory<>(GroupFilter.class, FilterOperation.values(), 4, 2);
-        filterFormFactory.setUseBeanValidation(true);
-        filterFormFactory.getConfiguration(FilterOperation.APPLY).setOperationListener(FilterOperation.APPLY, (e)-> {
+        GridLayoutFormFactory<GroupFilter, FilterOperation> filterFormFactory = new GridLayoutFormFactory<>(GroupFilter.class
+        		, new OperationMode[] {FilterOperation.APPLY}
+        		, 4, 2);
+        filterFormFactory.getConfiguration(FilterOperation.APPLY).setOperationActions(Arrays.asList(FilterOperation.values()));
+        filterFormFactory.getConfiguration(FilterOperation.APPLY).setOperationActionListener(FilterOperation.APPLY, (e)-> {
         	refreshGrid();
         });
-        filterFormFactory.getConfiguration(FilterOperation.APPLY).setOperationListener(FilterOperation.EMPTY, (e)-> {
+        filterFormFactory.getConfiguration(FilterOperation.APPLY).setOperationActionListener(FilterOperation.EMPTY, (e)-> {
         	filterBean.clear();
+        	filterFormFactory.getBinder().readBean(filterBean);
         	refreshGrid();
         });
+        filterFormFactory.buildSensitiveDefaults();
         
-        Component filterForm = filterFormFactory.buildNewForm(FilterOperation.APPLY, filterBean, false);
+        Component filterForm = filterFormFactory.buildNewForm(FilterOperation.APPLY
+        		, new OperationAction[] {FilterOperation.APPLY, FilterOperation.EMPTY}
+        		, filterBean, false);
         setCrudListener(this);
         getCrudLayout().addFilterComponent(filterForm);
 
@@ -50,17 +60,9 @@ public class GroupCrud extends GridCrud<Group> implements CrudListener<Group> {
         GridLayoutCrudFormFactory<Group> formFactory = new GridLayoutCrudFormFactory<>(Group.class, 2, 2);
         setCrudFormFactory(formFactory);
 
-        formFactory.setUseBeanValidation(true);
         formFactory.setJpaTypeForJpaValidation(JPAService.getFactory().getMetamodel().managedType(Group.class));
         formFactory.buildSensitiveDefaults();
-//        formFactory.setVisibleProperties("id", "name", "admin");
-//        formFactory.setDisabledProperties("id");
 
-        getGrid().setColumns("id", "name", "admin");
-        
-        formFactory.setErrorListener((op, obj, e) -> {e.printStackTrace(); Notification.show("ERROR: " + e.getLocalizedMessage(), Notification.Type.ERROR_MESSAGE);});
-
-        formFactory.setButtonCaption(CrudOperation.ADD, "Add new group");
         setRowCountCaption("%d group(s) found");
 
 	};

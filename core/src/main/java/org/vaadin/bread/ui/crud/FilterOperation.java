@@ -7,7 +7,7 @@ package org.vaadin.bread.ui.crud;
  * @author Dmitrij Colautti
  *
  */
-public enum FilterOperation implements Operation {
+public enum FilterOperation implements OperationMode, OperationAction {
 	EMPTY, APPLY;
 	
 	/* (non-Javadoc)

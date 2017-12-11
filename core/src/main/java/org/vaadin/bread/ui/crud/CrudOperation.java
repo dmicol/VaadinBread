@@ -3,7 +3,7 @@ package org.vaadin.bread.ui.crud;
 /**
  * @author Alejandro Duarte.
  */
-public enum CrudOperation implements Operation {
+public enum CrudOperation implements OperationMode, OperationAction {
 
     CANCEL, READ, ADD, UPDATE, DELETE;
 
