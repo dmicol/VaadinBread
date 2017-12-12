@@ -25,6 +25,7 @@ public class FormFactoryBuilder<T, FFT extends FormFactory<T>> {
 	private static OperationMode[] crudOperationModes = new OperationMode[] {CrudOperation.ADD, CrudOperation.DELETE, CrudOperation.READ, CrudOperation.UPDATE};
 	private static OperationMode[] filterOperationModes = new OperationMode[] {FilterOperation.APPLY};
 	
+	@SuppressWarnings("unchecked")
 	public FFT build() {
 		return (FFT) ff;
 	}
