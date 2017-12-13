@@ -1,16 +1,20 @@
 package org.vaadin.bread.ui.form.impl.field.provider;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Collection;
 import java.util.Date;
 
 import org.vaadin.bread.ui.form.FieldProvider;
 
 import com.vaadin.data.HasValue;
+import com.vaadin.shared.ui.datefield.DateResolution;
+import com.vaadin.shared.ui.datefield.DateTimeResolution;
 import com.vaadin.ui.CheckBox;
 import com.vaadin.ui.CheckBoxGroup;
 import com.vaadin.ui.ComboBox;
 import com.vaadin.ui.DateField;
+import com.vaadin.ui.DateTimeField;
 import com.vaadin.ui.TextField;
 
 /**
@@ -30,8 +34,15 @@ public class DefaultFieldProvider implements FieldProvider {
             return new CheckBox();
         }
 
-        if (LocalDate.class.isAssignableFrom(type) || Date.class.isAssignableFrom(type)) {
-            return new DateField();
+        if (LocalDate.class.isAssignableFrom(type)) {
+        	return new DateField();
+        }
+
+        if (LocalDateTime.class.isAssignableFrom(type) || Date.class.isAssignableFrom(type)) {
+        	DateTimeField dateField = new DateTimeField();
+        	dateField.setResolution(DateTimeResolution.SECOND);
+        	        	
+            return dateField; 
         }
 
         if (Enum.class.isAssignableFrom(type)) {
