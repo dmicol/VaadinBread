@@ -7,8 +7,10 @@ import java.lang.reflect.AnnotatedElement;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import javax.persistence.GeneratedValue;
 import javax.persistence.metamodel.Attribute;
@@ -16,7 +18,6 @@ import javax.persistence.metamodel.ManagedType;
 
 import org.vaadin.bread.ui.crud.OperationAction;
 import org.vaadin.bread.ui.form.impl.field.provider.DefaultFieldProvider;
-import org.vaadin.bread.ui.crud.Operation;
 
 import com.vaadin.data.HasValue;
 import com.vaadin.data.util.BeanUtil;
@@ -30,7 +31,7 @@ import com.vaadin.ui.Button;
 public class FormConfiguration implements Serializable {
 
     protected List<String> visibleProperties = new ArrayList<>();
-    protected List<String> disabledProperties = new ArrayList<>();
+    protected Set<String> disabledProperties = new HashSet<>();
     protected List<String> fieldCaptions = new ArrayList<>();
     @SuppressWarnings("rawtypes")
 	protected Map<Object, Class<? extends HasValue>> fieldTypes = new HashMap<>();
@@ -58,11 +59,11 @@ public class FormConfiguration implements Serializable {
         this.visibleProperties = visibleProperties;
     }
 
-    public List<String> getDisabledProperties() {
+    public Set<String> getDisabledProperties() {
         return disabledProperties;
     }
 
-    public void setDisabledProperties(List<String> disabledProperties) {
+    public void setDisabledProperties(Set<String> disabledProperties) {
         this.disabledProperties = disabledProperties;
     }
 
