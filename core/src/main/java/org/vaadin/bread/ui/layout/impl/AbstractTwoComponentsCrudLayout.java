@@ -48,6 +48,8 @@ public abstract class AbstractTwoComponentsCrudLayout extends Composite implemen
         captionLabel.addStyleName(ValoTheme.LABEL_NO_MARGIN);
         captionLabel.setVisible(false);
 
+        firstComponentHeaderLayout.setWidth(100, Unit.PERCENTAGE);
+        firstComponentHeaderLayout.setHeightUndefined();
         firstComponentHeaderLayout.setVisible(false);
         firstComponentHeaderLayout.setSpacing(true);
 
@@ -60,6 +62,8 @@ public abstract class AbstractTwoComponentsCrudLayout extends Composite implemen
 
         filterLayout.setVisible(false);
         filterLayout.setSpacing(true);
+        filterLayout.setHeightUndefined();
+        filterLayout.setWidth(100, Unit.PERCENTAGE);
         firstComponentHeaderLayout.addComponent(filterLayout);
 
         Label filterIcon = new Label();
@@ -110,6 +114,7 @@ public abstract class AbstractTwoComponentsCrudLayout extends Composite implemen
 
         filterLayout.setVisible(true);
         filterLayout.addComponent(component);
+        filterLayout.setExpandRatio(component, 1);
     }
 
     @Override
