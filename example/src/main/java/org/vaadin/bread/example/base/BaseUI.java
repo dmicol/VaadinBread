@@ -3,15 +3,11 @@ package org.vaadin.bread.example.base;
 import org.vaadin.bread.example.GroupCrud;
 import org.vaadin.bread.example.UserCrud;
 import org.vaadin.bread.example.base.repo.JPAService;
-import org.vaadin.bread.example.base.repo.UserRepository;
 import org.vaadin.bread.example.model.Group;
 import org.vaadin.bread.example.model.User;
-import org.vaadin.bread.example.model.UserFilter;
 import org.vaadin.bread.ui.crud.Crud;
-import org.vaadin.bread.ui.crud.CrudListener;
 import org.vaadin.jetty.VaadinJettyServer;
 
-import com.vaadin.data.provider.CallbackDataProvider;
 import com.vaadin.server.VaadinRequest;
 import com.vaadin.ui.TabSheet;
 import com.vaadin.ui.UI;

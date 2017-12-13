@@ -3,6 +3,7 @@
  */
 package org.vaadin.bread.example;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 
 import org.vaadin.bread.example.base.repo.GroupRepository;
@@ -47,7 +48,7 @@ public class UserCrud extends GridCrud<User> implements CrudListener<User> {
         		.gridLayoutFilter(UserFilter.class, 4, 2)
         		.build();
         
-        filterFormFactory.getConfiguration(FilterOperation.APPLY).setOperationActions(Arrays.asList(FilterOperation.values()));
+        filterFormFactory.getConfiguration(FilterOperation.APPLY).setOperationActions(new ArrayList<OperationAction>(Arrays.asList(FilterOperation.values())));
         filterFormFactory.getConfiguration(FilterOperation.APPLY).setOperationActionListener(FilterOperation.APPLY, (e)-> {
         	refreshGrid();
         });
@@ -59,7 +60,6 @@ public class UserCrud extends GridCrud<User> implements CrudListener<User> {
         filterFormFactory.buildSensitiveDefaults();
         
         Component filterForm = filterFormFactory.buildNewForm(FilterOperation.APPLY
-        		, new OperationAction[] {FilterOperation.APPLY, FilterOperation.EMPTY}
         		, filterBean, false);
         setCrudListener(this);
         getCrudLayout().addFilterComponent(filterForm);

@@ -2,7 +2,6 @@ package org.vaadin.bread.ui.form;
 
 import javax.persistence.metamodel.ManagedType;
 
-import org.vaadin.bread.ui.crud.Operation;
 import org.vaadin.bread.ui.crud.OperationAction;
 import org.vaadin.bread.ui.crud.OperationMode;
 
@@ -16,7 +15,7 @@ import com.vaadin.ui.Component;
  */
 public interface FormFactory<T> {
 
-    Component buildNewForm(OperationMode operationMode, OperationAction[] operationActions, T domainObject, boolean readOnly);
+    Component buildNewForm(OperationMode operationMode, T domainObject, boolean readOnly);
 
     void setOperationListener(OperationMode operationMode, OperationAction operationAction, Button.ClickListener operationButtonClickListener);
     
@@ -56,7 +55,7 @@ public interface FormFactory<T> {
 
 	void setJpaTypeForJpaValidation(ManagedType<?> managedType);
 	
-	BeanFormConfiguration getConfiguration(OperationMode operationMode);
+	FormConfiguration getConfiguration(OperationMode operationMode);
 
 	void setButtonCaption(OperationAction operationAction, String caption);
 

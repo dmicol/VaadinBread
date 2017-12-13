@@ -8,7 +8,6 @@ import java.util.List;
 
 import org.vaadin.bread.ui.crud.AbstractCrud;
 import org.vaadin.bread.ui.crud.CrudOperation;
-import org.vaadin.bread.ui.crud.OperationAction;
 import org.vaadin.bread.ui.crud.OperationException;
 import org.vaadin.bread.ui.form.FormConfiguration;
 import org.vaadin.bread.ui.form.FormFactory;
@@ -169,7 +168,6 @@ public class GridCrud<T> extends AbstractCrud<T> {
                 grid.asSingleSelect().clear();
             });
             Component form = crudFormFactory.buildNewForm(CrudOperation.READ
-            		, new OperationAction[] {CrudOperation.READ}
             		, domainObject, true);
 
             crudLayout.showForm(CrudOperation.READ, form);
@@ -262,7 +260,6 @@ public class GridCrud<T> extends AbstractCrud<T> {
             	}
                 });
         Component form = crudFormFactory.buildNewForm(operation
-        		, new OperationAction[] {operation, CrudOperation.CANCEL}
         		, domainObject, readOnly);
 
         crudLayout.showForm(operation, form);

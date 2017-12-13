@@ -1,5 +1,6 @@
 package org.vaadin.bread.ui.form;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
@@ -39,7 +40,7 @@ public abstract class AbstractFormFactory<T> implements FormFactory<T> {
 
     @Override
     public void setVisibleProperties(OperationMode operationMode, String... properties) {
-        getConfiguration(operationMode).setVisibleProperties(Arrays.asList(properties));
+        getConfiguration(operationMode).setVisibleProperties(new ArrayList<String>(Arrays.asList(properties)));
     }
 
     @Override
@@ -49,7 +50,7 @@ public abstract class AbstractFormFactory<T> implements FormFactory<T> {
 
     @Override
     public void setDisabledProperties(OperationMode operationMode, String... properties) {
-        getConfiguration(operationMode).setDisabledProperties(Arrays.asList(properties));
+        getConfiguration(operationMode).setDisabledProperties(new ArrayList<String>(Arrays.asList(properties)));
     }
 
     @Override
@@ -59,7 +60,7 @@ public abstract class AbstractFormFactory<T> implements FormFactory<T> {
 
     @Override
     public void setFieldCaptions(OperationMode operationMode, String... captions) {
-        getConfiguration(operationMode).setFieldCaptions(Arrays.asList(captions));
+        getConfiguration(operationMode).setFieldCaptions(new ArrayList<String>(Arrays.asList(captions)));
     }
 
     @Override

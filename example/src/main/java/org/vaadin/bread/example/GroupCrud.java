@@ -3,15 +3,12 @@
  */
 package org.vaadin.bread.example;
 
-import java.util.Arrays;
-
 import org.vaadin.bread.example.base.repo.GroupRepository;
 import org.vaadin.bread.example.base.repo.JPAService;
 import org.vaadin.bread.example.model.Group;
 import org.vaadin.bread.example.model.GroupFilter;
 import org.vaadin.bread.ui.crud.CrudListener;
 import org.vaadin.bread.ui.crud.FilterOperation;
-import org.vaadin.bread.ui.crud.OperationAction;
 import org.vaadin.bread.ui.crud.impl.GridCrud;
 import org.vaadin.bread.ui.form.impl.form.factory.FormFactoryBuilder;
 import org.vaadin.bread.ui.form.impl.form.factory.GridLayoutFormFactory;
@@ -38,7 +35,6 @@ public class GroupCrud extends GridCrud<Group> implements CrudListener<Group> {
         		.gridLayoutFilter(GroupFilter.class, 4, 2)
         		.build();
         
-        filterFormFactory.getConfiguration(FilterOperation.APPLY).setOperationActions(Arrays.asList(FilterOperation.values()));
         filterFormFactory.getConfiguration(FilterOperation.APPLY).setOperationActionListener(FilterOperation.APPLY, (e)-> {
         	refreshGrid();
         });
@@ -50,7 +46,6 @@ public class GroupCrud extends GridCrud<Group> implements CrudListener<Group> {
         filterFormFactory.buildSensitiveDefaults();
         
         Component filterForm = filterFormFactory.buildNewForm(FilterOperation.APPLY
-        		, new OperationAction[] {FilterOperation.APPLY, FilterOperation.EMPTY}
         		, filterBean, false);
         setCrudListener(this);
         getCrudLayout().addFilterComponent(filterForm);

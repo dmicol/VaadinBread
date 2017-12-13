@@ -3,10 +3,12 @@
  */
 package org.vaadin.bread.ui.form.impl.form.factory;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 
 import org.vaadin.bread.ui.crud.CrudOperation;
 import org.vaadin.bread.ui.crud.FilterOperation;
+import org.vaadin.bread.ui.crud.OperationAction;
 import org.vaadin.bread.ui.crud.OperationMode;
 import org.vaadin.bread.ui.form.FormFactory;
 
@@ -78,16 +80,16 @@ public class FormFactoryBuilder<T, FFT extends FormFactory<T>> {
 	}
 
     private void addFilterDefaults() {
-    	ff.getConfiguration(FilterOperation.APPLY)
-    		.setOperationActions(Arrays.asList(FilterOperation.APPLY, FilterOperation.EMPTY));
+    	ff.getConfiguration(FilterOperation.APPLY).getOperationActions()
+    		.addAll(Arrays.asList(FilterOperation.APPLY, FilterOperation.EMPTY));
+    	
      }
     
     private void addCrudDefaults() {
-    	ff.getConfiguration(CrudOperation.ADD).setOperationActions(Arrays.asList(CrudOperation.ADD, CrudOperation.CANCEL));
-    	ff.getConfiguration(CrudOperation.DELETE).setOperationActions(Arrays.asList(CrudOperation.DELETE, CrudOperation.CANCEL));
-    	ff.getConfiguration(CrudOperation.READ).setOperationActions(Arrays.asList(CrudOperation.READ, CrudOperation.CANCEL));
-    	ff.getConfiguration(CrudOperation.UPDATE).setOperationActions(Arrays.asList(CrudOperation.UPDATE, CrudOperation.CANCEL));
-		
+    	ff.getConfiguration(CrudOperation.ADD).getOperationActions().addAll(Arrays.asList(CrudOperation.ADD, CrudOperation.CANCEL));
+    	ff.getConfiguration(CrudOperation.DELETE).getOperationActions().addAll(Arrays.asList(CrudOperation.DELETE, CrudOperation.CANCEL));
+    	ff.getConfiguration(CrudOperation.READ).getOperationActions().addAll(Arrays.asList(CrudOperation.READ, CrudOperation.CANCEL));
+    	ff.getConfiguration(CrudOperation.UPDATE).getOperationActions().addAll(Arrays.asList(CrudOperation.UPDATE, CrudOperation.CANCEL));
     	
     	ff.setButtonCaption(CrudOperation.READ, "Ok");
     	ff.setButtonCaption(CrudOperation.ADD, "Add");

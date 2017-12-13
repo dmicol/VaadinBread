@@ -1,6 +1,7 @@
 package org.vaadin.bread.example.model;
 
 import java.time.LocalDate;
+
 import javax.annotation.Generated;
 import javax.persistence.metamodel.SetAttribute;
 import javax.persistence.metamodel.SingularAttribute;

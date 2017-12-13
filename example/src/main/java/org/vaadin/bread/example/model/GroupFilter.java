@@ -3,10 +3,6 @@
  */
 package org.vaadin.bread.example.model;
 
-import java.time.LocalDate;
-
-import javax.validation.constraints.Past;
-
 /**
  * @author Dmitrij Colautti
  *

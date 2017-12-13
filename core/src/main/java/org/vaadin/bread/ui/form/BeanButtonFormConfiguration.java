@@ -22,7 +22,7 @@ import com.vaadin.shared.util.SharedUtil;
  *
  */
 @SuppressWarnings("serial")
-public class BeanButtonFormConfiguration extends BeanFormConfiguration {
+public class BeanButtonFormConfiguration extends FormConfiguration {
 
     protected Map<OperationAction, String> buttonCaptions = new HashMap<>();
     protected Map<OperationAction, Resource> buttonIcons = new HashMap<>();
@@ -34,20 +34,11 @@ public class BeanButtonFormConfiguration extends BeanFormConfiguration {
     @Override
     public void buildSensitiveDefaults(Class<?> clazz) {
     	super.buildSensitiveDefaults(clazz);
-	    try {
-	    	operationActions.stream().forEach(op->
-	    		setButtonCaption(op, SharedUtil.propertyIdToHumanFriendly(op.getOperationName()))
-	    			);
-	        
-	    	List<PropertyDescriptor> descriptors = BeanUtil.getBeanPropertyDescriptors(clazz);
-	        descriptors.stream()
-	        	.filter(d -> !d.getName().equals("class"))
-	        	.forEach(pd -> {
-	        	});
-	        
-	    } catch (IntrospectionException e) {
-	        throw new RuntimeException(e);
-	    }
+
+    	operationActions.stream().forEach(op->
+    		setButtonCaption(op, SharedUtil.propertyIdToHumanFriendly(op.getOperationName()))
+		);
+
     }
     
     public String getButtonCaption(OperationAction action) {
