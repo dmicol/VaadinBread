@@ -69,4 +69,8 @@ public interface FormFactory<T> {
 
 	void addButtonStyleName(OperationAction operationAction, String style);
 
+	ErrorListener<T> getErrorListener();
+
+	OperationMode[] getOperationModes();
+
 }
