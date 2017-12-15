@@ -142,5 +142,10 @@ public class WindowBasedCrudLayout extends Composite implements CrudLayout {
     public void setFormWindowWidth(String formWindowWidth) {
         this.formWindowWidth = formWindowWidth;
     }
+    
+	@Override
+	public Component getToolbar() {
+		return toolbarLayout;
+	}
 
 }

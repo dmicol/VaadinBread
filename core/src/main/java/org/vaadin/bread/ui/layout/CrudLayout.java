@@ -16,6 +16,8 @@ public interface CrudLayout extends Component {
     void addFilterComponent(Component component);
 
     void addToolbarComponent(Component component);
+    
+    Component getToolbar();
 
     void showForm(CrudOperation operation, Component form);
 

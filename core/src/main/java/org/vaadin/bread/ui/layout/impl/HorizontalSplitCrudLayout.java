@@ -42,4 +42,9 @@ public class HorizontalSplitCrudLayout extends AbstractTwoComponentsCrudLayout {
         toolbarLayout.addComponent(component);
     }
 
+	@Override
+	public Component getToolbar() {
+		return toolbarLayout;
+	}
+
 }
