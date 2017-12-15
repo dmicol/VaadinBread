@@ -32,5 +32,10 @@ public class VerticalCrudLayout extends AbstractTwoComponentsCrudLayout {
         toolbarLayout.setVisible(true);
         toolbarLayout.addComponent(component);
     }
+    
+	@Override
+	public Component getToolbar() {
+		return toolbarLayout;
+	}
 
 }

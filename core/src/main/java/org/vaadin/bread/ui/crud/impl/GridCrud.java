@@ -107,6 +107,7 @@ public class GridCrud<T> extends AbstractCrud<T> {
         crudLayout.setMainComponent(grid);
         
         Button btn = new Button(FontAwesome.FILE_EXCEL_O.getHtml());
+        btn.setDescription("Export Excel");
         btn.setCaptionAsHtml(true);
         addExporterMenu("EXCEL", btn);
 
@@ -307,5 +308,9 @@ public class GridCrud<T> extends AbstractCrud<T> {
         crudLayout.addToolbarComponent(exporterButton);
 
     	return this;
+    }
+    
+    protected Component getToolbar() {
+    	return crudLayout.getToolbar();
     }
 }
