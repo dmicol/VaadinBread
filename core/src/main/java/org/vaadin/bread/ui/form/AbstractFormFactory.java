@@ -22,7 +22,7 @@ import com.vaadin.ui.Button;
  */
 public abstract class AbstractFormFactory<T> implements FormFactory<T> {
 
-    protected Map<Operation, BeanFormConfiguration> configurations = new HashMap<>();
+    protected Map<OperationMode, FormConfiguration> configurations = new HashMap<>();
 
     protected ErrorListener<T> errorListener;
     protected OperationMode[] operationModes;
@@ -160,8 +160,8 @@ public abstract class AbstractFormFactory<T> implements FormFactory<T> {
         this.errorListener = errorListener;
     }
 
-    public BeanFormConfiguration getConfiguration(OperationMode operationMode) {
-        configurations.putIfAbsent(operationMode, new BeanFormConfiguration());
+    public FormConfiguration getConfiguration(OperationMode operationMode) {
+        configurations.putIfAbsent(operationMode, new FormConfiguration());
         return configurations.get(operationMode);
     }
 
