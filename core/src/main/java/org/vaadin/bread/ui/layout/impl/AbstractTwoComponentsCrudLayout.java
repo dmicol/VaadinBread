@@ -9,12 +9,12 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.vaadin.bread.ui.crud.CrudOperation;
-import org.vaadin.bread.ui.layout.CrudLayout;
+import org.vaadin.bread.ui.layout.BreadLayout;
 
 /**
  * @author Alejandro Duarte.
  */
-public abstract class AbstractTwoComponentsCrudLayout extends Composite implements CrudLayout {
+public abstract class AbstractTwoComponentsCrudLayout extends Composite implements BreadLayout {
 
     protected VerticalLayout firstComponent = new VerticalLayout();
     protected VerticalLayout secondComponent = new VerticalLayout();
@@ -28,12 +28,8 @@ public abstract class AbstractTwoComponentsCrudLayout extends Composite implemen
     protected VerticalLayout formCaptionLayout = new VerticalLayout();
 
     protected Map<CrudOperation, String> formCaptions = new HashMap<>();
-
+    
     public AbstractTwoComponentsCrudLayout() {
-        AbstractComponentContainer mainLayout = getMainLayout();
-        setCompositionRoot(mainLayout);
-        setSizeFull();
-
         firstComponent.setSizeFull();
         firstComponent.setMargin(false);
         firstComponent.setSpacing(true);
@@ -58,7 +54,6 @@ public abstract class AbstractTwoComponentsCrudLayout extends Composite implemen
 
         toolbarLayout.setVisible(false);
         toolbarLayout.addStyleName(ValoTheme.LAYOUT_COMPONENT_GROUP);
-        addToolbarLayout(toolbarLayout);
 
         filterLayout.setVisible(false);
         filterLayout.setSpacing(true);
@@ -81,11 +76,9 @@ public abstract class AbstractTwoComponentsCrudLayout extends Composite implemen
         formComponentLayout.setMargin(false);
         secondComponent.addComponent(formComponentLayout);
         secondComponent.setExpandRatio(formComponentLayout, 1);
-
+        
         setFormCaption(CrudOperation.DELETE, "Are you sure you want to delete this item?");
     }
-
-    protected abstract AbstractComponentContainer getMainLayout();
 
     protected abstract void addToolbarLayout(CssLayout toolbarLayout);
 

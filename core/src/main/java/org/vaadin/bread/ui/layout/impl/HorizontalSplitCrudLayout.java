@@ -2,7 +2,6 @@ package org.vaadin.bread.ui.layout.impl;
 
 import com.vaadin.server.Sizeable;
 import com.vaadin.shared.ui.MarginInfo;
-import com.vaadin.ui.AbstractSplitPanel;
 import com.vaadin.ui.Component;
 import com.vaadin.ui.CssLayout;
 import com.vaadin.ui.HorizontalSplitPanel;
@@ -12,19 +11,21 @@ import com.vaadin.ui.HorizontalSplitPanel;
  */
 public class HorizontalSplitCrudLayout extends AbstractTwoComponentsCrudLayout {
 
+	protected HorizontalSplitPanel mainLayout = new HorizontalSplitPanel();
+	
     public HorizontalSplitCrudLayout() {
+    	setCompositionRoot(mainLayout);
+        setSizeFull();
+    	
+    	mainLayout.setSizeFull();
+    	mainLayout.setFirstComponent(firstComponent);
+    	mainLayout.setSecondComponent(secondComponent);
+    	mainLayout.setSplitPosition(60, Sizeable.Unit.PERCENTAGE);
+    	
+    	addToolbarLayout(toolbarLayout);
+    	
         secondComponentHeaderLayout.setMargin(new MarginInfo(false, false, false, true));
     }
-
-    @Override
-    protected AbstractSplitPanel getMainLayout() {
-        HorizontalSplitPanel mainLayout = new HorizontalSplitPanel();
-        mainLayout.setSizeFull();
-        mainLayout.setFirstComponent(firstComponent);
-        mainLayout.setSecondComponent(secondComponent);
-        mainLayout.setSplitPosition(60, Sizeable.Unit.PERCENTAGE);
-        return mainLayout;
-        }
 
     @Override
     protected void addToolbarLayout(CssLayout toolbarLayout) {

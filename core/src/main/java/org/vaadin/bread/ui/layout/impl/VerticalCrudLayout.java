@@ -1,6 +1,5 @@
 package org.vaadin.bread.ui.layout.impl;
 
-import com.vaadin.ui.AbstractComponentContainer;
 import com.vaadin.ui.Component;
 import com.vaadin.ui.CssLayout;
 import com.vaadin.ui.VerticalLayout;
@@ -9,12 +8,18 @@ import com.vaadin.ui.VerticalLayout;
  * @author Alejandro Duarte.
  */
 public class VerticalCrudLayout extends AbstractTwoComponentsCrudLayout {
+    
+	public VerticalCrudLayout() {
+    	super();
 
-    @Override
-    protected AbstractComponentContainer getMainLayout() {
-        VerticalLayout mainLayout = new VerticalLayout(firstComponent, secondComponent);
+    	VerticalLayout mainLayout =  new VerticalLayout();
+    	setCompositionRoot(mainLayout);
+        setSizeFull();
+
+        mainLayout.addComponents(firstComponent, secondComponent);
         mainLayout.setMargin(false);
-        return mainLayout;
+    	
+    	addToolbarLayout(toolbarLayout);
     }
 
     @Override

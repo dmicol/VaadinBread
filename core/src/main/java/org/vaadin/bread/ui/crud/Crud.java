@@ -1,7 +1,7 @@
 package org.vaadin.bread.ui.crud;
 
 import org.vaadin.bread.ui.form.FormFactory;
-import org.vaadin.bread.ui.layout.CrudLayout;
+import org.vaadin.bread.ui.layout.BreadLayout;
 
 import com.vaadin.data.provider.DataProvider;
 import com.vaadin.ui.Component;
@@ -37,6 +37,6 @@ public interface Crud<T> extends Component {
 
     void setCrudListener(CrudListener<T> crudListener);
 
-    CrudLayout getCrudLayout();
+    BreadLayout getCrudLayout();
 
 }

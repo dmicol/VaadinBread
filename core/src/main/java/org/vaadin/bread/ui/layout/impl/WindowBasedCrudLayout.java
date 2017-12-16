@@ -4,7 +4,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.vaadin.bread.ui.crud.CrudOperation;
-import org.vaadin.bread.ui.layout.CrudLayout;
+import org.vaadin.bread.ui.layout.BreadLayout;
 
 import com.vaadin.icons.VaadinIcons;
 import com.vaadin.ui.Component;
@@ -20,7 +20,7 @@ import com.vaadin.ui.themes.ValoTheme;
 /**
  * @author Alejandro Duarte
  */
-public class WindowBasedCrudLayout extends Composite implements CrudLayout {
+public class WindowBasedCrudLayout extends Composite implements BreadLayout {
 
     protected VerticalLayout mainLayout = new VerticalLayout();
     protected Label captionLabel = new Label();

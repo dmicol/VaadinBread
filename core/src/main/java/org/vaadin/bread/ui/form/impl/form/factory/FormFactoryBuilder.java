@@ -3,12 +3,10 @@
  */
 package org.vaadin.bread.ui.form.impl.form.factory;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 
 import org.vaadin.bread.ui.crud.CrudOperation;
 import org.vaadin.bread.ui.crud.FilterOperation;
-import org.vaadin.bread.ui.crud.OperationAction;
 import org.vaadin.bread.ui.crud.OperationMode;
 import org.vaadin.bread.ui.form.FormFactory;
 
@@ -24,8 +22,8 @@ public class FormFactoryBuilder<T, FFT extends FormFactory<T>> {
 	private FormFactory<T> ff = null;
 	
 
-	private static OperationMode[] crudOperationModes = new OperationMode[] {CrudOperation.ADD, CrudOperation.DELETE, CrudOperation.READ, CrudOperation.UPDATE};
-	private static OperationMode[] filterOperationModes = new OperationMode[] {FilterOperation.APPLY};
+	protected static OperationMode[] crudOperationModes = new OperationMode[] {CrudOperation.ADD, CrudOperation.DELETE, CrudOperation.READ, CrudOperation.UPDATE};
+	protected static OperationMode[] filterOperationModes = new OperationMode[] {FilterOperation.APPLY};
 	
 	@SuppressWarnings("unchecked")
 	public FFT build() {

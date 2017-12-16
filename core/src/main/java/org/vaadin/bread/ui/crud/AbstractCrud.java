@@ -5,7 +5,7 @@ import java.util.Map;
 
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.vaadin.bread.ui.form.FormFactory;
-import org.vaadin.bread.ui.layout.CrudLayout;
+import org.vaadin.bread.ui.layout.BreadLayout;
 import org.vaadin.bread.ui.support.BeanExcelBuilder;
 import org.vaadin.bread.ui.support.ExcelOnDemandStreamResource;
 
@@ -26,10 +26,10 @@ public abstract class AbstractCrud<T> extends Composite implements Crud<T> {
     protected DeleteOperationListener<T> deleteOperation = t -> { };
     protected Map<String, Resource> exportOperations = new HashMap<>();
 
-    protected CrudLayout crudLayout;
+    protected BreadLayout crudLayout;
     protected FormFactory<T> crudFormFactory;
 
-    public AbstractCrud(Class<T> domainType, CrudLayout crudLayout, FormFactory<T> crudFormFactory) {
+    public AbstractCrud(Class<T> domainType, BreadLayout crudLayout, FormFactory<T> crudFormFactory) {
         this.domainType = domainType;
         this.crudLayout = crudLayout;
         this.crudFormFactory = crudFormFactory;
@@ -51,7 +51,7 @@ public abstract class AbstractCrud<T> extends Composite implements Crud<T> {
         crudLayout.setCaption(caption);
     }
 
-    public CrudLayout getCrudLayout() {
+    public BreadLayout getCrudLayout() {
         return crudLayout;
     }
 

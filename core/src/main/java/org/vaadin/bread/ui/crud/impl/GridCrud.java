@@ -12,7 +12,7 @@ import org.vaadin.bread.ui.crud.OperationException;
 import org.vaadin.bread.ui.form.FormConfiguration;
 import org.vaadin.bread.ui.form.FormFactory;
 import org.vaadin.bread.ui.form.impl.form.factory.FormFactoryBuilder;
-import org.vaadin.bread.ui.layout.CrudLayout;
+import org.vaadin.bread.ui.layout.BreadLayout;
 import org.vaadin.bread.ui.layout.impl.WindowBasedCrudLayout;
 
 import com.kbdunn.vaadin.addons.fontawesome.FontAwesome;
@@ -51,7 +51,7 @@ public class GridCrud<T> extends AbstractCrud<T> {
         		new FormFactoryBuilder().formLayoutBread(domainType).build());
     }
 
-    public GridCrud(Class<T> domainType, CrudLayout crudLayout) {
+    public GridCrud(Class<T> domainType, BreadLayout crudLayout) {
         this(domainType, crudLayout, new FormFactoryBuilder().formLayoutBread(domainType).build());
     }
 
@@ -59,7 +59,7 @@ public class GridCrud<T> extends AbstractCrud<T> {
         this(domainType, new WindowBasedCrudLayout(), crudFormFactory);
     }
 
-    public GridCrud(Class<T> domainType, CrudLayout crudLayout, FormFactory<T> crudFormFactory) {
+    public GridCrud(Class<T> domainType, BreadLayout crudLayout, FormFactory<T> crudFormFactory) {
         super(domainType, crudLayout, crudFormFactory);
         initLayout();
     }

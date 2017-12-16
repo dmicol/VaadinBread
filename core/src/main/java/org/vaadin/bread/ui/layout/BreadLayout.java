@@ -7,7 +7,7 @@ import com.vaadin.ui.Component;
 /**
  * @author Alejandro Duarte
  */
-public interface CrudLayout extends Component {
+public interface BreadLayout extends Component {
 
     void setCaption(String caption);
 
