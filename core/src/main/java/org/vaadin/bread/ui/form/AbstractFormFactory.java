@@ -9,7 +9,6 @@ import java.util.Set;
 
 import javax.persistence.metamodel.ManagedType;
 
-import org.vaadin.bread.ui.crud.Operation;
 import org.vaadin.bread.ui.crud.OperationAction;
 import org.vaadin.bread.ui.crud.OperationMode;
 
@@ -25,13 +24,11 @@ public abstract class AbstractFormFactory<T> implements FormFactory<T> {
     protected Map<OperationMode, FormConfiguration> configurations = new HashMap<>();
 
     protected ErrorListener<T> errorListener;
-    protected OperationMode[] operationModes;
     
-    /**
-	 * 
-	 */
-	public AbstractFormFactory(OperationMode[] operationModes) {
-		this.operationModes = operationModes;
+    public AbstractFormFactory() {}
+    
+	public AbstractFormFactory(OperationMode... operationModes) {
+		Arrays.stream(operationModes).forEach(om -> configurations.put(om, new FormConfiguration()));
 	}
 	
     public void setOperationListener(OperationMode operationMode, OperationAction action, Button.ClickListener operationButtonClickListener) {
@@ -45,7 +42,7 @@ public abstract class AbstractFormFactory<T> implements FormFactory<T> {
 
     @Override
     public void setVisibleProperties(String... properties) {
-        Arrays.stream(operationModes).forEach(operationMode -> setVisibleProperties(operationMode, properties));
+    	configurations.keySet().forEach(operationMode -> setVisibleProperties(operationMode, properties));
     }
 
     @Override
@@ -55,7 +52,7 @@ public abstract class AbstractFormFactory<T> implements FormFactory<T> {
 
     @Override
     public void setDisabledProperties(String... properties) {
-        Arrays.stream(operationModes).forEach(operationMode -> setDisabledProperties(operationMode, properties));
+        configurations.keySet().forEach(operationMode -> setDisabledProperties(operationMode, properties));
     }
 
     @Override
@@ -65,7 +62,7 @@ public abstract class AbstractFormFactory<T> implements FormFactory<T> {
 
     @Override
     public void setFieldCaption(String property, String caption) {
-        Arrays.stream(operationModes).forEach(operationMode -> setFieldCaption(operationMode, property, caption));
+        configurations.keySet().forEach(operationMode -> setFieldCaption(operationMode, property, caption));
     }
 
     @Override
@@ -75,7 +72,7 @@ public abstract class AbstractFormFactory<T> implements FormFactory<T> {
 
     @Override
     public void setFieldType(String property, Class<? extends HasValue> type) {
-        Arrays.stream(operationModes).forEach(operationMode -> setFieldType(operationMode, property, type));
+        configurations.keySet().forEach(operationMode -> setFieldType(operationMode, property, type));
     }
 
     @Override
@@ -85,7 +82,7 @@ public abstract class AbstractFormFactory<T> implements FormFactory<T> {
 
     @Override
     public void setFieldCreationListener(String property, FieldCreationListener listener) {
-        Arrays.stream(operationModes).forEach(operationMode -> setFieldCreationListener(operationMode, property, listener));
+        configurations.keySet().forEach(operationMode -> setFieldCreationListener(operationMode, property, listener));
     }
 
     @Override
@@ -95,7 +92,7 @@ public abstract class AbstractFormFactory<T> implements FormFactory<T> {
 
     @Override
     public void setFieldProvider(String property, FieldProvider provider) {
-        Arrays.stream(operationModes).forEach(operationMode -> setFieldProvider(operationMode, property, provider));
+        configurations.keySet().forEach(operationMode -> setFieldProvider(operationMode, property, provider));
     }
 
     @Override
@@ -105,7 +102,7 @@ public abstract class AbstractFormFactory<T> implements FormFactory<T> {
 
     @Override
     public void setButtonCaption(OperationAction operationAction, String caption) {
-    	Arrays.stream(operationModes).forEach(operationMode -> setButtonCaption(operationMode, operationAction, caption));
+    	configurations.keySet().forEach(operationMode -> setButtonCaption(operationMode, operationAction, caption));
     }
 
     @Override
@@ -115,7 +112,7 @@ public abstract class AbstractFormFactory<T> implements FormFactory<T> {
 
     @Override
     public void setButtonIcon(OperationAction operationAction, Resource resource) {
-    	Arrays.stream(operationModes).forEach(operationMode -> setButtonIcon(operationMode, operationAction, resource));
+    	configurations.keySet().forEach(operationMode -> setButtonIcon(operationMode, operationAction, resource));
     }
 
     @Override
@@ -125,7 +122,7 @@ public abstract class AbstractFormFactory<T> implements FormFactory<T> {
 
     @Override
     public void addButtonStyleName(OperationAction operationAction, String style) {
-    	Arrays.stream(operationModes).forEach(operationMode -> addButtonStyleName(operationMode, operationAction, style));
+    	configurations.keySet().forEach(operationMode -> addButtonStyleName(operationMode, operationAction, style));
     }
     
     protected Map<OperationAction, Set<String>> buttonStyleNames = new HashMap<>();
@@ -142,7 +139,7 @@ public abstract class AbstractFormFactory<T> implements FormFactory<T> {
 
     @Override
     public void setUseBeanValidation(boolean useBeanValidation) {
-        Arrays.stream(operationModes).forEach(operationMode -> setUseBeanValidation(operationMode, useBeanValidation));
+        configurations.keySet().forEach(operationMode -> setUseBeanValidation(operationMode, useBeanValidation));
     }
 
     @Override
@@ -152,7 +149,7 @@ public abstract class AbstractFormFactory<T> implements FormFactory<T> {
 
     @Override
     public void setJpaTypeForJpaValidation(ManagedType<?> managedType) {
-        Arrays.stream(operationModes).forEach(operationMode -> setJpaTypeForJpaValidation(operationMode, managedType));
+        configurations.keySet().forEach(operationMode -> setJpaTypeForJpaValidation(operationMode, managedType));
     }
 
     @Override
@@ -167,11 +164,16 @@ public abstract class AbstractFormFactory<T> implements FormFactory<T> {
 
 	@Override
 	public OperationMode[] getOperationModes() {
-		return operationModes;
+		return configurations.keySet().toArray(new OperationMode[] {});
 	}
 
-	public void setOperationModes(OperationMode[] operationModes) {
-		this.operationModes = operationModes;
+	public void setOperationModes(OperationMode... operationModes) {
+		Arrays.sort(operationModes);
+		
+		Arrays.stream(operationModes).forEach(om -> configurations.putIfAbsent(om, new FormConfiguration()));
+
+		configurations.entrySet().stream().filter(om -> Arrays.binarySearch(operationModes, om)<0)
+			.forEach(om -> configurations.remove(om));
 	}
 
 	@Override
