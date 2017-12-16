@@ -16,14 +16,13 @@ import org.vaadin.bread.ui.crud.OperationMode;
 import com.vaadin.data.HasValue;
 import com.vaadin.server.Resource;
 import com.vaadin.ui.Button;
-import com.vaadin.ui.Notification;
 
 /**
  * @author Alejandro Duarte
  */
 public abstract class AbstractFormFactory<T> implements FormFactory<T> {
 
-    protected Map<Operation, BeanButtonFormConfiguration> configurations = new HashMap<>();
+    protected Map<Operation, BeanFormConfiguration> configurations = new HashMap<>();
 
     protected ErrorListener<T> errorListener;
     protected OperationMode[] operationModes;
@@ -160,15 +159,9 @@ public abstract class AbstractFormFactory<T> implements FormFactory<T> {
     public void setErrorListener(ErrorListener<T> errorListener) {
         this.errorListener = errorListener;
     }
-    
-	public void buildSensitiveDefaults(Class<?> clazz) {
-        Arrays.stream(operationModes).forEach(operationMode -> getConfiguration(operationMode).buildSensitiveDefaults(clazz));
-        setErrorListener((opm, opa, obj, e) -> {e.printStackTrace(); Notification.show("ERROR: " + e.getLocalizedMessage(), Notification.Type.ERROR_MESSAGE);});
 
-	}
-
-    public BeanButtonFormConfiguration getConfiguration(OperationMode operationMode) {
-        configurations.putIfAbsent(operationMode, new BeanButtonFormConfiguration());
+    public BeanFormConfiguration getConfiguration(OperationMode operationMode) {
+        configurations.putIfAbsent(operationMode, new BeanFormConfiguration());
         return configurations.get(operationMode);
     }
 
