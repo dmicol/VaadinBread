@@ -108,6 +108,7 @@ public class GridCrud<T> extends AbstractCrud<T> {
         
         Button btn = new Button(FontAwesome.FILE_EXCEL_O.getHtml());
         btn.setCaptionAsHtml(true);
+        btn.setDescription("Export to Excel");
         addExporterMenu("EXCEL", btn);
 
         updateButtons();
