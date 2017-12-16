@@ -40,9 +40,6 @@ public class FormConfiguration implements Serializable {
     protected Map<OperationAction, Button.ClickListener> actionListeners = new HashMap<>();
     protected List<OperationAction> operationActions = new ArrayList<>();
     
-	protected boolean useBeanValidation = true;
-	protected ManagedType<?> jpaTypeForJpaValidation;
-    
     public void setOperationActionListener(OperationAction operation, Button.ClickListener operationButtonClickListener) {
     	actionListeners.put(operation, operationButtonClickListener);
     }
@@ -107,23 +104,6 @@ public class FormConfiguration implements Serializable {
 		this.operationActions = operations;
 	}
 
-	public boolean isUseBeanValidation() {
-	    return useBeanValidation;
-	}
-
-	public void setUseBeanValidation(boolean useBeanValidation) {
-	    this.useBeanValidation = useBeanValidation;
-	}
-
-	public ManagedType<?> getJpaTypeForJpaValidation() {
-		return jpaTypeForJpaValidation;
-	}
-
-	public void setJpaTypeForJpaValidation(ManagedType<?> jpaTypeForJpaValidation) {
-		this.jpaTypeForJpaValidation = jpaTypeForJpaValidation;
-	}
-
-
 	public void buildSensitiveDefaults(Class<?> clazz) {
 	    try {
 	        List<PropertyDescriptor> descriptors = BeanUtil.getBeanPropertyDescriptors(clazz);
@@ -134,16 +114,6 @@ public class FormConfiguration implements Serializable {
 	        		if (!(propertyType.isArray() || Collection.class.isAssignableFrom(propertyType))) {
 	        			visibleProperties.add(pd.getName());
 	        			fieldCaptions.put(pd.getName(), SharedUtil.propertyIdToHumanFriendly(pd.getName()));
-	        			
-	        			if (jpaTypeForJpaValidation!=null) {
-	        				Attribute<?, ?> attribute = jpaTypeForJpaValidation.getAttribute(pd.getName());
-	        				if (attribute.getJavaMember() instanceof AnnotatedElement) {
-	        					AnnotatedElement annotated = (AnnotatedElement)attribute.getJavaMember();
-	        					if (annotated!=null && annotated.getAnnotation(GeneratedValue.class)!=null) {
-	        						disabledProperties.add(pd.getName());
-	        					}
-	        				}
-	        			}
 	        			fieldProviders.put(pd.getName(), new DefaultFieldProvider(pd.getPropertyType()));            		
 	        		}
 	        	});
