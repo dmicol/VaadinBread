@@ -32,7 +32,7 @@ public class FormConfiguration implements Serializable {
 
     protected List<String> visibleProperties = new ArrayList<>();
     protected Set<String> disabledProperties = new HashSet<>();
-    protected List<String> fieldCaptions = new ArrayList<>();
+    protected Map<String, String> fieldCaptions = new HashMap<>();
     @SuppressWarnings("rawtypes")
 	protected Map<Object, Class<? extends HasValue>> fieldTypes = new HashMap<>();
     protected Map<Object, FieldCreationListener> fieldCreationListeners = new HashMap<>();
@@ -67,11 +67,11 @@ public class FormConfiguration implements Serializable {
         this.disabledProperties = disabledProperties;
     }
 
-    public List<String> getFieldCaptions() {
+    public Map<String, String> getFieldCaptions() {
         return fieldCaptions;
     }
 
-    public void setFieldCaptions(List<String> fieldCaptions) {
+    public void setFieldCaptions(Map<String, String> fieldCaptions) {
         this.fieldCaptions = fieldCaptions;
     }
 
@@ -133,7 +133,7 @@ public class FormConfiguration implements Serializable {
 	        		Class<?> propertyType = pd.getPropertyType();
 	        		if (!(propertyType.isArray() || Collection.class.isAssignableFrom(propertyType))) {
 	        			visibleProperties.add(pd.getName());
-	        			fieldCaptions.add(SharedUtil.propertyIdToHumanFriendly(pd.getName()));
+	        			fieldCaptions.put(pd.getName(), SharedUtil.propertyIdToHumanFriendly(pd.getName()));
 	        			
 	        			if (jpaTypeForJpaValidation!=null) {
 	        				Attribute<?, ?> attribute = jpaTypeForJpaValidation.getAttribute(pd.getName());

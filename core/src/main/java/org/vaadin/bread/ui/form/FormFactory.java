@@ -27,9 +27,9 @@ public interface FormFactory<T> {
 
     void setDisabledProperties(String... properties);
 
-    void setFieldCaptions(OperationMode operationMode, String... captions);
+    void setFieldCaption(OperationMode operationMode, String property, String caption);
 
-    void setFieldCaptions(String... captions);
+    void setFieldCaption(String property, String caption);
 
     void setFieldType(OperationMode operationMode, String property, Class<? extends HasValue> type);
 

@@ -60,13 +60,13 @@ public abstract class AbstractFormFactory<T> implements FormFactory<T> {
     }
 
     @Override
-    public void setFieldCaptions(OperationMode operationMode, String... captions) {
-        getConfiguration(operationMode).setFieldCaptions(new ArrayList<String>(Arrays.asList(captions)));
+    public void setFieldCaption(OperationMode operationMode, String property, String caption) {
+        getConfiguration(operationMode).getFieldCaptions().put(property, caption);
     }
 
     @Override
-    public void setFieldCaptions(String... captions) {
-        Arrays.stream(operationModes).forEach(operationMode -> setFieldCaptions(operationMode, captions));
+    public void setFieldCaption(String property, String caption) {
+        Arrays.stream(operationModes).forEach(operationMode -> setFieldCaption(operationMode, property, caption));
     }
 
     @Override
