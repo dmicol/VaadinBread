@@ -15,12 +15,12 @@ import org.vaadin.bread.ui.form.impl.form.factory.FormFactoryBuilder;
 import org.vaadin.bread.ui.layout.CrudLayout;
 import org.vaadin.bread.ui.layout.impl.WindowBasedCrudLayout;
 
+import com.kbdunn.vaadin.addons.fontawesome.FontAwesome;
 import com.vaadin.data.provider.DataProvider;
 import com.vaadin.data.provider.Query;
 import com.vaadin.data.util.BeanUtil;
 import com.vaadin.icons.VaadinIcons;
 import com.vaadin.server.FileDownloader;
-import com.vaadin.server.FontAwesome;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Component;
 import com.vaadin.ui.Grid;

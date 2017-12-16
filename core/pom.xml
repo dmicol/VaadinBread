@@ -45,6 +45,13 @@
 			<version>2.0</version>
 			<scope>test</scope>
 		</dependency>
+		
+		<dependency>
+		   <groupId>org.vaadin.addons</groupId>
+		   <artifactId>fontawesomelabel</artifactId>
+		   <version>1.4.0</version>
+		</dependency>
+
 		<dependency>
 			<groupId>com.h2database</groupId>
 			<artifactId>h2</artifactId>
