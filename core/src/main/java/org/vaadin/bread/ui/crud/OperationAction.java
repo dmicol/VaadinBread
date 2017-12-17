@@ -7,9 +7,7 @@ package org.vaadin.bread.ui.crud;
  * @author Dmitrij Colautti
  *
  */
-public interface OperationAction extends Operation {
+public interface OperationAction {
 	
-	public default String getActionName() {
-		return getOperationName();
-	}
+	public String getActionName();
 }

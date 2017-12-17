@@ -9,13 +9,20 @@ package org.vaadin.bread.ui.crud;
  */
 public enum FilterOperation implements OperationMode, OperationAction {
 	EMPTY, APPLY;
-	
+
 	/* (non-Javadoc)
-	 * @see org.vaadin.crudui.crud.Operation#getOperationName()
+	 * @see org.vaadin.bread.ui.crud.OperationAction#getActionName()
 	 */
 	@Override
-	public String getOperationName() {
-		// TODO Auto-generated method stub
+	public String getActionName() {
+		return name();
+	}
+
+	/* (non-Javadoc)
+	 * @see org.vaadin.bread.ui.crud.OperationMode#getOperationModeName()
+	 */
+	@Override
+	public String getOperationModeName() {
 		return name();
 	}
 }

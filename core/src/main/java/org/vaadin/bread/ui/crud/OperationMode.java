@@ -7,9 +7,7 @@ package org.vaadin.bread.ui.crud;
  * @author Dmitrij Colautti
  *
  */
-public interface OperationMode extends Operation {
+public interface OperationMode {
 	
-	public default String getOperationModeName() {
-		return getOperationName();
-	}
+	public String getOperationModeName();
 }
