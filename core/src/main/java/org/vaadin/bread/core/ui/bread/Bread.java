@@ -38,17 +38,17 @@ public interface Bread<T> extends Component {
     void setBreadListener(BreadListener<T> crudListener);
 
     BreadLayout getBreadLayout();
+    
+    String getDeletedMessage();
 
 	void setDeletedMessage(String deletedMessage);
 
-	void setSavedMessage(String savedMessage);
-
-	void setRowCountCaption(String rowCountCaption);
-
-	String getDeletedMessage();
-
 	String getSavedMessage();
 
+	void setSavedMessage(String savedMessage);
+
 	String getRowCountCaption();
+	
+	void setRowCountCaption(String rowCountCaption);
 
 }

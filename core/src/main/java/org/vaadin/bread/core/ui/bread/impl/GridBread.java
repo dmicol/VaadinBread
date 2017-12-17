@@ -37,7 +37,6 @@ public class GridBread<T> extends AbstractBread<T> {
     protected Grid<T> grid;
 
     protected LinkedHashMap<String, Button> exporterButtons = new LinkedHashMap<>();
-    protected Collection<T> items;
     private boolean clickRowToUpdate;
 
     public GridBread(Class<T> domainType) {
@@ -200,8 +199,7 @@ public class GridBread<T> extends AbstractBread<T> {
         showForm(CrudOperation.UPDATE, domainObject, false, savedMessage, event -> {
             try {
                 T updatedObject = updateOperation.perform(domainObject);
-                grid.asSingleSelect().clear();
-                refreshGrid();
+                grid.getDataProvider().refreshItem(updatedObject);
                 grid.asSingleSelect().setValue(updatedObject);
                 // TODO: grid.scrollTo(updatedObject);
             } catch (OperationException e1) {
