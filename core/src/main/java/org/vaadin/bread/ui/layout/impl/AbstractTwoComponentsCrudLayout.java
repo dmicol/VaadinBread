@@ -8,7 +8,7 @@ import com.vaadin.ui.themes.ValoTheme;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.vaadin.bread.ui.crud.CrudOperation;
+import org.vaadin.bread.ui.form.CrudOperation;
 import org.vaadin.bread.ui.layout.BreadLayout;
 
 /**

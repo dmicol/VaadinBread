@@ -7,8 +7,8 @@ import java.util.LinkedHashMap;
 import java.util.List;
 
 import org.vaadin.bread.ui.crud.AbstractCrud;
-import org.vaadin.bread.ui.crud.CrudOperation;
 import org.vaadin.bread.ui.crud.OperationException;
+import org.vaadin.bread.ui.form.CrudOperation;
 import org.vaadin.bread.ui.form.FormConfiguration;
 import org.vaadin.bread.ui.form.FormFactory;
 import org.vaadin.bread.ui.form.impl.form.factory.FormFactoryBuilder;

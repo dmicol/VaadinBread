@@ -5,10 +5,10 @@ package org.vaadin.bread.ui.form.impl.form.factory;
 
 import java.util.Arrays;
 
-import org.vaadin.bread.ui.crud.CrudOperation;
-import org.vaadin.bread.ui.crud.FilterOperation;
-import org.vaadin.bread.ui.crud.OperationMode;
+import org.vaadin.bread.ui.form.CrudOperation;
+import org.vaadin.bread.ui.form.FilterOperation;
 import org.vaadin.bread.ui.form.FormFactory;
+import org.vaadin.bread.ui.form.OperationMode;
 
 import com.vaadin.icons.VaadinIcons;
 import com.vaadin.ui.themes.ValoTheme;

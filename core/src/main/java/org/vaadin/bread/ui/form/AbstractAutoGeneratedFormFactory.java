@@ -10,9 +10,7 @@ import java.util.Set;
 import org.vaadin.bread.data.JpaValidationBinder;
 import org.vaadin.bread.data.converter.StringToByteConverter;
 import org.vaadin.bread.data.converter.StringToCharacterConverter;
-import org.vaadin.bread.ui.crud.OperationAction;
 import org.vaadin.bread.ui.crud.OperationException;
-import org.vaadin.bread.ui.crud.OperationMode;
 import org.vaadin.bread.ui.form.impl.field.provider.DefaultFieldProvider;
 
 import com.vaadin.data.BeanValidationBinder;

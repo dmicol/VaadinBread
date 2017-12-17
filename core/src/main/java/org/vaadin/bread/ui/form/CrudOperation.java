@@ -1,14 +1,11 @@
-/**
- * 
- */
-package org.vaadin.bread.ui.crud;
+package org.vaadin.bread.ui.form;
 
 /**
- * @author Dmitrij Colautti
- *
+ * @author Alejandro Duarte.
  */
-public enum FilterOperation implements OperationMode, OperationAction {
-	EMPTY, APPLY;
+public enum CrudOperation implements OperationMode, OperationAction {
+
+    CANCEL, READ, ADD, UPDATE, DELETE;
 
 	/* (non-Javadoc)
 	 * @see org.vaadin.bread.ui.crud.OperationAction#getActionName()
@@ -25,4 +22,5 @@ public enum FilterOperation implements OperationMode, OperationAction {
 	public String getOperationModeName() {
 		return name();
 	}
+
 }

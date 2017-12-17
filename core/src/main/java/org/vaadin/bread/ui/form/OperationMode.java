@@ -1,7 +1,7 @@
 /**
  * 
  */
-package org.vaadin.bread.ui.crud;
+package org.vaadin.bread.ui.form;
 
 /**
  * @author Dmitrij Colautti

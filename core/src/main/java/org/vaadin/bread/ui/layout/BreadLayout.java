@@ -1,6 +1,6 @@
 package org.vaadin.bread.ui.layout;
 
-import org.vaadin.bread.ui.crud.CrudOperation;
+import org.vaadin.bread.ui.form.CrudOperation;
 
 import com.vaadin.ui.Component;
 

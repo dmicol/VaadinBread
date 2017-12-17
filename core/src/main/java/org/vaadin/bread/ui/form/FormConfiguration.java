@@ -16,7 +16,6 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.metamodel.Attribute;
 import javax.persistence.metamodel.ManagedType;
 
-import org.vaadin.bread.ui.crud.OperationAction;
 import org.vaadin.bread.ui.form.impl.field.provider.DefaultFieldProvider;
 
 import com.vaadin.data.HasValue;
@@ -210,7 +209,7 @@ public class FormConfiguration implements Serializable {
     	}
     	
     	operationActions.stream().forEach(op->
-    		setButtonCaption(op, SharedUtil.propertyIdToHumanFriendly(op.getOperationName()))
+    		setButtonCaption(op, SharedUtil.propertyIdToHumanFriendly(op.getActionName()))
 		);
 
     }

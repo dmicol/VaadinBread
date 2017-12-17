@@ -3,7 +3,7 @@ package org.vaadin.bread.ui.layout.impl;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.vaadin.bread.ui.crud.CrudOperation;
+import org.vaadin.bread.ui.form.CrudOperation;
 import org.vaadin.bread.ui.layout.BreadLayout;
 
 import com.vaadin.icons.VaadinIcons;

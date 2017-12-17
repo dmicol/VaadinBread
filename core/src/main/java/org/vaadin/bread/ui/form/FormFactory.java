@@ -2,9 +2,6 @@ package org.vaadin.bread.ui.form;
 
 import javax.persistence.metamodel.ManagedType;
 
-import org.vaadin.bread.ui.crud.OperationAction;
-import org.vaadin.bread.ui.crud.OperationMode;
-
 import com.vaadin.data.HasValue;
 import com.vaadin.server.Resource;
 import com.vaadin.ui.Button;
