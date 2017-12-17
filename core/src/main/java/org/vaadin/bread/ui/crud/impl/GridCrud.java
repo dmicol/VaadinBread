@@ -47,20 +47,12 @@ public class GridCrud<T> extends AbstractCrud<T> {
     private boolean clickRowToUpdate;
 
     public GridCrud(Class<T> domainType) {
-        this(domainType, new WindowBasedCrudLayout(), 
-        		new FormFactoryBuilder().formLayoutBread(domainType).build());
+        this(domainType, new WindowBasedCrudLayout());
     }
 
     public GridCrud(Class<T> domainType, BreadLayout crudLayout) {
-        this(domainType, crudLayout, new FormFactoryBuilder().formLayoutBread(domainType).build());
-    }
-
-    public GridCrud(Class<T> domainType, FormFactory<T> crudFormFactory) {
-        this(domainType, new WindowBasedCrudLayout(), crudFormFactory);
-    }
-
-    public GridCrud(Class<T> domainType, BreadLayout crudLayout, FormFactory<T> crudFormFactory) {
-        super(domainType, crudLayout, crudFormFactory);
+        super(domainType, crudLayout);
+        setCrudFormFactory(new FormFactoryBuilder().formLayoutBread(domainType).build());
         initLayout();
     }
 

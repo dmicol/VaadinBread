@@ -61,7 +61,7 @@ public class EditableGridCrud<T> extends GridCrud<T> {
     }
 
     public EditableGridCrud(Class<T> domainType, BreadLayout crudLayout) {
-        super(domainType, crudLayout, null);
+        super(domainType, crudLayout);
         crudFormFactory = new GridOnlyCrudFormFactory<>(domainType);
         setAddOperationVisible(false);
         setUpdateOperationVisible(false);

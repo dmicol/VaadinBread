@@ -29,21 +29,24 @@ public abstract class AbstractCrud<T> extends Composite implements Crud<T> {
     protected BreadLayout crudLayout;
     protected FormFactory<T> crudFormFactory;
 
-    public AbstractCrud(Class<T> domainType, BreadLayout crudLayout, FormFactory<T> crudFormFactory) {
+    public AbstractCrud(Class<T> domainType, BreadLayout crudLayout) {
         this.domainType = domainType;
         this.crudLayout = crudLayout;
-        this.crudFormFactory = crudFormFactory;
                 
-        exportOperations.put("EXCEL", new ExcelOnDemandStreamResource() {
+        exportOperations.put("EXCEL", excelResource());
+
+        setCompositionRoot(crudLayout);
+        setSizeFull();
+    }
+    
+    protected Resource excelResource() {
+    	return new ExcelOnDemandStreamResource() {
 			
 			@Override
 			protected XSSFWorkbook getWorkbook() {
 				return new BeanExcelBuilder<T>(domainType).createExcelDocument(dataProvider);
 			}
-		});
-
-        setCompositionRoot(crudLayout);
-        setSizeFull();
+		};
     }
 
     @Override
@@ -53,6 +56,11 @@ public abstract class AbstractCrud<T> extends Composite implements Crud<T> {
 
     public BreadLayout getCrudLayout() {
         return crudLayout;
+    }
+
+    @Override
+    public FormFactory<T> getCrudFormFactory() {
+        return crudFormFactory;
     }
 
     @Override
@@ -89,11 +97,6 @@ public abstract class AbstractCrud<T> extends Composite implements Crud<T> {
     }
 
     @Override
-    public FormFactory<T> getCrudFormFactory() {
-        return crudFormFactory;
-    }
-
-    @Override
     public void setCrudListener(CrudListener<T> crudListener) {
     	setDataProvider(crudListener.getDataProvider());
         setAddOperation(crudListener::add);
@@ -115,5 +118,9 @@ public abstract class AbstractCrud<T> extends Composite implements Crud<T> {
 
 	public DataProvider<T, ?> getDataProvider() {
 		return dataProvider;
+	}
+
+	public Class<T> getDomainType() {
+		return domainType;
 	}
 }
