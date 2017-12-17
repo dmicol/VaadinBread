@@ -10,7 +10,6 @@ import org.vaadin.bread.core.ui.bread.AbstractBread;
 import org.vaadin.bread.core.ui.bread.OperationException;
 import org.vaadin.bread.core.ui.form.CrudOperation;
 import org.vaadin.bread.core.ui.form.FormConfiguration;
-import org.vaadin.bread.core.ui.form.FormFactory;
 import org.vaadin.bread.core.ui.form.impl.form.factory.FormFactoryBuilder;
 import org.vaadin.bread.core.ui.layout.BreadLayout;
 import org.vaadin.bread.core.ui.layout.impl.WindowBasedBreadLayout;
@@ -29,12 +28,7 @@ import com.vaadin.ui.Notification;
 /**
  * @author Alejandro Duarte
  */
-@SuppressWarnings("deprecation")
 public class GridBread<T> extends AbstractBread<T> {
-
-    protected String rowCountCaption = "%d items(s) found";
-    protected String savedMessage = "Item saved";
-    protected String deletedMessage = "Item deleted";
 
     protected Button findAllButton;
     protected Button addButton;
@@ -277,18 +271,6 @@ public class GridBread<T> extends AbstractBread<T> {
     public Button getDeleteButton() {
         return deleteButton;
     }
-
-    public void setRowCountCaption(String rowCountCaption) {
-        this.rowCountCaption = rowCountCaption;
-    }
-
-    public void setSavedMessage(String savedMessage) {
-        this.savedMessage = savedMessage;
-    }
-    
-    public void setDeletedMessage(String deletedMessage) {
-        this.deletedMessage = deletedMessage;
-    }
     
     public Button getExporterMenu(String name) {
     	return exporterButtons.get(name);
@@ -301,4 +283,5 @@ public class GridBread<T> extends AbstractBread<T> {
 
     	return this;
     }
+
 }

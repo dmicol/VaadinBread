@@ -39,4 +39,16 @@ public interface Bread<T> extends Component {
 
     BreadLayout getBreadLayout();
 
+	void setDeletedMessage(String deletedMessage);
+
+	void setSavedMessage(String savedMessage);
+
+	void setRowCountCaption(String rowCountCaption);
+
+	String getDeletedMessage();
+
+	String getSavedMessage();
+
+	String getRowCountCaption();
+
 }

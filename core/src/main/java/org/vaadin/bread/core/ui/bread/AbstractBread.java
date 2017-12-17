@@ -28,6 +28,10 @@ public abstract class AbstractBread<T> extends Composite implements Bread<T> {
 
     protected BreadLayout breadLayout;
     protected FormFactory<T> crudFormFactory;
+    
+    protected String rowCountCaption = "%d items(s) found";
+    protected String savedMessage = "Item saved";
+    protected String deletedMessage = "Item deleted";
 
     public AbstractBread(Class<T> domainType, BreadLayout crudLayout) {
         this.domainType = domainType;
@@ -123,4 +127,34 @@ public abstract class AbstractBread<T> extends Composite implements Bread<T> {
 	public Class<T> getDomainType() {
 		return domainType;
 	}
+
+	@Override
+	public String getRowCountCaption() {
+		return rowCountCaption;
+	}
+
+	@Override
+	public String getSavedMessage() {
+		return savedMessage;
+	}
+
+	@Override
+	public String getDeletedMessage() {
+		return deletedMessage;
+	}
+
+    @Override
+	public void setRowCountCaption(String rowCountCaption) {
+        this.rowCountCaption = rowCountCaption;
+    }
+
+    @Override
+	public void setSavedMessage(String savedMessage) {
+        this.savedMessage = savedMessage;
+    }
+    
+    @Override
+	public void setDeletedMessage(String deletedMessage) {
+        this.deletedMessage = deletedMessage;
+    }
 }
