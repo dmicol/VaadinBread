@@ -1,0 +1,126 @@
+package org.vaadin.bread.core.ui.bread;
+
+import java.util.HashMap;
+import java.util.Map;
+
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+import org.vaadin.bread.core.ui.form.FormFactory;
+import org.vaadin.bread.core.ui.layout.BreadLayout;
+import org.vaadin.bread.core.ui.support.BeanExcelBuilder;
+import org.vaadin.bread.core.ui.support.ExcelOnDemandStreamResource;
+
+import com.vaadin.data.provider.DataProvider;
+import com.vaadin.server.Resource;
+import com.vaadin.ui.Composite;
+
+/**
+ * @author Alejandro Duarte
+ */
+public abstract class AbstractBread<T> extends Composite implements Bread<T> {
+
+    protected Class<T> domainType;
+
+    protected DataProvider<T, ?> dataProvider;
+    protected AddOperationListener<T> addOperation = t -> null;
+    protected UpdateOperationListener<T> updateOperation = t -> null;
+    protected DeleteOperationListener<T> deleteOperation = t -> { };
+    protected Map<String, Resource> exportOperations = new HashMap<>();
+
+    protected BreadLayout breadLayout;
+    protected FormFactory<T> crudFormFactory;
+
+    public AbstractBread(Class<T> domainType, BreadLayout crudLayout) {
+        this.domainType = domainType;
+        this.breadLayout = crudLayout;
+                
+        exportOperations.put("EXCEL", excelResource());
+
+        setCompositionRoot(crudLayout);
+        setSizeFull();
+    }
+    
+    protected Resource excelResource() {
+    	return new ExcelOnDemandStreamResource() {
+			
+			@Override
+			protected XSSFWorkbook getWorkbook() {
+				return new BeanExcelBuilder<T>(domainType).createExcelDocument(dataProvider);
+			}
+		};
+    }
+
+    @Override
+    public void setCaption(String caption) {
+        breadLayout.setCaption(caption);
+    }
+
+    public BreadLayout getBreadLayout() {
+        return breadLayout;
+    }
+
+    @Override
+    public FormFactory<T> getCrudFormFactory() {
+        return crudFormFactory;
+    }
+
+    @Override
+    public void setCrudFormFactory(FormFactory<T> crudFormFactory) {
+        this.crudFormFactory = crudFormFactory;
+    }
+    
+    @Override
+    public void setDataProvider(DataProvider<T, ?> dataProvider) {
+    	this.dataProvider = dataProvider;
+    }
+    
+    @Override
+    public void setAddOperation(AddOperationListener<T> addOperation) {
+        this.addOperation = addOperation;
+    }
+
+    @Override
+    public void setUpdateOperation(UpdateOperationListener<T> updateOperation) {
+        this.updateOperation = updateOperation;
+    }
+
+    @Override
+    public void setDeleteOperation(DeleteOperationListener<T> deleteOperation) {
+        this.deleteOperation = deleteOperation;
+    }
+
+    @Override
+    public void setOperations(DataProvider<T, ?> dataProvider, AddOperationListener<T> addOperation, UpdateOperationListener<T> updateOperation, DeleteOperationListener<T> deleteOperation) {
+        setDataProvider(dataProvider);
+        setAddOperation(addOperation);
+        setUpdateOperation(updateOperation);
+        setDeleteOperation(deleteOperation);
+    }
+
+    @Override
+    public void setBreadListener(BreadListener<T> breadListener) {
+    	setDataProvider(breadListener.getDataProvider());
+        setAddOperation(breadListener::add);
+        setUpdateOperation(breadListener::update);
+        setDeleteOperation(breadListener::delete);
+    }
+
+    public void addExporter(String name, Resource exporter) {
+        exportOperations.put(name, exporter);
+    }
+
+    public void removeExporter(String name) {
+        exportOperations.remove(name);
+    }
+    
+    public Resource getExporter(String name) {
+    	return exportOperations.get(name);
+    }
+
+	public DataProvider<T, ?> getDataProvider() {
+		return dataProvider;
+	}
+
+	public Class<T> getDomainType() {
+		return domainType;
+	}
+}

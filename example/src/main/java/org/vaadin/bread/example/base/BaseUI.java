@@ -1,11 +1,11 @@
 package org.vaadin.bread.example.base;
 
+import org.vaadin.bread.core.ui.bread.Bread;
 import org.vaadin.bread.example.GroupCrud;
 import org.vaadin.bread.example.UserCrud;
 import org.vaadin.bread.example.base.repo.JPAService;
 import org.vaadin.bread.example.model.Group;
 import org.vaadin.bread.example.model.User;
-import org.vaadin.bread.ui.crud.Crud;
 import org.vaadin.jetty.VaadinJettyServer;
 
 import com.vaadin.server.VaadinRequest;
@@ -35,19 +35,19 @@ public class BaseUI extends UI {
         addCrud(getGroupCrud(), "Group");
     }
 
-    private void addCrud(Crud<?> crud, String caption) {
+    private void addCrud(Bread<?> crud, String caption) {
         VerticalLayout layout = new VerticalLayout(crud);
         layout.setSizeFull();
         layout.setMargin(true);
         tabSheet.addTab(layout, caption);
     }
 
-	private Crud<User> getUserCrud() {
+	private Bread<User> getUserCrud() {
     	
     	return new UserCrud();
     }
 
-	private Crud<Group> getGroupCrud() {
+	private Bread<Group> getGroupCrud() {
     	
     	return new GroupCrud();
     }

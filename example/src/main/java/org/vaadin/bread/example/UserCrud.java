@@ -6,21 +6,21 @@ package org.vaadin.bread.example;
 import java.util.ArrayList;
 import java.util.Arrays;
 
+import org.vaadin.bread.core.ui.bread.BreadListener;
+import org.vaadin.bread.core.ui.bread.impl.GridBread;
+import org.vaadin.bread.core.ui.form.CrudOperation;
+import org.vaadin.bread.core.ui.form.FilterOperation;
+import org.vaadin.bread.core.ui.form.OperationAction;
+import org.vaadin.bread.core.ui.form.impl.field.provider.ComboBoxProvider;
+import org.vaadin.bread.core.ui.form.impl.form.factory.FormFactoryBuilder;
+import org.vaadin.bread.core.ui.form.impl.form.factory.GridLayoutFormFactory;
+import org.vaadin.bread.core.ui.layout.impl.HorizontalSplitBreadLayout;
 import org.vaadin.bread.example.base.repo.GroupRepository;
 import org.vaadin.bread.example.base.repo.JPAService;
 import org.vaadin.bread.example.base.repo.UserRepository;
 import org.vaadin.bread.example.model.Group;
 import org.vaadin.bread.example.model.User;
 import org.vaadin.bread.example.model.UserFilter;
-import org.vaadin.bread.ui.crud.CrudListener;
-import org.vaadin.bread.ui.crud.impl.GridCrud;
-import org.vaadin.bread.ui.form.CrudOperation;
-import org.vaadin.bread.ui.form.FilterOperation;
-import org.vaadin.bread.ui.form.OperationAction;
-import org.vaadin.bread.ui.form.impl.field.provider.ComboBoxProvider;
-import org.vaadin.bread.ui.form.impl.form.factory.FormFactoryBuilder;
-import org.vaadin.bread.ui.form.impl.form.factory.GridLayoutFormFactory;
-import org.vaadin.bread.ui.layout.impl.HorizontalSplitCrudLayout;
 
 import com.vaadin.data.provider.CallbackDataProvider;
 import com.vaadin.data.provider.ConfigurableFilterDataProvider;
@@ -35,12 +35,12 @@ import com.vaadin.ui.renderers.TextRenderer;
  *
  */
 @SuppressWarnings("serial")
-public class UserCrud extends GridCrud<User> implements CrudListener<User> {
+public class UserCrud extends GridBread<User> implements BreadListener<User> {
 
     private UserFilter filterBean = new UserFilter();
     
 	public UserCrud() {
-		super(User.class, new HorizontalSplitCrudLayout());
+		super(User.class, new HorizontalSplitBreadLayout());
 		
 		// build filter
         GridLayoutFormFactory<UserFilter> filterFormFactory = 
@@ -61,8 +61,8 @@ public class UserCrud extends GridCrud<User> implements CrudListener<User> {
         
         Component filterForm = filterFormFactory.buildNewForm(FilterOperation.APPLY
         		, filterBean, false);
-        setCrudListener(this);
-        getCrudLayout().addFilterComponent(filterForm);
+        setBreadListener(this);
+        getBreadLayout().addFilterComponent(filterForm);
 
         // build form
         GridLayoutFormFactory<User> formFactory = new FormFactoryBuilder<User, GridLayoutFormFactory<User>>()

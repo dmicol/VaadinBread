@@ -3,16 +3,16 @@
  */
 package org.vaadin.bread.example;
 
+import org.vaadin.bread.core.ui.bread.BreadListener;
+import org.vaadin.bread.core.ui.bread.impl.GridBread;
+import org.vaadin.bread.core.ui.form.FilterOperation;
+import org.vaadin.bread.core.ui.form.impl.form.factory.FormFactoryBuilder;
+import org.vaadin.bread.core.ui.form.impl.form.factory.GridLayoutFormFactory;
+import org.vaadin.bread.core.ui.layout.impl.HorizontalSplitBreadLayout;
 import org.vaadin.bread.example.base.repo.GroupRepository;
 import org.vaadin.bread.example.base.repo.JPAService;
 import org.vaadin.bread.example.model.Group;
 import org.vaadin.bread.example.model.GroupFilter;
-import org.vaadin.bread.ui.crud.CrudListener;
-import org.vaadin.bread.ui.crud.impl.GridCrud;
-import org.vaadin.bread.ui.form.FilterOperation;
-import org.vaadin.bread.ui.form.impl.form.factory.FormFactoryBuilder;
-import org.vaadin.bread.ui.form.impl.form.factory.GridLayoutFormFactory;
-import org.vaadin.bread.ui.layout.impl.HorizontalSplitCrudLayout;
 
 import com.vaadin.data.provider.CallbackDataProvider;
 import com.vaadin.data.provider.ConfigurableFilterDataProvider;
@@ -22,12 +22,12 @@ import com.vaadin.ui.Component;
  * @author Dmitrij Colautti
  *
  */
-public class GroupCrud extends GridCrud<Group> implements CrudListener<Group> {
+public class GroupCrud extends GridBread<Group> implements BreadListener<Group> {
 
     private GroupFilter filterBean = new GroupFilter();
     
 	public GroupCrud() {
-		super(Group.class, new HorizontalSplitCrudLayout());
+		super(Group.class, new HorizontalSplitBreadLayout());
 		
 		// build filter
         GridLayoutFormFactory<GroupFilter> filterFormFactory = 
@@ -47,8 +47,8 @@ public class GroupCrud extends GridCrud<Group> implements CrudListener<Group> {
         
         Component filterForm = filterFormFactory.buildNewForm(FilterOperation.APPLY
         		, filterBean, false);
-        setCrudListener(this);
-        getCrudLayout().addFilterComponent(filterForm);
+        setBreadListener(this);
+        getBreadLayout().addFilterComponent(filterForm);
 
         // build form
         GridLayoutFormFactory<Group> formFactory = new FormFactoryBuilder<Group, GridLayoutFormFactory<Group>>()

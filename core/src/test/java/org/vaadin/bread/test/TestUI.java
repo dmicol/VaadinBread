@@ -1,18 +1,18 @@
 package org.vaadin.bread.test;
 
+import org.vaadin.bread.core.ui.bread.Bread;
+import org.vaadin.bread.core.ui.bread.BreadListener;
+import org.vaadin.bread.core.ui.bread.impl.GridBread;
+import org.vaadin.bread.core.ui.form.CrudOperation;
+import org.vaadin.bread.core.ui.form.impl.field.provider.CheckBoxGroupProvider;
+import org.vaadin.bread.core.ui.form.impl.field.provider.ComboBoxProvider;
+import org.vaadin.bread.core.ui.form.impl.form.factory.GridLayoutFormFactory;
+import org.vaadin.bread.core.ui.layout.impl.HorizontalSplitBreadLayout;
 import org.vaadin.bread.test.repo.Group;
 import org.vaadin.bread.test.repo.GroupRepository;
 import org.vaadin.bread.test.repo.JPAService;
 import org.vaadin.bread.test.repo.User;
 import org.vaadin.bread.test.repo.UserRepository;
-import org.vaadin.bread.ui.crud.Crud;
-import org.vaadin.bread.ui.crud.CrudListener;
-import org.vaadin.bread.ui.crud.impl.GridCrud;
-import org.vaadin.bread.ui.form.CrudOperation;
-import org.vaadin.bread.ui.form.impl.field.provider.CheckBoxGroupProvider;
-import org.vaadin.bread.ui.form.impl.field.provider.ComboBoxProvider;
-import org.vaadin.bread.ui.form.impl.form.factory.GridLayoutFormFactory;
-import org.vaadin.bread.ui.layout.impl.HorizontalSplitCrudLayout;
 import org.vaadin.jetty.VaadinJettyServer;
 
 import com.vaadin.data.provider.DataProvider;
@@ -28,7 +28,7 @@ import com.vaadin.ui.renderers.TextRenderer;
 /**
  * @author Alejandro Duarte
  */
-public class TestUI extends UI implements CrudListener<User> {
+public class TestUI extends UI implements BreadListener<User> {
 
     public static void main(String[] args) throws Exception {
         JPAService.init();
@@ -43,36 +43,36 @@ public class TestUI extends UI implements CrudListener<User> {
         tabSheet.setSizeFull();
         setContent(tabSheet);
 
-        addCrud(getDefaultCrud(), "Default");
-        addCrud(getDefaultCrudWithFixes(), "Default (with fixes)");
-        addCrud(getConfiguredCrud(), "Configured");
+        addBread(getDefaultBread(), "Default");
+        addBread(getDefaultBreadWithFixes(), "Default (with fixes)");
+        addBread(getConfiguredBread(), "Configured");
     }
 
-    private void addCrud(Crud crud, String caption) {
+    private void addBread(Bread crud, String caption) {
         VerticalLayout layout = new VerticalLayout(crud);
         layout.setSizeFull();
         layout.setMargin(true);
         tabSheet.addTab(layout, caption);
     }
 
-    private Crud getDefaultCrud() {
-    	GridCrud<User> gridCrud = new GridCrud<>(User.class);
-    	gridCrud.setCrudListener(this);
-        return gridCrud;
+    private Bread getDefaultBread() {
+    	GridBread<User> gridBread = new GridBread<>(User.class);
+    	gridBread.setBreadListener(this);
+        return gridBread;
     }
 
-    private Crud getDefaultCrudWithFixes() {
-        GridCrud<User> crud = new GridCrud<>(User.class);
-        crud.setCrudListener(this);
-        crud.getCrudFormFactory().setFieldProvider("groups", new CheckBoxGroupProvider<>(GroupRepository.findAll()));
-        crud.getCrudFormFactory().setFieldProvider("mainGroup", new ComboBoxProvider<>(GroupRepository.findAll()));
+    private Bread getDefaultBreadWithFixes() {
+        GridBread<User> bread = new GridBread<>(User.class);
+        bread.setBreadListener(this);
+        bread.getCrudFormFactory().setFieldProvider("groups", new CheckBoxGroupProvider<>(GroupRepository.findAll()));
+        bread.getCrudFormFactory().setFieldProvider("mainGroup", new ComboBoxProvider<>(GroupRepository.findAll()));
 
-        return crud;
+        return bread;
     }
 
-    private Crud getConfiguredCrud() {
-        GridCrud<User> crud = new GridCrud<>(User.class, new HorizontalSplitCrudLayout());
-        crud.setCrudListener(this);
+    private Bread getConfiguredBread() {
+        GridBread<User> crud = new GridBread<>(User.class, new HorizontalSplitBreadLayout());
+        crud.setBreadListener(this);
 
         GridLayoutFormFactory<User> formFactory = new GridLayoutFormFactory<>(User.class, CrudOperation.values(), 2, 2);
         crud.setCrudFormFactory(formFactory);
