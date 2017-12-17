@@ -143,4 +143,8 @@ public class WindowBasedCrudLayout extends Composite implements BreadLayout {
         this.formWindowWidth = formWindowWidth;
     }
 
+	public String getFormWindowWidth() {
+		return formWindowWidth;
+	}
+
 }

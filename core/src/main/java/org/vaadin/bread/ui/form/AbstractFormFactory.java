@@ -24,6 +24,8 @@ public abstract class AbstractFormFactory<T> implements FormFactory<T> {
     protected Map<OperationMode, FormConfiguration> configurations = new HashMap<>();
 
     protected ErrorListener<T> errorListener;
+
+    protected String validationErrorMessage = "Please fix the errors and try again";
     
     public AbstractFormFactory() {}
     
@@ -180,5 +182,15 @@ public abstract class AbstractFormFactory<T> implements FormFactory<T> {
 	public ErrorListener<T> getErrorListener() {
 		return errorListener;
 	}
+
+    @Override
+	public String getValidationErrorMessage() {
+        return validationErrorMessage;
+    }
+
+    @Override
+	public void setValidationErrorMessage(String validationErrorMessage) {
+        this.validationErrorMessage = validationErrorMessage;
+    }
 
 }

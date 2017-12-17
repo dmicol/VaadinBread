@@ -73,4 +73,8 @@ public interface FormFactory<T> {
 
 	OperationMode[] getOperationModes();
 
+	void setValidationErrorMessage(String validationErrorMessage);
+
+	String getValidationErrorMessage();
+
 }
