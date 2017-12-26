@@ -24,7 +24,7 @@ Bread UI Add-on includes at least one implementation for each of these interface
 Create a new BreadComponent and add it to a layout (currently, Bread UI Add-on provides only one implementation of the `Bread` interface: `GridBread`):
 
 ```
-GridBasedCrudComponent<User> crud = new GridBasedCrudComponent<>(User.class);
+GridBread<User> crud = new GridBread<>(User.class);
 layout.addComponent(crud);
 ```
 Use lambda expressions or method references to delegate CRUD operations to your backend:
@@ -66,7 +66,7 @@ crud.setCrudListener(new CrudListener<User>() {
 Use a different `CrudLayout` implementation:
 
 ```
-GridBasedCrudComponent<User> crud = new GridBasedCrudComponent<>(User.class, new HorizontalSplitCrudLayout());
+GridBread<User> crud = new GridBread<>(User.class, new HorizontalSplitCrudLayout());
 ```
 
 Set a different `CrudFormFactory` implementation:
