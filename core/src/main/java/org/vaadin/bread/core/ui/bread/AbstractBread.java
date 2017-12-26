@@ -4,6 +4,8 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+import org.vaadin.bread.core.ui.form.FilterOperation;
+import org.vaadin.bread.core.ui.form.FormConfiguration;
 import org.vaadin.bread.core.ui.form.FormFactory;
 import org.vaadin.bread.core.ui.layout.BreadLayout;
 import org.vaadin.bread.core.ui.support.BeanExcelBuilder;

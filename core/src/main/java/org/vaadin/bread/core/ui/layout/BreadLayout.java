@@ -22,4 +22,8 @@ public interface BreadLayout extends Component {
 
     void hideForm();
 
+	boolean isFiltersVisible();
+
+	void setFiltersVisible(boolean visible);
+
 }

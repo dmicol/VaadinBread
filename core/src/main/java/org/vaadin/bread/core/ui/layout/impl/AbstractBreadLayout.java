@@ -7,12 +7,13 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.vaadin.bread.core.ui.form.CrudOperation;
+import org.vaadin.bread.core.ui.form.FilterOperation;
+import org.vaadin.bread.core.ui.form.FormConfiguration;
 import org.vaadin.bread.core.ui.layout.BreadLayout;
 
 import com.vaadin.icons.VaadinIcons;
-import com.vaadin.server.Sizeable.Unit;
-import com.vaadin.shared.ui.MarginInfo;
 import com.vaadin.ui.AbstractComponent;
+import com.vaadin.ui.Button;
 import com.vaadin.ui.Component;
 import com.vaadin.ui.Composite;
 import com.vaadin.ui.CssLayout;
@@ -60,8 +61,9 @@ public abstract class AbstractBreadLayout extends Composite implements BreadLayo
         toolbarLayout.setVisible(false);
         toolbarLayout.addStyleName(ValoTheme.LAYOUT_COMPONENT_GROUP);
         
-        Label filterIcon = new Label();
-        filterIcon.setIcon(VaadinIcons.SEARCH);
+        Button filterIcon = new Button(VaadinIcons.SEARCH);
+        filterIcon.addStyleName(ValoTheme.BUTTON_BORDERLESS);
+        filterIcon.addClickListener(e -> filterTabs.setVisible(!filterTabs.isVisible()) );
         browseComponentHeaderLayout.addComponent(filterIcon);
 
         filterTabs.setVisible(false);
@@ -114,10 +116,18 @@ public abstract class AbstractBreadLayout extends Composite implements BreadLayo
 	    filterTabs.addTab(component, filterCaption);
 	}
 
-
-
 	public void setDetailCaption(CrudOperation operation, String caption) {
 	    detailCaptions.put(operation, caption);
+	}
+	
+	@Override
+	public void setFiltersVisible(boolean visible) {
+		filterTabs.setVisible(visible);
+	}
+	
+	@Override
+	public boolean isFiltersVisible() {
+		return filterTabs.isVisible();
 	}
 
 }
