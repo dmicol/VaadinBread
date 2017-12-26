@@ -70,6 +70,7 @@ public abstract class AbstractBreadLayout extends Composite implements BreadLayo
         filterTabs.setHeightUndefined();;
         filterTabs.setWidth(100, Unit.PERCENTAGE);
         filterTabs.setTabCaptionsAsHtml(true);
+        filterTabs.setTabsVisible(false);
         browseComponentHeaderLayout.addComponent(filterTabs);
         browseComponentHeaderLayout.setExpandRatio(filterTabs, 1);
         breadComponent.addComponent(browseComponentHeaderLayout);
@@ -114,6 +115,9 @@ public abstract class AbstractBreadLayout extends Composite implements BreadLayo
 	
 	    filterTabs.setVisible(true);
 	    filterTabs.addTab(component, filterCaption);
+	    
+	    if (filterTabs.getComponentCount()>1)
+	    	filterTabs.setTabsVisible(true);
 	}
 
 	public void setDetailCaption(CrudOperation operation, String caption) {
