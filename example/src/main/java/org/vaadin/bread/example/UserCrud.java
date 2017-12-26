@@ -10,6 +10,7 @@ import org.vaadin.bread.core.ui.bread.BreadListener;
 import org.vaadin.bread.core.ui.bread.impl.GridBread;
 import org.vaadin.bread.core.ui.form.CrudOperation;
 import org.vaadin.bread.core.ui.form.FilterOperation;
+import org.vaadin.bread.core.ui.form.FormConfiguration;
 import org.vaadin.bread.core.ui.form.OperationAction;
 import org.vaadin.bread.core.ui.form.impl.field.provider.ComboBoxProvider;
 import org.vaadin.bread.core.ui.form.impl.form.factory.FormFactoryBuilder;
@@ -57,14 +58,15 @@ public class UserCrud extends GridBread<User> implements BreadListener<User> {
         filterFormFactory.getConfiguration(FilterOperation.APPLY).setOperationActionListener(FilterOperation.EMPTY, (e)-> {
         	filterBean.clear();
         	filterFormFactory.getBinder().readBean(filterBean);
-        	refreshGrid();
         });
         filterFormFactory.buildSensitiveDefaults();
+        filterFormFactory.getConfiguration(FilterOperation.APPLY)
+        	.setOperationActionListener(FilterOperation.APPLY, e -> {  getBreadLayout().setFiltersVisible(false); });
         
-        Component filterForm = filterFormFactory.buildNewForm(FilterOperation.APPLY
-        		, filterBean, false);
+        Component filterForm = filterFormFactory.buildNewForm(FilterOperation.APPLY, filterBean, false);
         setBreadListener(this);
         getBreadLayout().addFilterComponent("filtro",filterForm);
+    	
 
         // build form
         GridLayoutFormFactory<User> formFactory = new FormFactoryBuilder<User, GridLayoutFormFactory<User>>()

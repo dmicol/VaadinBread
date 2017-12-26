@@ -43,12 +43,13 @@ public class GroupCrud extends GridBread<Group> implements BreadListener<Group> 
         filterFormFactory.getConfiguration(FilterOperation.APPLY).setOperationActionListener(FilterOperation.EMPTY, (e)-> {
         	filterBean.clear();
         	filterFormFactory.getBinder().readBean(filterBean);
-        	refreshGrid();
         });
         filterFormFactory.buildSensitiveDefaults();
+
+        filterFormFactory.getConfiguration(FilterOperation.APPLY)
+        	.setOperationActionListener(FilterOperation.APPLY, e -> {  getBreadLayout().setFiltersVisible(false); });
         
-        Component filterForm = filterFormFactory.buildNewForm(FilterOperation.APPLY
-        		, filterBean, false);
+        Component filterForm = filterFormFactory.buildNewForm(FilterOperation.APPLY, filterBean, false);
         setBreadListener(this);
         getBreadLayout().addFilterComponent("filtro",filterForm);
 
