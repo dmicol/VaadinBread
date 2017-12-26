@@ -28,6 +28,8 @@ public class GroupCrud extends GridBread<Group> implements BreadListener<Group> 
     
 	public GroupCrud() {
 		super(Group.class, new HorizontalSplitBreadLayout());
+
+		getBreadLayout().setCaption("GRUPPO");
 		
 		// build filter
         GridLayoutFormFactory<GroupFilter> filterFormFactory = 
@@ -48,7 +50,7 @@ public class GroupCrud extends GridBread<Group> implements BreadListener<Group> 
         Component filterForm = filterFormFactory.buildNewForm(FilterOperation.APPLY
         		, filterBean, false);
         setBreadListener(this);
-        getBreadLayout().addFilterComponent(filterForm);
+        getBreadLayout().addFilterComponent("filtro",filterForm);
 
         // build form
         GridLayoutFormFactory<Group> formFactory = new FormFactoryBuilder<Group, GridLayoutFormFactory<Group>>()

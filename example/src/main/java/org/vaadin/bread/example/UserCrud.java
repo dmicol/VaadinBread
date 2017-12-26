@@ -14,7 +14,7 @@ import org.vaadin.bread.core.ui.form.OperationAction;
 import org.vaadin.bread.core.ui.form.impl.field.provider.ComboBoxProvider;
 import org.vaadin.bread.core.ui.form.impl.form.factory.FormFactoryBuilder;
 import org.vaadin.bread.core.ui.form.impl.form.factory.GridLayoutFormFactory;
-import org.vaadin.bread.core.ui.layout.impl.HorizontalSplitBreadLayout;
+import org.vaadin.bread.core.ui.layout.impl.WindowBasedBreadLayout;
 import org.vaadin.bread.example.base.repo.GroupRepository;
 import org.vaadin.bread.example.base.repo.JPAService;
 import org.vaadin.bread.example.base.repo.UserRepository;
@@ -40,7 +40,9 @@ public class UserCrud extends GridBread<User> implements BreadListener<User> {
     private UserFilter filterBean = new UserFilter();
     
 	public UserCrud() {
-		super(User.class, new HorizontalSplitBreadLayout());
+		super(User.class, new WindowBasedBreadLayout());
+		
+		getBreadLayout().setCaption("UTENTE");
 		
 		// build filter
         GridLayoutFormFactory<UserFilter> filterFormFactory = 
@@ -62,7 +64,7 @@ public class UserCrud extends GridBread<User> implements BreadListener<User> {
         Component filterForm = filterFormFactory.buildNewForm(FilterOperation.APPLY
         		, filterBean, false);
         setBreadListener(this);
-        getBreadLayout().addFilterComponent(filterForm);
+        getBreadLayout().addFilterComponent("filtro",filterForm);
 
         // build form
         GridLayoutFormFactory<User> formFactory = new FormFactoryBuilder<User, GridLayoutFormFactory<User>>()

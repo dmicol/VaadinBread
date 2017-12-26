@@ -19,24 +19,24 @@ public class VerticalSplitBreadLayout extends AbstractTwoComponentsBreadLayout {
     	
 
         mainLayout.setSizeFull();
-        mainLayout.setFirstComponent(firstComponent);
-        mainLayout.setSecondComponent(secondComponent);
+        mainLayout.setFirstComponent(breadComponent);
+        mainLayout.setSecondComponent(detailComponent);
     	
     	addToolbarLayout(toolbarLayout);
         
-        secondComponentHeaderLayout.setMargin(new MarginInfo(false, false, true, false));
+        detailComponentHeaderLayout.setMargin(new MarginInfo(false, false, true, false));
     }
 
     @Override
     protected void addToolbarLayout(CssLayout toolbarLayout) {
-        firstComponentHeaderLayout.addComponent(toolbarLayout);
+        browseComponentHeaderLayout.addComponent(toolbarLayout);
     }
 
     @Override
     public void addToolbarComponent(Component component) {
-        if (!firstComponentHeaderLayout.isVisible()) {
-            firstComponentHeaderLayout.setVisible(true);
-            firstComponent.addComponent(firstComponentHeaderLayout, firstComponent.getComponentCount() - 1);
+        if (!browseComponentHeaderLayout.isVisible()) {
+            browseComponentHeaderLayout.setVisible(true);
+            breadComponent.addComponent(browseComponentHeaderLayout, breadComponent.getComponentCount() - 1);
         }
 
         toolbarLayout.setVisible(true);

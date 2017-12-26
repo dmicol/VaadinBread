@@ -16,7 +16,7 @@ public class VerticalBreadLayout extends AbstractTwoComponentsBreadLayout {
     	setCompositionRoot(mainLayout);
         setSizeFull();
 
-        mainLayout.addComponents(firstComponent, secondComponent);
+        mainLayout.addComponents(breadComponent, detailComponent);
         mainLayout.setMargin(false);
     	
     	addToolbarLayout(toolbarLayout);
@@ -24,14 +24,14 @@ public class VerticalBreadLayout extends AbstractTwoComponentsBreadLayout {
 
     @Override
     protected void addToolbarLayout(CssLayout toolbarLayout) {
-        firstComponentHeaderLayout.addComponent(toolbarLayout);
+        browseComponentHeaderLayout.addComponent(toolbarLayout);
     }
 
     @Override
     public void addToolbarComponent(Component component) {
-        if (!firstComponentHeaderLayout.isVisible()) {
-            firstComponentHeaderLayout.setVisible(true);
-            firstComponent.addComponent(firstComponentHeaderLayout, firstComponent.getComponentCount() - 1);
+        if (!browseComponentHeaderLayout.isVisible()) {
+            browseComponentHeaderLayout.setVisible(true);
+            breadComponent.addComponent(browseComponentHeaderLayout, breadComponent.getComponentCount() - 1);
         }
 
         toolbarLayout.setVisible(true);

@@ -20,21 +20,15 @@ import com.vaadin.ui.themes.ValoTheme;
 /**
  * @author Alejandro Duarte
  */
-public class WindowBasedBreadLayout extends Composite implements BreadLayout {
+public class WindowBasedBreadLayout extends AbstractBreadLayout implements BreadLayout {
 
     protected VerticalLayout mainLayout = new VerticalLayout();
-    protected Label captionLabel = new Label();
-    protected HorizontalLayout headerLayout = new HorizontalLayout();
-    protected CssLayout toolbarLayout = new CssLayout();
-    protected HorizontalLayout filterLayout = new HorizontalLayout();
-    protected VerticalLayout mainComponentLayout = new VerticalLayout();
     protected Window formWindow;
     protected String formWindowWidth = "500px";
 
-    protected Map<CrudOperation, String> windowCaptions = new HashMap<>();
-
     public WindowBasedBreadLayout() {
-        setCompositionRoot(mainLayout);
+    	super();
+        setCompositionRoot(breadComponent);
         mainLayout.setSizeFull();
         mainLayout.setMargin(false);
         mainLayout.setSpacing(true);
@@ -46,25 +40,7 @@ public class WindowBasedBreadLayout extends Composite implements BreadLayout {
         captionLabel.addStyleName(ValoTheme.LABEL_NO_MARGIN);
         captionLabel.setVisible(false);
 
-        headerLayout.setVisible(false);
-        headerLayout.setSpacing(true);
-
-        toolbarLayout.setVisible(false);
-        toolbarLayout.addStyleName(ValoTheme.LAYOUT_COMPONENT_GROUP);
-        headerLayout.addComponent(toolbarLayout);
-
-        filterLayout.setVisible(false);
-        filterLayout.setSpacing(true);
-        headerLayout.addComponent(filterLayout);
-
-        Label filterIcon = new Label();
-        filterIcon.setIcon(VaadinIcons.SEARCH);
-        filterLayout.addComponent(filterIcon);
-
-        mainComponentLayout.setSizeFull();
-        mainComponentLayout.setMargin(false);
-        mainLayout.addComponent(mainComponentLayout);
-        mainLayout.setExpandRatio(mainComponentLayout, 1);
+        breadComponent.addComponent(toolbarLayout, 2);
 
         setWindowCaption(CrudOperation.ADD, "Add");
         setWindowCaption(CrudOperation.UPDATE, "Update");
@@ -72,39 +48,18 @@ public class WindowBasedBreadLayout extends Composite implements BreadLayout {
     }
 
     @Override
-    public void setCaption(String caption) {
-        if (!captionLabel.isVisible()) {
-            captionLabel.setVisible(true);
-            mainLayout.addComponent(captionLabel, 0);
-        }
-
-        captionLabel.setValue(caption);
-    }
-
-    @Override
     public void setMainComponent(Component component) {
-        mainComponentLayout.removeAllComponents();
-        mainComponentLayout.addComponent(component);
+        browseComponentLayout.removeAllComponents();
+        browseComponentLayout.addComponent(component);
     }
 
-    @Override
-    public void addFilterComponent(Component component) {
-        if (!headerLayout.isVisible()) {
-            headerLayout.setVisible(true);
-            mainLayout.addComponent(headerLayout, mainLayout.getComponentCount() - 1);
-        }
 
-        filterLayout.setVisible(true);
-        filterLayout.addComponent(component);
-    }
-
+	protected void addToolbarLayout(CssLayout toolbarLayout) {
+		
+	}
+    
     @Override
     public void addToolbarComponent(Component component) {
-        if (!headerLayout.isVisible()) {
-            headerLayout.setVisible(true);
-            mainLayout.addComponent(headerLayout, mainLayout.getComponentCount() - 1);
-        }
-
         toolbarLayout.setVisible(true);
         toolbarLayout.addComponent(component);
     }
@@ -124,7 +79,7 @@ public class WindowBasedBreadLayout extends Composite implements BreadLayout {
     @Override
     public void showForm(CrudOperation operation, Component form) {
         if (!operation.equals(CrudOperation.READ)) {
-            showWindow(windowCaptions.get(operation), form);
+            showWindow(detailCaptions.get(operation), form);
         }
     }
 
@@ -136,7 +91,7 @@ public class WindowBasedBreadLayout extends Composite implements BreadLayout {
     }
 
     public void setWindowCaption(CrudOperation operation, String caption) {
-        windowCaptions.put(operation, caption);
+    	setDetailCaption(operation, caption);
     }
 
     public void setFormWindowWidth(String formWindowWidth) {

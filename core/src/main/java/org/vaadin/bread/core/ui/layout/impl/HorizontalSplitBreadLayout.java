@@ -18,25 +18,25 @@ public class HorizontalSplitBreadLayout extends AbstractTwoComponentsBreadLayout
         setSizeFull();
     	
     	mainLayout.setSizeFull();
-    	mainLayout.setFirstComponent(firstComponent);
-    	mainLayout.setSecondComponent(secondComponent);
+    	mainLayout.setFirstComponent(breadComponent);
+    	mainLayout.setSecondComponent(detailComponent);
     	mainLayout.setSplitPosition(60, Sizeable.Unit.PERCENTAGE);
     	
     	addToolbarLayout(toolbarLayout);
     	
-        secondComponentHeaderLayout.setMargin(new MarginInfo(false, false, false, true));
+        detailComponentHeaderLayout.setMargin(new MarginInfo(false, false, false, true));
     }
 
     @Override
     protected void addToolbarLayout(CssLayout toolbarLayout) {
-        secondComponentHeaderLayout.addComponent(toolbarLayout);
+        detailComponentHeaderLayout.addComponent(toolbarLayout);
     }
 
     @Override
     public void addToolbarComponent(Component component) {
-        if (!secondComponentHeaderLayout.isVisible()) {
-            secondComponentHeaderLayout.setVisible(true);
-            secondComponent.addComponent(secondComponentHeaderLayout, secondComponent.getComponentCount() - 1);
+        if (!detailComponentHeaderLayout.isVisible()) {
+            detailComponentHeaderLayout.setVisible(true);
+            detailComponent.addComponent(detailComponentHeaderLayout, detailComponent.getComponentCount() - 1);
         }
 
         toolbarLayout.setVisible(true);
