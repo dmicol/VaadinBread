@@ -47,13 +47,6 @@ public class WindowBasedBreadLayout extends AbstractBreadLayout implements Bread
         setWindowCaption(CrudOperation.DELETE, "Are you sure you want to delete this item?");
     }
 
-    @Override
-    public void setMainComponent(Component component) {
-        browseComponentLayout.removeAllComponents();
-        browseComponentLayout.addComponent(component);
-    }
-
-
 	protected void addToolbarLayout(CssLayout toolbarLayout) {
 		
 	}
