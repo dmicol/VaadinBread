@@ -39,6 +39,7 @@ public class GroupCrud extends GridBread<Group> implements BreadListener<Group> 
         
         filterFormFactory.getConfiguration(FilterOperation.APPLY).setOperationActionListener(FilterOperation.APPLY, (e)-> {
         	refreshGrid();
+        	getBreadLayout().setFiltersVisible(false);
         });
         filterFormFactory.getConfiguration(FilterOperation.APPLY).setOperationActionListener(FilterOperation.EMPTY, (e)-> {
         	filterBean.clear();
@@ -46,8 +47,6 @@ public class GroupCrud extends GridBread<Group> implements BreadListener<Group> 
         });
         filterFormFactory.buildSensitiveDefaults();
 
-        filterFormFactory.getConfiguration(FilterOperation.APPLY)
-        	.setOperationActionListener(FilterOperation.APPLY, e -> {  getBreadLayout().setFiltersVisible(false); });
         
         Component filterForm = filterFormFactory.buildNewForm(FilterOperation.APPLY, filterBean, false);
         setBreadListener(this);

@@ -54,15 +54,14 @@ public class UserCrud extends GridBread<User> implements BreadListener<User> {
         filterFormFactory.getConfiguration(FilterOperation.APPLY).setOperationActions(new ArrayList<OperationAction>(Arrays.asList(FilterOperation.values())));
         filterFormFactory.getConfiguration(FilterOperation.APPLY).setOperationActionListener(FilterOperation.APPLY, (e)-> {
         	refreshGrid();
+        	getBreadLayout().setFiltersVisible(false);
         });
         filterFormFactory.getConfiguration(FilterOperation.APPLY).setOperationActionListener(FilterOperation.EMPTY, (e)-> {
         	filterBean.clear();
         	filterFormFactory.getBinder().readBean(filterBean);
         });
         filterFormFactory.buildSensitiveDefaults();
-        filterFormFactory.getConfiguration(FilterOperation.APPLY)
-        	.setOperationActionListener(FilterOperation.APPLY, e -> {  getBreadLayout().setFiltersVisible(false); });
-        
+
         Component filterForm = filterFormFactory.buildNewForm(FilterOperation.APPLY, filterBean, false);
         setBreadListener(this);
         getBreadLayout().addFilterComponent("filtro",filterForm);
