@@ -3,6 +3,7 @@ package org.vaadin.bread.example.model;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.persistence.Basic;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -23,6 +24,7 @@ public class Group {
 
     private String name;
 
+    @Basic(optional=false)
     private Boolean admin;
 
     @OneToMany(mappedBy="mainGroup")

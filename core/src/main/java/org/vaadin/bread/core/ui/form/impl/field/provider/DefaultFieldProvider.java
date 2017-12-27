@@ -31,8 +31,9 @@ public class DefaultFieldProvider implements FieldProvider {
     @Override
     public HasValue buildField() {
         if (Boolean.class.isAssignableFrom(type) || boolean.class == type) {
-            return new CheckBox();
-        }
+            ComboBox comboBox = new ComboBox();
+            comboBox.setItems(true, false);
+            return comboBox;        }
 
         if (LocalDate.class.isAssignableFrom(type)) {
         	return new DateField();
