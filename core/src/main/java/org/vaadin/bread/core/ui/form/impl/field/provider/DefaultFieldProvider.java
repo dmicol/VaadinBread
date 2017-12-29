@@ -33,7 +33,8 @@ public class DefaultFieldProvider implements FieldProvider {
         if (Boolean.class.isAssignableFrom(type) || boolean.class == type) {
             ComboBox comboBox = new ComboBox();
             comboBox.setItems(true, false);
-            return comboBox;        }
+            return comboBox;        
+        }
 
         if (LocalDate.class.isAssignableFrom(type)) {
         	return new DateField();

@@ -29,6 +29,8 @@ import com.vaadin.ui.Notification;
  * @author Alejandro Duarte
  */
 public class GridBread<T> extends AbstractBread<T> {
+	
+	public static final String EXPORTER_EXCEL = "EXCEL";
 
     protected Button findAllButton;
     protected Button addButton;
@@ -94,7 +96,7 @@ public class GridBread<T> extends AbstractBread<T> {
         Button btn = new Button(FontAwesome.FILE_EXCEL_O.getHtml());
         btn.setCaptionAsHtml(true);
         btn.setDescription("Export to Excel");
-        addExporterMenu("EXCEL", btn);
+        addExporterMenu(EXPORTER_EXCEL, btn);
 
         updateButtons();
     }
@@ -153,8 +155,7 @@ public class GridBread<T> extends AbstractBread<T> {
         	crudFormFactory.getConfiguration(CrudOperation.READ).setOperationActionListener(CrudOperation.READ, event -> {
                 grid.asSingleSelect().clear();
             });
-            Component form = crudFormFactory.buildNewForm(CrudOperation.READ
-            		, domainObject, true);
+            Component form = crudFormFactory.buildNewForm(CrudOperation.READ, domainObject, true);
 
             breadLayout.showForm(CrudOperation.READ, form);
 
