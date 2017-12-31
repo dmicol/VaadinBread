@@ -67,6 +67,14 @@
             <artifactId>javax.el</artifactId>
             <version>3.0.1-b08</version>
         </dependency>
+        
+        		
+		<dependency>
+		   <groupId>org.vaadin.addons</groupId>
+		   <artifactId>fontawesomelabel</artifactId>
+		   <version>1.4.0</version>
+		</dependency>
+        
 
         <dependency>
         	<groupId>org.apache.logging.log4j</groupId>
