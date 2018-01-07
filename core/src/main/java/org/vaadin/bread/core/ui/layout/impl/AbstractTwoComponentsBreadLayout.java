@@ -15,8 +15,11 @@ import com.vaadin.ui.themes.ValoTheme;
  */
 public abstract class AbstractTwoComponentsBreadLayout extends AbstractBreadLayout implements BreadLayout {
 
-    protected VerticalLayout detailComponent = new VerticalLayout();
+	private static final long serialVersionUID = -6169042588367185056L;
+
+	protected VerticalLayout detailComponent = new VerticalLayout();
     protected HorizontalLayout detailComponentHeaderLayout = new HorizontalLayout();
+    
     protected VerticalLayout formComponentLayout = new VerticalLayout();
     protected VerticalLayout formCaptionLayout = new VerticalLayout();
 
