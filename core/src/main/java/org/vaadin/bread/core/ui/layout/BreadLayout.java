@@ -26,4 +26,6 @@ public interface BreadLayout extends Component {
 
 	void setFiltersVisible(boolean visible);
 
+	void setDetailCaption(CrudOperation operation, String caption);
+
 }

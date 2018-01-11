@@ -120,6 +120,7 @@ public abstract class AbstractBreadLayout extends Composite implements BreadLayo
 	    	filterTabs.setTabsVisible(true);
 	}
 
+	@Override
 	public void setDetailCaption(CrudOperation operation, String caption) {
 	    detailCaptions.put(operation, caption);
 	}
