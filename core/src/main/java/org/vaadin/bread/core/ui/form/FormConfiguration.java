@@ -179,22 +179,25 @@ public class FormConfiguration implements Serializable {
 	
 
 	public void buildSensitiveDefaults(Class<?> clazz) {
-	    try {
-	        List<PropertyDescriptor> descriptors = BeanUtil.getBeanPropertyDescriptors(clazz);
-	        descriptors.stream()
-	        	.filter(d -> !d.getName().equals("class"))
-	        	.forEach(pd -> {
-	        		Class<?> propertyType = pd.getPropertyType();
-	        		if (!(propertyType.isArray() || Collection.class.isAssignableFrom(propertyType))) {
-	        			visibleProperties.add(pd.getName());
-	        			fieldCaptions.put(pd.getName(), SharedUtil.propertyIdToHumanFriendly(pd.getName()));
-	        			fieldProviders.put(pd.getName(), new DefaultFieldProvider(pd.getPropertyType()));            		
-	        		}
-	        	});
-	        
-	    } catch (IntrospectionException e) {
-	        throw new RuntimeException(e);
-	    }
+		if (visibleProperties.isEmpty()) {
+		    try {
+		        List<PropertyDescriptor> descriptors = BeanUtil.getBeanPropertyDescriptors(clazz);
+		        descriptors.stream()
+		        	.filter(d -> !d.getName().equals("class"))
+		        	.forEach(pd -> {
+		        		Class<?> propertyType = pd.getPropertyType();
+		        		if (!(propertyType.isArray() || Collection.class.isAssignableFrom(propertyType))) {
+		        			visibleProperties.add(pd.getName());
+		        			fieldCaptions.put(pd.getName(), SharedUtil.propertyIdToHumanFriendly(pd.getName()));
+		        			fieldProviders.put(pd.getName(), new DefaultFieldProvider(pd.getPropertyType()));            		
+		        		}
+		        	});
+		        
+		    } catch (IntrospectionException e) {
+		        throw new RuntimeException(e);
+		    }
+		}
+	    
 
     	if (jpaTypeForJpaValidation!=null) {
 	        visibleProperties.stream().forEach(prodId -> {
