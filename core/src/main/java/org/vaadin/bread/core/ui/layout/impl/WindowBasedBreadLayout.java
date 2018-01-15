@@ -58,11 +58,7 @@ public class WindowBasedBreadLayout extends AbstractBreadLayout implements Bread
     }
 
     private void showWindow(String caption, Component form) {
-        VerticalLayout windowLayout = new VerticalLayout(form);
-        windowLayout.setWidth("100%");
-        windowLayout.setMargin(false);
-
-        formWindow = new Window(caption, windowLayout);
+        formWindow = new Window(caption, detailComponent);
         formWindow.setWidth(formWindowWidth);
         formWindow.setModal(true);
         formWindow.center();
@@ -71,6 +67,7 @@ public class WindowBasedBreadLayout extends AbstractBreadLayout implements Bread
 
     @Override
     public void showForm(CrudOperation operation, Component form) {
+    	super.showForm(operation, form);
         if (!operation.equals(CrudOperation.READ)) {
             showWindow(detailCaptions.get(operation), form);
         }
@@ -78,6 +75,7 @@ public class WindowBasedBreadLayout extends AbstractBreadLayout implements Bread
 
     @Override
     public void hideForm() {
+    	super.hideForm();
         if (formWindow != null) {
             formWindow.close();
         }

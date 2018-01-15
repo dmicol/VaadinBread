@@ -8,7 +8,7 @@ import com.vaadin.ui.VerticalSplitPanel;
 /**
  * @author Alejandro Duarte.
  */
-public class VerticalSplitBreadLayout extends AbstractTwoComponentsBreadLayout {
+public class VerticalSplitBreadLayout extends AbstractBreadLayout {
 
     public VerticalSplitBreadLayout() {
     	super();

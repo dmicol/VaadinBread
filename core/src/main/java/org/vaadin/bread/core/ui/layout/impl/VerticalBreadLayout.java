@@ -7,7 +7,7 @@ import com.vaadin.ui.VerticalLayout;
 /**
  * @author Alejandro Duarte.
  */
-public class VerticalBreadLayout extends AbstractTwoComponentsBreadLayout {
+public class VerticalBreadLayout extends AbstractBreadLayout {
     
 	public VerticalBreadLayout() {
     	super();

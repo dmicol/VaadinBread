@@ -9,7 +9,7 @@ import com.vaadin.ui.HorizontalSplitPanel;
 /**
  * @author Alejandro Duarte.
  */
-public class HorizontalSplitBreadLayout extends AbstractTwoComponentsBreadLayout {
+public class HorizontalSplitBreadLayout extends AbstractBreadLayout {
 
 	protected HorizontalSplitPanel mainLayout = new HorizontalSplitPanel();
 	
