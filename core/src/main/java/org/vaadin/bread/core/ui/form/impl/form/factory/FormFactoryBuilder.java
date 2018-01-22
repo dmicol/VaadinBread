@@ -83,6 +83,7 @@ public class FormFactoryBuilder<T, FFT extends FormFactory<T>> {
 
     	ff.setValidationActive(true);
     	ff.setValidationActive(FilterOperation.APPLY, FilterOperation.EMPTY, false);
+    	ff.addButtonStyleName(FilterOperation.APPLY, ValoTheme.BUTTON_PRIMARY);
      }
     
     private void addCrudDefaults() {
