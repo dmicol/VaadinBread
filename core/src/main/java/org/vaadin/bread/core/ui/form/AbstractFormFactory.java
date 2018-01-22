@@ -127,18 +127,18 @@ public abstract class AbstractFormFactory<T> implements FormFactory<T> {
     protected Map<OperationAction, Set<String>> buttonStyleNames = new HashMap<>();
 
     @Override
-    public void setUseBeanValidation(boolean useBeanValidation) {
-        configurations.keySet().forEach(operationMode -> setUseBeanValidation(operationMode, useBeanValidation));
+    public void setValidationActive(boolean useBeanValidation) {
+        configurations.keySet().forEach(operationMode -> setValidationActive(operationMode, useBeanValidation));
     }
 
 	@Override
-	public void setUseBeanValidation(OperationMode operationMode, boolean useBeanValidation) {
+	public void setValidationActive(OperationMode operationMode, boolean useBeanValidation) {
 		FormConfiguration conf = getConfiguration(operationMode);
-		conf.getOperationActions().forEach(action -> setUseBeanValidation(operationMode, action, useBeanValidation));
+		conf.getOperationActions().forEach(action -> setValidationActive(operationMode, action, useBeanValidation));
 	}
 
 	@Override
-	public void setUseBeanValidation(OperationMode operationMode, OperationAction action,  boolean useBeanValidation) {
+	public void setValidationActive(OperationMode operationMode, OperationAction action,  boolean useBeanValidation) {
 		getConfiguration(operationMode).setValidationActive(action, useBeanValidation);
 	}
 

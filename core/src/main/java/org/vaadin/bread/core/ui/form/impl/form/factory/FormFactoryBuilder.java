@@ -80,7 +80,9 @@ public class FormFactoryBuilder<T, FFT extends FormFactory<T>> {
     private void addFilterDefaults() {
     	ff.getConfiguration(FilterOperation.APPLY).getOperationActions()
     		.addAll(Arrays.asList(FilterOperation.APPLY, FilterOperation.EMPTY));
-    	
+
+    	ff.setValidationActive(true);
+    	ff.setValidationActive(FilterOperation.APPLY, FilterOperation.EMPTY, false);
      }
     
     private void addCrudDefaults() {
@@ -89,11 +91,11 @@ public class FormFactoryBuilder<T, FFT extends FormFactory<T>> {
     	ff.getConfiguration(CrudOperation.READ).getOperationActions().addAll(Arrays.asList(CrudOperation.READ, CrudOperation.CANCEL));
     	ff.getConfiguration(CrudOperation.UPDATE).getOperationActions().addAll(Arrays.asList(CrudOperation.UPDATE, CrudOperation.CANCEL));
     	
-    	ff.setUseBeanValidation(true);
-    	ff.setUseBeanValidation(CrudOperation.ADD, CrudOperation.CANCEL, false);
-    	ff.setUseBeanValidation(CrudOperation.DELETE, false);
-    	ff.setUseBeanValidation(CrudOperation.READ, false);
-    	ff.setUseBeanValidation(CrudOperation.UPDATE, CrudOperation.CANCEL, false);
+    	ff.setValidationActive(true);
+    	ff.setValidationActive(CrudOperation.ADD, CrudOperation.CANCEL, false);
+    	ff.setValidationActive(CrudOperation.DELETE, false);
+    	ff.setValidationActive(CrudOperation.READ, false);
+    	ff.setValidationActive(CrudOperation.UPDATE, CrudOperation.CANCEL, false);
     	
     	ff.setButtonCaption(CrudOperation.READ, "Ok");
     	ff.setButtonCaption(CrudOperation.ADD, "Add");

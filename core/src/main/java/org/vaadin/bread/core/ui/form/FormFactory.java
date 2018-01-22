@@ -40,9 +40,9 @@ public interface FormFactory<T> {
 
     void setFieldProvider(String property, FieldProvider provider);
 
-    void setUseBeanValidation(OperationMode operationMode, boolean useBeanValidation);
+    void setValidationActive(OperationMode operationMode, boolean useBeanValidation);
 
-    void setUseBeanValidation(boolean useBeanValidation);
+    void setValidationActive(boolean useBeanValidation);
 
     void setErrorListener(ErrorListener<T> errorListener);
 
@@ -74,6 +74,6 @@ public interface FormFactory<T> {
 
 	String getValidationErrorMessage();
 
-	void setUseBeanValidation(OperationMode operationMode, OperationAction action, boolean useBeanValidation);
+	void setValidationActive(OperationMode operationMode, OperationAction action, boolean useBeanValidation);
 
 }

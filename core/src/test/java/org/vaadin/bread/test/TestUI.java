@@ -77,7 +77,7 @@ public class TestUI extends UI implements BreadListener<User> {
         GridLayoutFormFactory<User> formFactory = new GridLayoutFormFactory<>(User.class, CrudOperation.values(), 2, 2);
         crud.setCrudFormFactory(formFactory);
 
-        formFactory.setUseBeanValidation(true);
+        formFactory.setValidationActive(true);
         formFactory.setJpaTypeForJpaValidation(JPAService.getFactory().getMetamodel().managedType(User.class));
 
         formFactory.setErrorListener((opm, opa, obj, e) -> Notification.show("Custom error message (simulated error)", Notification.Type.ERROR_MESSAGE));
