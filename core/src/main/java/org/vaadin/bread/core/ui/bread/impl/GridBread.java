@@ -231,9 +231,9 @@ public class GridBread<T> extends AbstractBread<T> {
     protected void showForm(CrudOperation operation, T domainObject, boolean readOnly, String successMessage, Button.ClickListener buttonClickListener) {
     	FormConfiguration config = crudFormFactory.getConfiguration(operation);
     	config.setOperationActionListener(operation, operationPerformedClickEvent -> {
-            buttonClickListener.buttonClick(operationPerformedClickEvent);
-            breadLayout.hideForm();
-            Notification.show(successMessage);
+    		breadLayout.hideForm();
+			buttonClickListener.buttonClick(operationPerformedClickEvent);
+			Notification.show(successMessage);
         });
     	config.setOperationActionListener(CrudOperation.CANCEL, cancelClickEvent -> {
 	            if (clickRowToUpdate) {

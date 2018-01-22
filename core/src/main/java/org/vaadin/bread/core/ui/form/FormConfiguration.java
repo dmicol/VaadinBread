@@ -11,6 +11,8 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.stream.Collector;
+import java.util.stream.Collectors;
 
 import javax.persistence.GeneratedValue;
 import javax.persistence.metamodel.Attribute;
@@ -43,17 +45,10 @@ public class FormConfiguration implements Serializable {
     protected Map<OperationAction, String> buttonCaptions = new HashMap<>();
     protected Map<OperationAction, Resource> buttonIcons = new HashMap<>();
     protected Map<OperationAction, Set<String>> buttonStyleNames = new HashMap<>();
+    protected Map<OperationAction, Boolean> validationActive = new HashMap<>();
     
-	protected boolean useBeanValidation = true;
+    protected boolean useBeanValidation = true;
 	protected ManagedType<?> jpaTypeForJpaValidation;
-	
-	public boolean isUseBeanValidation() {
-	    return useBeanValidation;
-	}
-
-	public void setUseBeanValidation(boolean useBeanValidation) {
-	    this.useBeanValidation = useBeanValidation;
-	}
 
 	public ManagedType<?> getJpaTypeForJpaValidation() {
 		return jpaTypeForJpaValidation;
@@ -126,7 +121,6 @@ public class FormConfiguration implements Serializable {
 	public void setOperationActions(List<OperationAction> operations) {
 		this.operationActions = operations;
 	}
-
     
     public String getButtonCaption(OperationAction action) {
     	return buttonCaptions.get(action);
@@ -216,4 +210,32 @@ public class FormConfiguration implements Serializable {
 		);
 
     }
+    
+    public boolean getValidationActive(OperationAction action) {
+    	return validationActive.get(action)==Boolean.TRUE ? true : false;
+    }
+    
+    public void setValidationActive(OperationAction action, boolean val) {
+    	validationActive.put(action, val);
+    }
+
+	public Map<OperationAction, Boolean> getValidationActive() {
+		return validationActive;
+	}
+
+	public void setValidationActive(Map<OperationAction, Boolean> useBeanValidation) {
+		this.validationActive = useBeanValidation;
+	}
+
+	public boolean isValidationActive() {
+		return validationActive.values().stream().collect(Collectors.reducing((v1,v2) -> v1 || v2)).orElse(false);
+	}
+
+	public boolean isUseBeanValidation() {
+		return useBeanValidation;
+	}
+
+	public void setUseBeanValidation(boolean useBeanValidation) {
+		this.useBeanValidation = useBeanValidation;
+	}
 }

@@ -9,5 +9,5 @@ package org.vaadin.bread.core.ui.form;
  */
 public interface ErrorListener<T> {
 
-	void onError(OperationMode operationMode, OperationAction operationAction, T domainObject, Exception e);
+	void onError(OperationMode operationMode, OperationAction operationAction, T domainObject, Throwable t);
 }

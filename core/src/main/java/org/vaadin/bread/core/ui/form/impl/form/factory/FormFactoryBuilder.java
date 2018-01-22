@@ -89,6 +89,12 @@ public class FormFactoryBuilder<T, FFT extends FormFactory<T>> {
     	ff.getConfiguration(CrudOperation.READ).getOperationActions().addAll(Arrays.asList(CrudOperation.READ, CrudOperation.CANCEL));
     	ff.getConfiguration(CrudOperation.UPDATE).getOperationActions().addAll(Arrays.asList(CrudOperation.UPDATE, CrudOperation.CANCEL));
     	
+    	ff.setUseBeanValidation(true);
+    	ff.setUseBeanValidation(CrudOperation.ADD, CrudOperation.CANCEL, false);
+    	ff.setUseBeanValidation(CrudOperation.DELETE, false);
+    	ff.setUseBeanValidation(CrudOperation.READ, false);
+    	ff.setUseBeanValidation(CrudOperation.UPDATE, CrudOperation.CANCEL, false);
+    	
     	ff.setButtonCaption(CrudOperation.READ, "Ok");
     	ff.setButtonCaption(CrudOperation.ADD, "Add");
     	ff.setButtonCaption(CrudOperation.UPDATE, "Update");

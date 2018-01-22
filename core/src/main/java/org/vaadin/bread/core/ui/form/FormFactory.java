@@ -46,7 +46,7 @@ public interface FormFactory<T> {
 
     void setErrorListener(ErrorListener<T> errorListener);
 
-    void showError(OperationMode operationMode, OperationAction operationAction, T domainObject, Exception e);
+    void showError(OperationMode operationMode, OperationAction operationAction, T domainObject, Throwable e);
 
 	void setJpaTypeForJpaValidation(OperationMode operationMode, ManagedType<?> managedType);
 
@@ -73,5 +73,7 @@ public interface FormFactory<T> {
 	void setValidationErrorMessage(String validationErrorMessage);
 
 	String getValidationErrorMessage();
+
+	void setUseBeanValidation(OperationMode operationMode, OperationAction action, boolean useBeanValidation);
 
 }
