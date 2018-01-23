@@ -201,6 +201,7 @@ public class GridBread<T> extends AbstractBread<T> {
             try {
                 T updatedObject = updateOperation.perform(domainObject);
                 grid.getDataProvider().refreshItem(updatedObject);
+                grid.asSingleSelect().clear();
                 grid.asSingleSelect().setValue(updatedObject);
                 // TODO: grid.scrollTo(updatedObject);
             } catch (OperationException e1) {
