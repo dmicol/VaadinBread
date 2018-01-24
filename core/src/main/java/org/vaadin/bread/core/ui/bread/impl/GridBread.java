@@ -175,26 +175,30 @@ public class GridBread<T> extends AbstractBread<T> {
     }
 
     protected void addButtonClicked() {
-        try {
-            T domainObject = domainType.newInstance();
-            showForm(CrudOperation.ADD, domainObject, false, savedMessage, event -> {
-                try {
-                    T addedObject = addOperation.perform(domainObject);
-                    refreshGrid();
-                    grid.asSingleSelect().setValue(addedObject);
-                    // TODO: grid.scrollTo(addedObject);
-                } catch (OperationException e1) {
-                    refreshGrid();
-                } catch (Exception e2) {
-                    refreshGrid();
-                    throw e2;
-                }
-            });
-        } catch (InstantiationException | IllegalAccessException e) {
-            e.printStackTrace();
-        }
+        T domainObject = getNewDomaiObject();
+        showForm(CrudOperation.ADD, domainObject, false, savedMessage, event -> {
+            try {
+                T addedObject = addOperation.perform(domainObject);
+                refreshGrid();
+                grid.asSingleSelect().setValue(addedObject);
+                // TODO: grid.scrollTo(addedObject);
+            } catch (OperationException e1) {
+                refreshGrid();
+            } catch (Exception e2) {
+                refreshGrid();
+                throw e2;
+            }
+        });
     }
 
+    protected T getNewDomaiObject() {
+    	try {
+			return domainType.newInstance();
+		} catch (InstantiationException | IllegalAccessException e) {
+			throw new RuntimeException(e);
+		}
+    }
+    
     protected void updateButtonClicked() {
         T domainObject = grid.asSingleSelect().getValue();
         showForm(CrudOperation.UPDATE, domainObject, false, savedMessage, event -> {

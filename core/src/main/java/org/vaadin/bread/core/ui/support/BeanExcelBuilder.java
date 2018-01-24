@@ -12,6 +12,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.CellStyle;
@@ -52,6 +53,10 @@ public class BeanExcelBuilder<T> {
 		this.propertySet = BeanPropertySet.get(clazz);
 	}
 	
+	protected Stream<PropertyDefinition<T,?>> getFiltertedProperyDefinitions() {
+		return propertySet.getProperties().filter(p -> !(p.getType().isArray() || Collection.class.isAssignableFrom(p.getType())));
+	}
+	
 	protected XSSFSheet buildSheet(XSSFWorkbook wb) {
 		if (sheetName!=null) {
 			return wb.createSheet(sheetName);
@@ -76,7 +81,7 @@ public class BeanExcelBuilder<T> {
         
         List<String> headers = columnsHeaders;
         if (headers==null) {
-        	headers = propertySet.getProperties().map(pd -> SharedUtil.propertyIdToHumanFriendly(pd.getName())).collect(Collectors.toList());
+        	headers = getFiltertedProperyDefinitions().map(pd -> SharedUtil.propertyIdToHumanFriendly(pd.getName())).collect(Collectors.toList());
         }
         int cn=startCol;
         startHeaderRow(r);
@@ -101,7 +106,7 @@ public class BeanExcelBuilder<T> {
 	    doStarRow(bean, r);
 	    List<String> props = properties;
 	    if (props==null) {
-	    	props = propertySet.getProperties().map(pd -> pd.getName()).collect(Collectors.toList());
+	    	props = getFiltertedProperyDefinitions().map(pd -> pd.getName()).collect(Collectors.toList());
 	    }
 	    for(String propertyName : props) {
 	    	
@@ -205,6 +210,8 @@ public class BeanExcelBuilder<T> {
 			cell.setCellValue((Calendar) value);
 		} else if (RichTextString.class.isInstance(value)) {
 			cell.setCellValue((RichTextString) value);
+		} else {
+			cell.setCellValue(value.toString());
 		}
 		
 	}
