@@ -181,6 +181,8 @@ public class BeanExcelBuilder<T> {
 			cell.setCellType(CellType.NUMERIC);
 		} else if (RichTextString.class.isAssignableFrom(definition.getType())) {
 			cell.setCellType(CellType.STRING);
+		} else {
+			cell.setCellType(CellType.STRING);
 		}
 
 
