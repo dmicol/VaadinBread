@@ -22,8 +22,8 @@ public class FormFactoryBuilder<T, FFT extends FormFactory<T>> {
 	private FormFactory<T> ff = null;
 	
 
-	protected static OperationMode[] crudOperationModes = new OperationMode[] {CrudOperation.ADD, CrudOperation.DELETE, CrudOperation.READ, CrudOperation.UPDATE};
-	protected static OperationMode[] filterOperationModes = new OperationMode[] {FilterOperation.APPLY};
+	public static OperationMode[] crudOperationModes = new OperationMode[] {CrudOperation.ADD, CrudOperation.DELETE, CrudOperation.READ, CrudOperation.UPDATE};
+	public static OperationMode[] filterOperationModes = new OperationMode[] {FilterOperation.APPLY};
 	
 	@SuppressWarnings("unchecked")
 	public FFT build() {
@@ -39,7 +39,7 @@ public class FormFactoryBuilder<T, FFT extends FormFactory<T>> {
 	@SuppressWarnings("unchecked")
 	public FormFactoryBuilder<T, FormLayoutFormFactory<T>> formLayout(Class<T> domainType, OperationMode[] operationModes ) {
 		ff = new FormLayoutFormFactory<T>(domainType, operationModes);
-		addCrudDefaults();
+		addCrudDefaults(ff);
 		return (FormFactoryBuilder<T, FormLayoutFormFactory<T>>) this;
 	}
 	
@@ -48,7 +48,7 @@ public class FormFactoryBuilder<T, FFT extends FormFactory<T>> {
 		ff = new GridLayoutFormFactory<T>(domainType
 				, crudOperationModes
 				, columns, rows);
-		addCrudDefaults();
+		addCrudDefaults(ff);
 		return (FormFactoryBuilder<T, GridLayoutFormFactory<T>>) this;
 	}	
 
@@ -56,7 +56,7 @@ public class FormFactoryBuilder<T, FFT extends FormFactory<T>> {
 	public FormFactoryBuilder<T, FormLayoutFormFactory<T>> formLayoutBread(Class<T> domainType) {
 		ff = new FormLayoutFormFactory<T>(domainType
 				, crudOperationModes);
-		addCrudDefaults();
+		addCrudDefaults(ff);
 		return (FormFactoryBuilder<T, FormLayoutFormFactory<T>>) this;
 	}
 	
@@ -86,7 +86,7 @@ public class FormFactoryBuilder<T, FFT extends FormFactory<T>> {
     	ff.addButtonStyleName(FilterOperation.APPLY, ValoTheme.BUTTON_PRIMARY);
      }
     
-    private void addCrudDefaults() {
+    public static void addCrudDefaults(FormFactory<?> ff) {
     	ff.getConfiguration(CrudOperation.ADD).getOperationActions().addAll(Arrays.asList(CrudOperation.ADD, CrudOperation.CANCEL));
     	ff.getConfiguration(CrudOperation.DELETE).getOperationActions().addAll(Arrays.asList(CrudOperation.DELETE, CrudOperation.CANCEL));
     	ff.getConfiguration(CrudOperation.READ).getOperationActions().addAll(Arrays.asList(CrudOperation.READ, CrudOperation.CANCEL));
