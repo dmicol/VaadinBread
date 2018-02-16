@@ -1,5 +1,8 @@
 package org.vaadin.bread.core.ui.bread;
 
+import java.util.List;
+import java.util.Map;
+
 import org.vaadin.bread.core.ui.form.FormFactory;
 import org.vaadin.bread.core.ui.layout.BreadLayout;
 
@@ -40,15 +43,17 @@ public interface Bread<T> extends Component {
     BreadLayout getBreadLayout();
     
     String getDeletedMessage();
-
 	void setDeletedMessage(String deletedMessage);
 
 	String getSavedMessage();
-
 	void setSavedMessage(String savedMessage);
 
-	String getRowCountCaption();
-	
+	String getRowCountCaption();	
 	void setRowCountCaption(String rowCountCaption);
+	
+    List<String> getVisibleProperties();
+    void setVisibleProperties(List<String> visibleProperties);
 
+    Map<String, String> getPropertyCaptions();
+    void setPropertyCaptions(Map<String, String> fieldCaptions);
 }

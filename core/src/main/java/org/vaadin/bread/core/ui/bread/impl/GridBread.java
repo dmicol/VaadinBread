@@ -1,23 +1,19 @@
 package org.vaadin.bread.core.ui.bread.impl;
 
-import java.beans.IntrospectionException;
-import java.beans.PropertyDescriptor;
-import java.util.Collection;
 import java.util.LinkedHashMap;
-import java.util.List;
 
 import org.vaadin.bread.core.ui.bread.AbstractBread;
 import org.vaadin.bread.core.ui.bread.OperationException;
 import org.vaadin.bread.core.ui.form.CrudOperation;
 import org.vaadin.bread.core.ui.form.FormConfiguration;
 import org.vaadin.bread.core.ui.form.impl.form.factory.FormFactoryBuilder;
+import org.vaadin.bread.core.ui.form.impl.form.factory.FormLayoutFormFactory;
 import org.vaadin.bread.core.ui.layout.BreadLayout;
 import org.vaadin.bread.core.ui.layout.impl.WindowBasedBreadLayout;
 
 import com.kbdunn.vaadin.addons.fontawesome.FontAwesome;
 import com.vaadin.data.provider.DataProvider;
 import com.vaadin.data.provider.Query;
-import com.vaadin.data.util.BeanUtil;
 import com.vaadin.icons.VaadinIcons;
 import com.vaadin.server.FileDownloader;
 import com.vaadin.ui.Button;
@@ -29,7 +25,8 @@ import com.vaadin.ui.Notification;
  * @author Alejandro Duarte
  */
 public class GridBread<T> extends AbstractBread<T> {
-	
+	private static final long serialVersionUID = 2259353891274839889L;
+
 	public static final String EXPORTER_EXCEL = "EXCEL";
 
     protected Button findAllButton;
@@ -47,7 +44,7 @@ public class GridBread<T> extends AbstractBread<T> {
 
     public GridBread(Class<T> domainType, BreadLayout crudLayout) {
         super(domainType, crudLayout);
-        setCrudFormFactory(new FormFactoryBuilder().formLayoutBread(domainType).build());
+        setCrudFormFactory(new FormFactoryBuilder<T, FormLayoutFormFactory<T>>().formLayoutBread(domainType).build());
         initLayout();
     }
 
@@ -74,23 +71,10 @@ public class GridBread<T> extends AbstractBread<T> {
 
         grid = new Grid<>(domainType);
         grid.setSizeFull();
+        grid.setColumns((String[]) getVisibleProperties().toArray());
+        getPropertyCaptions().forEach((p,c) -> grid.getColumn(p).setCaption(c));
         grid.addSelectionListener(e -> gridSelectionChanged());
         
-		try {
-			grid.removeAllColumns();
-			List<PropertyDescriptor> descriptors;
-			descriptors = BeanUtil.getBeanPropertyDescriptors(domainType);
-			descriptors.stream()
-			.filter(d -> !d.getName().equals("class"))
-			.forEach(pd -> {
-				Class<?> propertyType = pd.getPropertyType();
-				if (!(propertyType.isArray() || Collection.class.isAssignableFrom(propertyType))) {        			
-					grid.addColumn(pd.getName());
-				}
-			});
-		} catch (IntrospectionException e1) {
-			throw new RuntimeException(e1);
-		}
         breadLayout.setMainComponent(grid);
         
         Button btn = new Button(FontAwesome.FILE_EXCEL_O.getHtml());
@@ -171,7 +155,7 @@ public class GridBread<T> extends AbstractBread<T> {
     protected void findAllButtonClicked() {
         grid.asSingleSelect().clear();
         refreshGrid();
-        Notification.show(String.format(rowCountCaption, grid.getDataProvider().size(new Query())));
+        Notification.show(String.format(rowCountCaption, grid.getDataProvider().size(new Query<>())));
     }
 
     protected void addButtonClicked() {
