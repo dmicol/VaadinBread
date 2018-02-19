@@ -8,6 +8,7 @@ import org.vaadin.bread.example.model.Group;
 import org.vaadin.bread.example.model.User;
 import org.vaadin.jetty.VaadinJettyServer;
 
+import com.vaadin.navigator.PushStateNavigation;
 import com.vaadin.server.VaadinRequest;
 import com.vaadin.ui.TabSheet;
 import com.vaadin.ui.UI;
@@ -16,6 +17,7 @@ import com.vaadin.ui.VerticalLayout;
 /**
  * @author Dmitrij Colautti
  */
+@PushStateNavigation
 public class BaseUI extends UI {
 
     public static void main(String[] args) throws Exception {
