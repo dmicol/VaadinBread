@@ -11,13 +11,13 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-import java.util.stream.Collector;
 import java.util.stream.Collectors;
 
 import javax.persistence.GeneratedValue;
 import javax.persistence.metamodel.Attribute;
 import javax.persistence.metamodel.ManagedType;
 
+import org.vaadin.bread.core.ui.PropertiesConfiguration;
 import org.vaadin.bread.core.ui.form.impl.field.provider.DefaultFieldProvider;
 
 import com.vaadin.data.HasValue;
@@ -32,9 +32,7 @@ import com.vaadin.ui.Button;
 @SuppressWarnings("serial")
 public class FormConfiguration implements Serializable {
 
-    protected List<String> visibleProperties = new ArrayList<>();
-    protected Set<String> disabledProperties = new HashSet<>();
-    protected Map<String, String> fieldCaptions = new HashMap<>();
+	protected PropertiesConfiguration propertiesConfiguration;
     @SuppressWarnings("rawtypes")
 	protected Map<Object, Class<? extends HasValue>> fieldTypes = new HashMap<>();
     protected Map<Object, FieldCreationListener> fieldCreationListeners = new HashMap<>();
@@ -64,30 +62,6 @@ public class FormConfiguration implements Serializable {
     
     public Button.ClickListener getOperationActionListener(OperationAction operation) {
     	return actionListeners.get(operation);
-    }
-    
-    public List<String> getVisibleProperties() {
-        return visibleProperties;
-    }
-
-    public void setVisibleProperties(List<String> visibleProperties) {
-        this.visibleProperties = visibleProperties;
-    }
-
-    public Set<String> getDisabledProperties() {
-        return disabledProperties;
-    }
-
-    public void setDisabledProperties(Set<String> disabledProperties) {
-        this.disabledProperties = disabledProperties;
-    }
-
-    public Map<String, String> getFieldCaptions() {
-        return fieldCaptions;
-    }
-
-    public void setFieldCaptions(Map<String, String> fieldCaptions) {
-        this.fieldCaptions = fieldCaptions;
     }
 
     public Map<Object, Class<? extends HasValue>> getFieldTypes() {
@@ -173,7 +147,8 @@ public class FormConfiguration implements Serializable {
 	
 
 	public void buildSensitiveDefaults(Class<?> clazz) {
-		if (visibleProperties.isEmpty()) {
+		propertiesConfiguration.buildSensitiveDefaults(clazz);
+		if (propertiesConfiguration.getVisibleProperties().isEmpty()) {
 		    try {
 		        List<PropertyDescriptor> descriptors = BeanUtil.getBeanPropertyDescriptors(clazz);
 		        descriptors.stream()
@@ -181,8 +156,6 @@ public class FormConfiguration implements Serializable {
 		        	.forEach(pd -> {
 		        		Class<?> propertyType = pd.getPropertyType();
 		        		if (!(propertyType.isArray() || Collection.class.isAssignableFrom(propertyType))) {
-		        			visibleProperties.add(pd.getName());
-		        			fieldCaptions.put(pd.getName(), SharedUtil.propertyIdToHumanFriendly(pd.getName()));
 		        			fieldProviders.put(pd.getName(), new DefaultFieldProvider(pd.getPropertyType()));            		
 		        		}
 		        	});
@@ -194,12 +167,12 @@ public class FormConfiguration implements Serializable {
 	    
 
     	if (jpaTypeForJpaValidation!=null) {
-	        visibleProperties.stream().forEach(prodId -> {
+    		propertiesConfiguration.getVisibleProperties().stream().forEach(prodId -> {
     				Attribute<?, ?> attribute = jpaTypeForJpaValidation.getAttribute(prodId);
     				if (attribute.getJavaMember() instanceof AnnotatedElement) {
     					AnnotatedElement annotated = (AnnotatedElement)attribute.getJavaMember();
     					if (annotated!=null && annotated.getAnnotation(GeneratedValue.class)!=null) {
-    						disabledProperties.add(prodId);
+    						propertiesConfiguration.getDisabledProperties()	.add(prodId);
     					}
     				}
 	        	});
@@ -237,5 +210,13 @@ public class FormConfiguration implements Serializable {
 
 	public void setUseBeanValidation(boolean useBeanValidation) {
 		this.useBeanValidation = useBeanValidation;
+	}
+
+	public PropertiesConfiguration getPropertiesConfiguration() {
+		return propertiesConfiguration;
+	}
+
+	public void setPropertiesConfiguration(PropertiesConfiguration propertiesConfiguration) {
+		this.propertiesConfiguration = propertiesConfiguration;
 	}
 }
