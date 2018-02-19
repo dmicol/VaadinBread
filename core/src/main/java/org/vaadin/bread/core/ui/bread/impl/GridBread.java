@@ -71,7 +71,7 @@ public class GridBread<T> extends AbstractBread<T> {
 
         grid = new Grid<>(domainType);
         grid.setSizeFull();
-        grid.setColumns((String[]) getVisibleProperties().toArray());
+        grid.setColumns(getVisibleProperties().toArray(new String[] {}));
         getPropertyCaptions().forEach((p,c) -> grid.getColumn(p).setCaption(c));
         grid.addSelectionListener(e -> gridSelectionChanged());
         

@@ -32,7 +32,7 @@ import com.vaadin.ui.Button;
 @SuppressWarnings("serial")
 public class FormConfiguration implements Serializable {
 
-	protected PropertiesConfiguration propertiesConfiguration;
+	protected PropertiesConfiguration propertiesConfiguration = new PropertiesConfiguration();
     @SuppressWarnings("rawtypes")
 	protected Map<Object, Class<? extends HasValue>> fieldTypes = new HashMap<>();
     protected Map<Object, FieldCreationListener> fieldCreationListeners = new HashMap<>();
@@ -147,8 +147,8 @@ public class FormConfiguration implements Serializable {
 	
 
 	public void buildSensitiveDefaults(Class<?> clazz) {
-		propertiesConfiguration.buildSensitiveDefaults(clazz);
 		if (propertiesConfiguration.getVisibleProperties().isEmpty()) {
+			propertiesConfiguration.buildSensitiveDefaults(clazz);
 		    try {
 		        List<PropertyDescriptor> descriptors = BeanUtil.getBeanPropertyDescriptors(clazz);
 		        descriptors.stream()
