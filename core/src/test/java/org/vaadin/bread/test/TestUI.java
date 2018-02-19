@@ -1,7 +1,7 @@
 package org.vaadin.bread.test;
 
 import org.vaadin.bread.core.ui.bread.Bread;
-import org.vaadin.bread.core.ui.bread.BreadListener;
+import org.vaadin.bread.core.ui.bread.ItemListListener;
 import org.vaadin.bread.core.ui.bread.impl.GridBread;
 import org.vaadin.bread.core.ui.form.CrudOperation;
 import org.vaadin.bread.core.ui.form.impl.field.provider.CheckBoxGroupProvider;
@@ -16,6 +16,7 @@ import org.vaadin.bread.test.repo.UserRepository;
 import org.vaadin.jetty.VaadinJettyServer;
 
 import com.vaadin.data.provider.DataProvider;
+import com.vaadin.navigator.PushStateNavigation;
 import com.vaadin.server.VaadinRequest;
 import com.vaadin.ui.DateField;
 import com.vaadin.ui.Notification;
@@ -28,7 +29,8 @@ import com.vaadin.ui.renderers.TextRenderer;
 /**
  * @author Alejandro Duarte
  */
-public class TestUI extends UI implements BreadListener<User> {
+@PushStateNavigation
+public class TestUI extends UI implements ItemListListener<User> {
 
     public static void main(String[] args) throws Exception {
         JPAService.init();
@@ -57,13 +59,13 @@ public class TestUI extends UI implements BreadListener<User> {
 
     private Bread getDefaultBread() {
     	GridBread<User> gridBread = new GridBread<>(User.class);
-    	gridBread.setBreadListener(this);
+    	gridBread.setItemListListener(this);
         return gridBread;
     }
 
     private Bread getDefaultBreadWithFixes() {
         GridBread<User> bread = new GridBread<>(User.class);
-        bread.setBreadListener(this);
+        bread.setItemListListener(this);
         bread.getCrudFormFactory().setFieldProvider("groups", new CheckBoxGroupProvider<>(GroupRepository.findAll()));
         bread.getCrudFormFactory().setFieldProvider("mainGroup", new ComboBoxProvider<>(GroupRepository.findAll()));
 
@@ -72,7 +74,7 @@ public class TestUI extends UI implements BreadListener<User> {
 
     private Bread getConfiguredBread() {
         GridBread<User> crud = new GridBread<>(User.class, new HorizontalSplitBreadLayout());
-        crud.setBreadListener(this);
+        crud.setItemListListener(this);
 
         GridLayoutFormFactory<User> formFactory = new GridLayoutFormFactory<>(User.class, CrudOperation.values(), 2, 2);
         crud.setCrudFormFactory(formFactory);

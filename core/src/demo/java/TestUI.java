@@ -1,4 +1,5 @@
 import com.vaadin.annotations.Theme;
+import com.vaadin.navigator.PushStateNavigation;
 import com.vaadin.server.VaadinRequest;
 import com.vaadin.ui.CheckBoxGroup;
 import com.vaadin.ui.ComboBox;
@@ -32,6 +33,7 @@ import java.util.concurrent.atomic.AtomicLong;
  * @author Alejandro Duarte
  */
 @Theme(ValoTheme.THEME_NAME)
+@PushStateNavigation
 public class TestUI extends UI implements CrudListener<User> {
 
     private static AtomicLong nextId = new AtomicLong(1);
