@@ -5,7 +5,7 @@
     <groupId>org.vaadin</groupId>
     <artifactId>bread</artifactId>
     <packaging>pom</packaging>
-    <version>0.7</version>
+    <version>0.8</version>
     <name>Bread UI Vaadin Add-on</name>
 
     <prerequisites>
@@ -16,7 +16,7 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <maven.compiler.source>1.8</maven.compiler.source>
         <maven.compiler.target>1.8</maven.compiler.target>
-        <vaadin.version>8.1.5</vaadin.version>
+        <vaadin.version>8.3.1</vaadin.version>
         <vaadin.plugin.version>${vaadin.version}</vaadin.plugin.version>
 
         <!-- ZIP Manifest fields -->
