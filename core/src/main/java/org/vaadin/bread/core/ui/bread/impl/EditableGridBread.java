@@ -92,7 +92,7 @@ public class EditableGridBread<T> extends GridBread<T> {
             Binder<T> binder = getCrudFormFactory().getBinder();
             editor.setBinder(binder);
 
-            List<String> properties = getCrudFormFactory().getConfiguration(CrudOperation.UPDATE).getVisibleProperties();
+            List<String> properties = getCrudFormFactory().getConfiguration(CrudOperation.UPDATE).getPropertiesConfiguration().getVisibleOrderedProperties();
 
             for (String property : properties) {
                 Grid.Column<T, ?> column = grid.getColumn(property);

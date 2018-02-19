@@ -4,7 +4,9 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.Set;
 
 import javax.persistence.metamodel.ManagedType;
@@ -36,7 +38,7 @@ public abstract class AbstractFormFactory<T> implements FormFactory<T> {
 
     @Override
     public void setVisibleProperties(OperationMode operationMode, String... properties) {
-        getConfiguration(operationMode).setVisibleProperties(new ArrayList<String>(Arrays.asList(properties)));
+        getConfiguration(operationMode).getPropertiesConfiguration().setVisibleProperties(new ArrayList<String>(Arrays.asList(properties)));
     }
 
     @Override
@@ -46,7 +48,7 @@ public abstract class AbstractFormFactory<T> implements FormFactory<T> {
 
     @Override
     public void setDisabledProperties(OperationMode operationMode, String... properties) {
-        getConfiguration(operationMode).setDisabledProperties(new HashSet<String>(Arrays.asList(properties)));
+        getConfiguration(operationMode).getPropertiesConfiguration().setDisabledProperties(new HashSet<String>(Arrays.asList(properties)));
     }
 
     @Override
@@ -56,7 +58,7 @@ public abstract class AbstractFormFactory<T> implements FormFactory<T> {
 
     @Override
     public void setFieldCaption(OperationMode operationMode, String property, String caption) {
-        getConfiguration(operationMode).getFieldCaptions().put(property, caption);
+        getConfiguration(operationMode).getPropertiesConfiguration().getPropertiesCaption().put(property, caption);
     }
 
     @Override
@@ -172,8 +174,11 @@ public abstract class AbstractFormFactory<T> implements FormFactory<T> {
 		
 		Arrays.stream(operationModes).forEach(om -> configurations.putIfAbsent(om, new FormConfiguration()));
 
-		configurations.entrySet().stream().filter(om -> Arrays.binarySearch(operationModes, om)<0)
-			.forEach(om -> configurations.remove(om));
+		for (Iterator<Entry<OperationMode, FormConfiguration>> iterator = configurations.entrySet().iterator(); iterator.hasNext();) {
+			Entry<OperationMode, FormConfiguration> entry = iterator.next();
+			if (Arrays.binarySearch(operationModes, entry.getKey())<0)
+				iterator.remove();
+		}
 	}
 
 	@Override
