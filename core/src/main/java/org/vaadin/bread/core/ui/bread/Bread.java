@@ -38,7 +38,7 @@ public interface Bread<T> extends Component {
 
     void setOperations(DataProvider<T, ?> dataProvider, AddOperationListener<T> addOperation, UpdateOperationListener<T> updateOperation, DeleteOperationListener<T> deleteOperation);
 
-    void setBreadListener(BreadListener<T> crudListener);
+    void setItemListListener(ItemListListener<T> crudListener);
 
     BreadLayout getBreadLayout();
     

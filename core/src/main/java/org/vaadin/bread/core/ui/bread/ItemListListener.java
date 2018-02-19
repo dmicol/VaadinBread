@@ -7,7 +7,7 @@ import com.vaadin.data.provider.DataProvider;
 /**
  * @author Alejandro Duarte
  */
-public interface BreadListener<T> extends Serializable {
+public interface ItemListListener<T> extends Serializable {
 
     DataProvider<T, ?> getDataProvider();
 

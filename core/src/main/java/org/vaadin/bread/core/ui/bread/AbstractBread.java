@@ -133,7 +133,7 @@ public abstract class AbstractBread<T> extends Composite implements Bread<T> {
     }
 
     @Override
-    public void setBreadListener(BreadListener<T> breadListener) {
+    public void setItemListListener(ItemListListener<T> breadListener) {
     	setDataProvider(breadListener.getDataProvider());
         setAddOperation(breadListener::add);
         setUpdateOperation(breadListener::update);
