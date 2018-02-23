@@ -103,12 +103,10 @@ public class FormFactoryBuilder<T, FFT extends FormFactory<T>> {
     	ff.setButtonCaption(CrudOperation.UPDATE, "Update");
     	ff.setButtonCaption(CrudOperation.DELETE, "Yes, delete");
 
-    	ff.setButtonIcon(CrudOperation.READ, null);
     	ff.setButtonIcon(CrudOperation.ADD, VaadinIcons.CHECK);
     	ff.setButtonIcon(CrudOperation.UPDATE, VaadinIcons.CHECK);
     	ff.setButtonIcon(CrudOperation.DELETE, VaadinIcons.TRASH);
 
-    	ff.addButtonStyleName(CrudOperation.READ, null);
     	ff.addButtonStyleName(CrudOperation.ADD, ValoTheme.BUTTON_PRIMARY);
     	ff.addButtonStyleName(CrudOperation.UPDATE, ValoTheme.BUTTON_PRIMARY);
     	ff.addButtonStyleName(CrudOperation.DELETE, ValoTheme.BUTTON_DANGER);
