@@ -38,7 +38,7 @@ public class GridItemList<T> extends AbstractItemList<T> {
     	super.initLayout();
     	grid = new Grid<>(domainType);
         grid.setSizeFull();
-        grid.setColumns((String[]) propertiesConfiguration.getVisibleOrderedProperties().toArray());
+        grid.setColumns(propertiesConfiguration.getVisibleOrderedProperties().toArray(new String[] {}));
         propertiesConfiguration.getPropertiesCaption().forEach((p,c) -> grid.getColumn(p).setCaption(c));
         grid.addSelectionListener(e -> gridSelectionChanged());
         

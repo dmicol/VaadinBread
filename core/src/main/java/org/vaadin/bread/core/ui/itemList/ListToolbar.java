@@ -31,7 +31,8 @@ public class ListToolbar extends CssLayout implements ListOperation{
     protected LinkedHashMap<String, Button> exporterButtons = new LinkedHashMap<>();
     protected Map<String, Resource> exportOperations = new HashMap<>();
     
-    protected void initLayout() {
+    @Override
+    public void initLayout() {
         findAllButton = new Button("");
         findAllButton.setDescription("Refresh list");
         findAllButton.setIcon(VaadinIcons.REFRESH);

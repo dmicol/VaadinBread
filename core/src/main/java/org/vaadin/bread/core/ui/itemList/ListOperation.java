@@ -56,5 +56,9 @@ public interface ListOperation {
 	 * @return
 	 */
 	Resource getExporter(String name);
+	/**
+	 * 
+	 */
+	void initLayout();
 
 }

@@ -34,8 +34,8 @@ public class RelationsConfiguration implements Serializable {
 				.forEach(property -> {
 					configuration.getVisibleProperties().add(property.getName());
 					configuration.getPropertiesCaption().put(property.getName(), SharedUtil.propertyIdToHumanFriendly(property.getName()));
-					relations.putIfAbsent(property.getName(), new PropertiesConfiguration())
-						.buildSensitiveDefaults(property.getPropertyType());
+					relations.putIfAbsent(property.getName(), new PropertiesConfiguration());
+					relations.get(property.getName()).buildSensitiveDefaults(property.getPropertyType());
 				});
 		} catch (IntrospectionException e) {
 			throw new RuntimeException(e);

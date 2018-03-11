@@ -8,6 +8,7 @@ import org.vaadin.bread.core.ui.bread.ItemListListener;
 import org.vaadin.bread.core.ui.bread.UpdateOperationListener;
 import org.vaadin.bread.core.ui.itemList.ItemList;
 import org.vaadin.bread.core.ui.itemList.ListOperation;
+import org.vaadin.bread.core.ui.itemList.ListToolbar;
 import org.vaadin.bread.core.ui.itemListLayout.ListLayout;
 import org.vaadin.bread.core.ui.support.BeanExcelBuilder;
 import org.vaadin.bread.core.ui.support.ExcelOnDemandStreamResource;
@@ -34,7 +35,7 @@ public abstract class AbstractItemList<T> extends Composite implements ItemList<
     protected String rowCountCaption = "%d items(s) found";    
 
 	protected ListLayout listLayout;
-	protected ListOperation listOperation;
+	protected ListOperation listOperation = new ListToolbar();
 
     public AbstractItemList(Class<T> domainType, ListLayout listLayout) {
         this.domainType = domainType;
@@ -43,12 +44,12 @@ public abstract class AbstractItemList<T> extends Composite implements ItemList<
         setCompositionRoot(listLayout);                
 
         setSizeFull();
-        propertiesConfiguration.buildSensitiveDefaults(domainType);
+        propertiesConfiguration = new PropertiesConfiguration(domainType);
     }
     
     public void initLayout() {
     	listOperation.addExporter(ListOperation.EXPORTER_EXCEL, excelResource());
-    	
+    	listOperation.initLayout();
     }
     
     protected Resource excelResource() {
