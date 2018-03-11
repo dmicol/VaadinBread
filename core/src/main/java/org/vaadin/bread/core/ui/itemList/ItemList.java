@@ -9,7 +9,9 @@ import org.vaadin.bread.core.ui.bread.ItemListListener;
 import org.vaadin.bread.core.ui.bread.UpdateOperationListener;
 
 import com.vaadin.data.provider.DataProvider;
+import com.vaadin.event.selection.SelectionListener;
 import com.vaadin.ui.Component;
+import com.vaadin.ui.SingleSelect;
 
 /**
  * @author Dmitrij Colautti
@@ -34,6 +36,16 @@ public interface ItemList<T> extends Component {
 	String getRowCountCaption();	
 	
 	void setRowCountCaption(String rowCountCaption);
+
+	/**
+	 * @param listener
+	 */
+	void addSelectionListener(SelectionListener<T> listener);
+
+	/**
+	 * @return
+	 */
+	SingleSelect<T> asSingleSelect();
 	
 	
 }

@@ -7,9 +7,11 @@ import org.vaadin.bread.core.ui.itemListLayout.impl.VerticalListLayout;
 
 import com.vaadin.data.provider.DataProvider;
 import com.vaadin.data.provider.Query;
+import com.vaadin.event.selection.SelectionListener;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Grid;
 import com.vaadin.ui.Notification;
+import com.vaadin.ui.SingleSelect;
 
 /**
  * @author Alejandro Duarte
@@ -96,5 +98,16 @@ public class GridItemList<T> extends AbstractItemList<T> {
     public Button getExporterMenu(String name) {
     	return exporterButtons.get(name);
     }
+
+	@Override
+	public void addSelectionListener(SelectionListener<T> listener) {
+		grid.addSelectionListener(listener);
+	}
+
+	@Override
+	public SingleSelect<T> asSingleSelect() {
+		// TODO Auto-generated method stub
+		return grid.asSingleSelect();
+	}
 
 }

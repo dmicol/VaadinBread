@@ -8,6 +8,8 @@ import org.vaadin.bread.core.ui.form.CrudOperation;
 import org.vaadin.bread.core.ui.form.FormConfiguration;
 import org.vaadin.bread.core.ui.form.impl.form.factory.FormFactoryBuilder;
 import org.vaadin.bread.core.ui.form.impl.form.factory.FormLayoutFormFactory;
+import org.vaadin.bread.core.ui.itemList.ItemList;
+import org.vaadin.bread.core.ui.itemList.impl.GridItemList;
 import org.vaadin.bread.core.ui.layout.BreadLayout;
 import org.vaadin.bread.core.ui.layout.impl.WindowBasedBreadLayout;
 
@@ -18,7 +20,6 @@ import com.vaadin.icons.VaadinIcons;
 import com.vaadin.server.FileDownloader;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Component;
-import com.vaadin.ui.Grid;
 import com.vaadin.ui.Notification;
 
 /**
@@ -33,7 +34,7 @@ public class GridBread<T> extends AbstractBread<T> {
     protected Button addButton;
     protected Button updateButton;
     protected Button deleteButton;
-    protected Grid<T> grid;
+    protected GridItemList<T> gridItemList;
 
     protected LinkedHashMap<String, Button> exporterButtons = new LinkedHashMap<>();
     private boolean clickRowToUpdate;
@@ -69,13 +70,11 @@ public class GridBread<T> extends AbstractBread<T> {
         deleteButton.setIcon(VaadinIcons.TRASH);
         breadLayout.addToolbarComponent(deleteButton);
 
-        grid = new Grid<>(domainType);
-        grid.setSizeFull();
-        grid.setColumns(getVisibleProperties().toArray(new String[] {}));
-        getPropertyCaptions().forEach((p,c) -> grid.getColumn(p).setCaption(c));
-        grid.addSelectionListener(e -> gridSelectionChanged());
+        gridItemList = new GridItemList<>(domainType);
+        gridItemList.setSizeFull();
+        gridItemList.addSelectionListener(e -> gridSelectionChanged());
         
-        breadLayout.setMainComponent(grid);
+        breadLayout.setMainComponent(gridItemList);
         
         Button btn = new Button(FontAwesome.FILE_EXCEL_O.getHtml());
         btn.setCaptionAsHtml(true);
@@ -122,22 +121,22 @@ public class GridBread<T> extends AbstractBread<T> {
     @Override
     public void setDataProvider(DataProvider<T, ?> dataProvider) {
     	super.setDataProvider(dataProvider);
-    	grid.setDataProvider(dataProvider);
+    	gridItemList.setDataProvider(dataProvider);
     }
 
     protected void updateButtons() {
-        boolean rowSelected = !grid.asSingleSelect().isEmpty();
+        boolean rowSelected = !gridItemList.asSingleSelect().isEmpty();
         updateButton.setEnabled(rowSelected);
         deleteButton.setEnabled(rowSelected);
     }
 
     protected void gridSelectionChanged() {
         updateButtons();
-        T domainObject = grid.asSingleSelect().getValue();
+        T domainObject = gridItemList.asSingleSelect().getValue();
 
         if (domainObject != null) {
         	crudFormFactory.getConfiguration(CrudOperation.READ).setOperationActionListener(CrudOperation.READ, event -> {
-                grid.asSingleSelect().clear();
+                gridItemList.asSingleSelect().clear();
             });
             Component form = crudFormFactory.buildNewForm(CrudOperation.READ, domainObject, true);
 
@@ -153,9 +152,9 @@ public class GridBread<T> extends AbstractBread<T> {
     }
 
     protected void findAllButtonClicked() {
-        grid.asSingleSelect().clear();
+        gridItemList.asSingleSelect().clear();
         refreshGrid();
-        Notification.show(String.format(rowCountCaption, grid.getDataProvider().size(new Query<>())));
+        Notification.show(String.format(rowCountCaption, gridItemList.getDataProvider().size(new Query<>())));
     }
 
     protected void addButtonClicked() {
@@ -164,7 +163,7 @@ public class GridBread<T> extends AbstractBread<T> {
             try {
                 T addedObject = addOperation.perform(domainObject);
                 refreshGrid();
-                grid.asSingleSelect().setValue(addedObject);
+                gridItemList.asSingleSelect().setValue(addedObject);
                 // TODO: grid.scrollTo(addedObject);
             } catch (OperationException e1) {
                 refreshGrid();
@@ -184,13 +183,13 @@ public class GridBread<T> extends AbstractBread<T> {
     }
     
     protected void updateButtonClicked() {
-        T domainObject = grid.asSingleSelect().getValue();
+        T domainObject = gridItemList.asSingleSelect().getValue();
         showForm(CrudOperation.UPDATE, domainObject, false, savedMessage, event -> {
             try {
                 T updatedObject = updateOperation.perform(domainObject);
-                grid.getDataProvider().refreshItem(updatedObject);
-                grid.asSingleSelect().clear();
-                grid.asSingleSelect().setValue(updatedObject);
+                gridItemList.getDataProvider().refreshItem(updatedObject);
+                gridItemList.asSingleSelect().clear();
+                gridItemList.asSingleSelect().setValue(updatedObject);
                 // TODO: grid.scrollTo(updatedObject);
             } catch (OperationException e1) {
                 refreshGrid();
@@ -202,12 +201,12 @@ public class GridBread<T> extends AbstractBread<T> {
     }
 
     protected void deleteButtonClicked() {
-        T domainObject = grid.asSingleSelect().getValue();
+        T domainObject = gridItemList.asSingleSelect().getValue();
         showForm(CrudOperation.DELETE, domainObject, true, deletedMessage, event -> {
             try {
                 deleteOperation.perform(domainObject);
                 refreshGrid();
-                grid.asSingleSelect().clear();
+                gridItemList.asSingleSelect().clear();
             } catch (OperationException e1) {
                 refreshGrid();
             } catch (Exception e2) {
@@ -226,22 +225,18 @@ public class GridBread<T> extends AbstractBread<T> {
         });
     	config.setOperationActionListener(CrudOperation.CANCEL, cancelClickEvent -> {
 	            if (clickRowToUpdate) {
-	                grid.asSingleSelect().clear();
+	                gridItemList.asSingleSelect().clear();
 	            } else {
-                    T selected = grid.asSingleSelect().getValue();
+                    T selected = gridItemList.asSingleSelect().getValue();
                     breadLayout.hideForm();
-                    grid.asSingleSelect().clear();
-                    grid.asSingleSelect().setValue(selected);
+                    gridItemList.asSingleSelect().clear();
+                    gridItemList.asSingleSelect().setValue(selected);
             	}
                 });
         Component form = crudFormFactory.buildNewForm(operation
         		, domainObject, readOnly);
 
         breadLayout.showForm(operation, form);
-    }
-
-    public Grid<T> getGrid() {
-        return grid;
     }
 
     public Button getFindAllButton() {
@@ -271,5 +266,13 @@ public class GridBread<T> extends AbstractBread<T> {
 
     	return this;
     }
+
+	public ItemList<T> getItemList() {
+		return gridItemList;
+	}
+
+	public GridItemList<T> getGridItemList() {
+		return gridItemList;
+	}
 
 }

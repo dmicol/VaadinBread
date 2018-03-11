@@ -16,7 +16,7 @@ import com.vaadin.shared.util.SharedUtil;
 @SuppressWarnings("serial")
 public class RelationsConfiguration implements Serializable {
 
-	protected Map<String, PropertiesConfiguration> relationsConfiguration = new HashMap<>();
+	protected Map<String, PropertiesConfiguration> relations = new HashMap<>();
 
     protected PropertiesConfiguration configuration = new PropertiesConfiguration();
 
@@ -34,7 +34,7 @@ public class RelationsConfiguration implements Serializable {
 				.forEach(property -> {
 					configuration.getVisibleProperties().add(property.getName());
 					configuration.getPropertiesCaption().put(property.getName(), SharedUtil.propertyIdToHumanFriendly(property.getName()));
-					relationsConfiguration.putIfAbsent(property.getName(), new PropertiesConfiguration())
+					relations.putIfAbsent(property.getName(), new PropertiesConfiguration())
 						.buildSensitiveDefaults(property.getPropertyType());
 				});
 		} catch (IntrospectionException e) {

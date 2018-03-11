@@ -84,8 +84,8 @@ public class UserCrud extends GridBread<User> implements ItemListListener<User> 
         formFactory.setButtonCaption(CrudOperation.ADD, "Add new user");
 
         
-        getGrid().setColumns("name", "birthDate", "email", "phoneNumber", "mainGroup", "active");
-        getGrid().getColumn("mainGroup").setRenderer(group -> group == null ? "" : ((Group) group).getName(), new TextRenderer());
+        getGridItemList().getGrid().setColumns("name", "birthDate", "email", "phoneNumber", "mainGroup", "active");
+        getGridItemList().getGrid().getColumn("mainGroup").setRenderer(group -> group == null ? "" : ((Group) group).getName(), new TextRenderer());
 //        ((Grid.Column<User, Date>) crud.getGrid().getColumn("birthDate")).setRenderer(new DateRenderer("%1$tY-%1$tm-%1$te"));
         setRowCountCaption("%d user(s) found");
 

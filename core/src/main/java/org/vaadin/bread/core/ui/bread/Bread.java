@@ -1,10 +1,9 @@
 package org.vaadin.bread.core.ui.bread;
 
-import java.util.List;
-import java.util.Map;
-
+import org.vaadin.bread.core.ui.PropertiesConfiguration;
 import org.vaadin.bread.core.ui.form.FormFactory;
 import org.vaadin.bread.core.ui.layout.BreadLayout;
+import org.vaadin.bread.core.ui.relation.RelationsConfiguration;
 
 import com.vaadin.data.provider.DataProvider;
 import com.vaadin.ui.Component;
@@ -50,10 +49,9 @@ public interface Bread<T> extends Component {
 
 	String getRowCountCaption();	
 	void setRowCountCaption(String rowCountCaption);
-	
-    List<String> getVisibleProperties();
-    void setVisibleProperties(List<String> visibleProperties);
 
-    Map<String, String> getPropertyCaptions();
-    void setPropertyCaptions(Map<String, String> fieldCaptions);
+	PropertiesConfiguration getPropertiesConfiguration();
+
+	RelationsConfiguration getRelationsConfiguration();
+	
 }

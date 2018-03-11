@@ -7,6 +7,7 @@ import org.vaadin.bread.core.ui.form.CrudOperation;
 import org.vaadin.bread.core.ui.form.impl.field.provider.CheckBoxGroupProvider;
 import org.vaadin.bread.core.ui.form.impl.field.provider.ComboBoxProvider;
 import org.vaadin.bread.core.ui.form.impl.form.factory.GridLayoutFormFactory;
+import org.vaadin.bread.core.ui.itemList.impl.GridItemList;
 import org.vaadin.bread.core.ui.layout.impl.HorizontalSplitBreadLayout;
 import org.vaadin.bread.test.repo.Group;
 import org.vaadin.bread.test.repo.GroupRepository;
@@ -91,8 +92,8 @@ public class TestUI extends UI implements ItemListListener<User> {
 
         formFactory.setDisabledProperties("id");
 
-        crud.getGrid().setColumns("name", "birthDate", "email", "phoneNumber", "mainGroup", "active");
-        crud.getGrid().getColumn("mainGroup").setRenderer(group -> group == null ? "" : ((Group) group).getName(), new TextRenderer());
+        crud.getGridItemList().getGrid().setColumns("name", "birthDate", "email", "phoneNumber", "mainGroup", "active");
+        crud.getGridItemList().getGrid().getColumn("mainGroup").setRenderer(group -> group == null ? "" : ((Group) group).getName(), new TextRenderer());
 //        ((Grid.Column<User, Date>) crud.getGrid().getColumn("birthDate")).setRenderer(new DateRenderer("%1$tY-%1$tm-%1$te"));
 
         formFactory.setFieldType("password", PasswordField.class);

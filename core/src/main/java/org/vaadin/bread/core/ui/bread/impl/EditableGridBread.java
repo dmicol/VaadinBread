@@ -76,13 +76,13 @@ public class EditableGridBread<T> extends GridBread<T> {
     protected void configureEditor() {
         try {
             getCrudFormFactory().buildFields(CrudOperation.UPDATE, domainType.newInstance(), false);
-            editor = grid.getEditor();
+            editor = gridItemList.getGrid().getEditor();
             editor.setEnabled(true);
             editor.addSaveListener(e -> {
             	T updatedObject = updateOperation.perform(e.getBean());
                 try {
-                	grid.getDataProvider().refreshItem(updatedObject);
-                    grid.asSingleSelect().setValue(updatedObject);
+                	gridItemList.getDataProvider().refreshItem(updatedObject);
+                    gridItemList.asSingleSelect().setValue(updatedObject);
                     Notification.show(savedMessage);
                 } catch (Exception ex) {
                     crudFormFactory.showError(CrudOperation.UPDATE, CrudOperation.UPDATE, updatedObject, ex);
@@ -95,7 +95,7 @@ public class EditableGridBread<T> extends GridBread<T> {
             List<String> properties = getCrudFormFactory().getConfiguration(CrudOperation.UPDATE).getPropertiesConfiguration().getVisibleOrderedProperties();
 
             for (String property : properties) {
-                Grid.Column<T, ?> column = grid.getColumn(property);
+                Grid.Column<T, ?> column = gridItemList.getGrid().getColumn(property);
                 Binder.Binding<T, ?> binding = binder.getBinding(property).get();
                 column.setEditorBinding(binding);
             }
@@ -140,12 +140,12 @@ public class EditableGridBread<T> extends GridBread<T> {
         cancel.addClickListener(e -> window.close());
 
         delete.addClickListener(e -> {
-        	T value = grid.asSingleSelect().getValue();
+        	T value = gridItemList.asSingleSelect().getValue();
             try {
                 deleteOperation.perform(value);
                 window.close();
                 refreshGrid();
-                grid.asSingleSelect().clear();
+                gridItemList.asSingleSelect().clear();
                 Notification.show(deletedMessage);
 
             } catch (Exception ex) {
