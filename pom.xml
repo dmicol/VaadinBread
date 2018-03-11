@@ -5,7 +5,7 @@
     <groupId>org.vaadin</groupId>
     <artifactId>bread</artifactId>
     <packaging>pom</packaging>
-    <version>0.8</version>
+    <version>0.9-SNAPSHOT</version>
     <name>Bread UI Vaadin Add-on</name>
 
     <prerequisites>

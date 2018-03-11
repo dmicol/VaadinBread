@@ -6,11 +6,10 @@ package org.vaadin.bread.example;
 import java.util.ArrayList;
 import java.util.Arrays;
 
-import org.vaadin.bread.core.ui.bread.BreadListener;
+import org.vaadin.bread.core.ui.bread.ItemListListener;
 import org.vaadin.bread.core.ui.bread.impl.GridBread;
 import org.vaadin.bread.core.ui.form.CrudOperation;
 import org.vaadin.bread.core.ui.form.FilterOperation;
-import org.vaadin.bread.core.ui.form.FormConfiguration;
 import org.vaadin.bread.core.ui.form.OperationAction;
 import org.vaadin.bread.core.ui.form.impl.field.provider.ComboBoxProvider;
 import org.vaadin.bread.core.ui.form.impl.form.factory.FormFactoryBuilder;
@@ -36,7 +35,7 @@ import com.vaadin.ui.renderers.TextRenderer;
  *
  */
 @SuppressWarnings("serial")
-public class UserCrud extends GridBread<User> implements BreadListener<User> {
+public class UserCrud extends GridBread<User> implements ItemListListener<User> {
 
     private UserFilter filterBean = new UserFilter();
     
@@ -63,7 +62,7 @@ public class UserCrud extends GridBread<User> implements BreadListener<User> {
         filterFormFactory.buildSensitiveDefaults();
 
         Component filterForm = filterFormFactory.buildNewForm(FilterOperation.APPLY, filterBean, false);
-        setBreadListener(this);
+        setItemListListener(this);
         getBreadLayout().addFilterComponent("filtro",filterForm);
     	
 

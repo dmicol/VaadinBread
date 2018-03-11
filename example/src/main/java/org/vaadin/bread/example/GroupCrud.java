@@ -3,7 +3,7 @@
  */
 package org.vaadin.bread.example;
 
-import org.vaadin.bread.core.ui.bread.BreadListener;
+import org.vaadin.bread.core.ui.bread.ItemListListener;
 import org.vaadin.bread.core.ui.bread.impl.GridBread;
 import org.vaadin.bread.core.ui.form.FilterOperation;
 import org.vaadin.bread.core.ui.form.impl.form.factory.FormFactoryBuilder;
@@ -22,7 +22,7 @@ import com.vaadin.ui.Component;
  * @author Dmitrij Colautti
  *
  */
-public class GroupCrud extends GridBread<Group> implements BreadListener<Group> {
+public class GroupCrud extends GridBread<Group> implements ItemListListener<Group> {
 
     private GroupFilter filterBean = new GroupFilter();
     
@@ -49,7 +49,7 @@ public class GroupCrud extends GridBread<Group> implements BreadListener<Group> 
 
         
         Component filterForm = filterFormFactory.buildNewForm(FilterOperation.APPLY, filterBean, false);
-        setBreadListener(this);
+        setItemListListener(this);
         getBreadLayout().addFilterComponent("filtro",filterForm);
 
         // build form

@@ -9,12 +9,13 @@ import org.vaadin.bread.core.ui.bread.ItemListListener;
 import org.vaadin.bread.core.ui.bread.UpdateOperationListener;
 
 import com.vaadin.data.provider.DataProvider;
+import com.vaadin.ui.Component;
 
 /**
  * @author Dmitrij Colautti
  *
  */
-public interface ItemList<T> {
+public interface ItemList<T> extends Component {
 	
     void setDataProvider(DataProvider<T, ?> dataProvider);
 

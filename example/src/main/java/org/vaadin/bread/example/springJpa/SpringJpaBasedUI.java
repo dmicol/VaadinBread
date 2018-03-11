@@ -1,7 +1,7 @@
 package org.vaadin.bread.example.springJpa;
 
 import org.vaadin.bread.core.ui.bread.Bread;
-import org.vaadin.bread.core.ui.bread.BreadListener;
+import org.vaadin.bread.core.ui.bread.ItemListListener;
 import org.vaadin.bread.example.UserCrud;
 import org.vaadin.bread.example.base.repo.JPAService;
 import org.vaadin.bread.example.base.repo.UserRepository;
@@ -18,7 +18,7 @@ import com.vaadin.ui.VerticalLayout;
 /**
  * @author Dmitrij Colautti
  */
-public class SpringJpaBasedUI extends UI implements BreadListener<User> {
+public class SpringJpaBasedUI extends UI implements ItemListListener<User> {
 
     public static void main(String[] args) throws Exception {
         JPAService.init();
