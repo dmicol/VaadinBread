@@ -4,9 +4,9 @@
   <artifactId>bread-example</artifactId>
 
   <parent>
-    <groupId>org.vaadin</groupId>
-    <version>0.9-SNAPSHOT</version>
+    <groupId>org.vaadin.addons</groupId>
     <artifactId>bread</artifactId>
+    <version>0.9</version>
   </parent>
   
   <dependencies>
