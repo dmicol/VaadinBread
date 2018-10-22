@@ -68,9 +68,9 @@ public class WindowBasedBreadLayout extends AbstractBreadLayout implements Bread
     @Override
     public void showForm(CrudOperation operation, Component form) {
     	super.showForm(operation, form);
-        if (!operation.equals(CrudOperation.READ)) {
+//        if (!operation.equals(CrudOperation.READ)) {
             showWindow(detailCaptions.get(operation), form);
-        }
+//        }
     }
 
     @Override
