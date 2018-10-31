@@ -168,13 +168,17 @@ public class FormConfiguration implements Serializable {
 
     	if (jpaTypeForJpaValidation!=null) {
     		propertiesConfiguration.getVisibleProperties().stream().forEach(prodId -> {
-    				Attribute<?, ?> attribute = jpaTypeForJpaValidation.getAttribute(prodId);
-    				if (attribute.getJavaMember() instanceof AnnotatedElement) {
-    					AnnotatedElement annotated = (AnnotatedElement)attribute.getJavaMember();
-    					if (annotated!=null && annotated.getAnnotation(GeneratedValue.class)!=null) {
-    						propertiesConfiguration.getDisabledProperties()	.add(prodId);
-    					}
-    				}
+    				try {
+	    				Attribute<?, ?> attribute = jpaTypeForJpaValidation.getAttribute(prodId);
+	    				if (attribute.getJavaMember() instanceof AnnotatedElement) {
+	    					AnnotatedElement annotated = (AnnotatedElement)attribute.getJavaMember();
+	    					if (annotated!=null && annotated.getAnnotation(GeneratedValue.class)!=null) {
+	    						propertiesConfiguration.getDisabledProperties()	.add(prodId);
+	    					}
+	    				}
+					} catch (IllegalArgumentException e) { 
+						// No OP 
+					}
 	        	});
     	}
     	
