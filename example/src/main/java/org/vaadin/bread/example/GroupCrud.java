@@ -16,6 +16,7 @@ import org.vaadin.bread.example.model.GroupFilter;
 
 import com.vaadin.data.provider.CallbackDataProvider;
 import com.vaadin.data.provider.ConfigurableFilterDataProvider;
+import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.Component;
 
 /**
@@ -25,26 +26,21 @@ import com.vaadin.ui.Component;
 public class GroupCrud extends GridBread<Group> implements ItemListListener<Group> {
 
     private GroupFilter filterBean = new GroupFilter();
-    
+    private GridLayoutFormFactory<GroupFilter> filterFormFactory;
+    		
 	public GroupCrud() {
 		super(Group.class, new HorizontalSplitBreadLayout());
 
 		getBreadLayout().setCaption("GRUPPO");
 		
 		// build filter
-        GridLayoutFormFactory<GroupFilter> filterFormFactory = 
+        filterFormFactory = 
         		new FormFactoryBuilder<GroupFilter, GridLayoutFormFactory<GroupFilter>>()
         		.gridLayoutFilter(GroupFilter.class, 4, 2)
         		.build();
         
-        filterFormFactory.getConfiguration(FilterOperation.APPLY).setOperationActionListener(FilterOperation.APPLY, (e)-> {
-        	refreshGrid();
-        	getBreadLayout().setFiltersVisible(false);
-        });
-        filterFormFactory.getConfiguration(FilterOperation.APPLY).setOperationActionListener(FilterOperation.EMPTY, (e)-> {
-        	filterBean.clear();
-        	filterFormFactory.getBinder().readBean(filterBean);
-        });
+        filterFormFactory.getConfiguration(FilterOperation.APPLY).setOperationActionListener(FilterOperation.APPLY, this::filterApply);
+        filterFormFactory.getConfiguration(FilterOperation.APPLY).setOperationActionListener(FilterOperation.EMPTY, this::filterEmpty);
         filterFormFactory.buildSensitiveDefaults();
 
         
@@ -63,6 +59,16 @@ public class GroupCrud extends GridBread<Group> implements ItemListListener<Grou
         setRowCountCaption("%d group(s) found");
 
 	};
+	
+	protected void filterApply(ClickEvent event) {
+    	refreshGrid();
+    	getBreadLayout().setFiltersVisible(false);		
+	}
+	
+	protected void filterEmpty(ClickEvent event) {
+    	filterBean.clear();
+    	filterFormFactory.getBinder().readBean(filterBean);		
+	}
 	
 
     @Override

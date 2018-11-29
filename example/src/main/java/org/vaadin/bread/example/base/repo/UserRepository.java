@@ -10,6 +10,8 @@ import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 
+import org.vaadin.bread.core.ui.filter.FilterValue;
+import org.vaadin.bread.core.ui.filter.JpaCriteriaFilterValueFactory;
 import org.vaadin.bread.example.model.User;
 import org.vaadin.bread.example.model.UserFilter;
 import org.vaadin.bread.example.model.User_;
@@ -19,6 +21,31 @@ public class UserRepository {
     public static List<User> findAll() {
         return JPAService.runInTransaction(em ->
                 em.createQuery("select u from User u", User.class).getResultList()
+        );
+    }
+    
+    
+
+    public static List<User> findAll(List<FilterValue> uf, int offset, int limit) {
+    	if (uf==null)
+    		return findAll();
+    	
+        return JPAService.runInTransaction(em -> {
+	    	final CriteriaBuilder cb = em.getCriteriaBuilder();
+	    	final CriteriaQuery<User> cq = cb.createQuery(User.class);
+	    	final Root<User> from = cq.from(User.class);
+	    	
+	    	cq.select(from);
+	    	
+	    	ArrayList<Predicate> ps = new JpaCriteriaFilterValueFactory().build(uf, cb, from);
+	    	
+	    	cq.where(ps.toArray(new Predicate[] {}));
+	    	TypedQuery<User> q = em.createQuery(cq);
+	    	q.setFirstResult(offset);
+	    	q.setMaxResults(limit);
+	    	
+	        return q.getResultList();
+    	}
         );
     }
 
