@@ -20,8 +20,6 @@ import com.vaadin.ui.Button.ClickListener;
 import com.vaadin.ui.ComboBox;
 import com.vaadin.ui.Component;
 import com.vaadin.ui.CssLayout;
-import com.vaadin.ui.HorizontalLayout;
-import com.vaadin.ui.Label;
 
 /**
  * @author Dmitrij.colautti
@@ -45,9 +43,8 @@ public class FilterFieldComponent extends CssLayout {
 	
 	public FilterFieldComponent(Class<?> clazz) {
 		this.clazz = clazz;
-//		setWidth(100, Unit.PERCENTAGE);
 		setWidthUndefined();
-		addStyleName("FilterFieldComponent");
+		addStyleName("bread-filterfieldComponent");
 	}
 	
 	@Override
