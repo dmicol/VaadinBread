@@ -295,14 +295,5 @@
         </repository>
     </repositories>
 
-	<distributionManagement>
-		<snapshotRepository>
-			<id>nexus-snapshots</id>
-			<url>https://nexus.gruppocattolica.it/nexus3/repository/snapshots/</url>
-		</snapshotRepository>
-		<repository>
-			<id>nexus-releases</id>
-			<url>https://nexus.gruppocattolica.it/nexus3/repository/releases/</url>
-		</repository>
-	</distributionManagement>
+
 </project>
