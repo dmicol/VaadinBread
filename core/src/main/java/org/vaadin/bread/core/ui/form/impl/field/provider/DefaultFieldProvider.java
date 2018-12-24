@@ -8,22 +8,21 @@ import java.util.Date;
 import org.vaadin.bread.core.ui.form.FieldProvider;
 
 import com.vaadin.data.HasValue;
-import com.vaadin.shared.ui.datefield.DateResolution;
 import com.vaadin.shared.ui.datefield.DateTimeResolution;
-import com.vaadin.ui.CheckBox;
 import com.vaadin.ui.CheckBoxGroup;
 import com.vaadin.ui.ComboBox;
 import com.vaadin.ui.DateField;
 import com.vaadin.ui.DateTimeField;
 import com.vaadin.ui.TextField;
 
-/**
- * @author Alejandro Duarte.
- */
 public class DefaultFieldProvider implements FieldProvider {
 
     private Class<?> type;
 
+    public static HasValue buildField(Class<?> type) {
+    	return new DefaultFieldProvider(type).buildField();
+    }
+    
     public DefaultFieldProvider(Class<?> type) {
         this.type = type;
     }

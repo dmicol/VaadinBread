@@ -9,6 +9,8 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 
+import org.apache.commons.lang3.RandomUtils;
+import org.vaadin.bread.example.model.Gender;
 import org.vaadin.bread.example.model.Group;
 import org.vaadin.bread.example.model.User;
 
@@ -39,14 +41,16 @@ public class JPAService {
                 .filter(r -> r.getId() <= 2)
                 .collect(Collectors.toSet());
 
+        
         for (int i = 1; i <= 50; i++) {
             User user = new User();
             user.setName("User " + i);
-            user.setBirthDate(LocalDate.now().minusDays(1));
+            user.setBirthDate(LocalDate.now().minusDays(i));
             user.setEmail("email" + i + "@test.com");
             user.setPhoneNumber(i * 101001);
             user.setPassword("password" + i);
-            user.setActive(true);
+            user.setActive(RandomUtils.nextInt()%2==0);
+            user.setGender(RandomUtils.nextInt()%2==0 ? Gender.FEMALE : Gender.MALE);
             user.setGroups(groups);
             user.setMainGroup(groups.stream().findFirst().get());
 

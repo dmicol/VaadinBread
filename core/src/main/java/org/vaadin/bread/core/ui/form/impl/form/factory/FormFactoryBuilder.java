@@ -79,11 +79,11 @@ public class FormFactoryBuilder<T, FFT extends FormFactory<T>> {
 
     private void addFilterDefaults() {
     	ff.getConfiguration(FilterOperation.APPLY).getOperationActions()
-    		.addAll(Arrays.asList(FilterOperation.APPLY, FilterOperation.EMPTY));
+    		.addAll(Arrays.asList(FilterOperation.values()));
 
     	ff.setValidationActive(true);
     	ff.setValidationActive(FilterOperation.APPLY, FilterOperation.EMPTY, false);
-    	ff.addButtonStyleName(FilterOperation.APPLY, ValoTheme.BUTTON_PRIMARY);
+    	ff.addButtonStyleName(FilterOperation.APPLY, FilterOperation.APPLY, ValoTheme.BUTTON_PRIMARY);
      }
     
     public static void addCrudDefaults(FormFactory<?> ff) {
