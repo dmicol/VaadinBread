@@ -10,12 +10,10 @@ import java.util.List;
 import org.vaadin.bread.core.ui.form.impl.field.provider.DefaultFieldProvider;
 
 import com.vaadin.data.HasValue;
-import com.vaadin.data.provider.InMemoryDataProviderHelpers;
 import com.vaadin.data.provider.ListDataProvider;
 import com.vaadin.data.util.BeanUtil;
 import com.vaadin.event.selection.SingleSelectionEvent;
 import com.vaadin.icons.VaadinIcons;
-import com.vaadin.server.ThemeResource;
 import com.vaadin.shared.Registration;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickListener;
@@ -23,26 +21,33 @@ import com.vaadin.ui.ComboBox;
 import com.vaadin.ui.Component;
 import com.vaadin.ui.CssLayout;
 import com.vaadin.ui.HorizontalLayout;
+import com.vaadin.ui.Label;
 
 /**
  * @author Dmitrij.colautti
  *
  */
 public class FilterFieldComponent extends CssLayout {
-
+	private static final long serialVersionUID = 1L;
+	
 	private Class<?> clazz;
 	private boolean built = false;
 	private ComboBox<PropertyDescriptor> field;
 	private ComboBox<Operation> operation;
 	private Component value1;
 	private Component value2;
+	private Button add;
 	private Button remove;
 	private ClickListener removeListener;
+	private ClickListener addListener;
 	private Registration addClickListener;
+	private Registration removeClickListener;
 	
 	public FilterFieldComponent(Class<?> clazz) {
 		this.clazz = clazz;
-		
+//		setWidth(100, Unit.PERCENTAGE);
+		setWidthUndefined();
+		addStyleName("FilterFieldComponent");
 	}
 	
 	@Override
@@ -50,6 +55,15 @@ public class FilterFieldComponent extends CssLayout {
 		super.attach();
 		
 		if (!built) {
+			
+			add = new Button();
+			add.setIcon(VaadinIcons.PLUS);
+			addComponent(add);
+			
+			remove = new Button();
+			remove.setIcon(VaadinIcons.CLOSE);
+			addComponent(remove);
+
 			field = new ComboBox<>();
 
     		List<PropertyDescriptor> descriptors;
@@ -67,13 +81,7 @@ public class FilterFieldComponent extends CssLayout {
 			operation = new ComboBox<>();
 			operation.setItemCaptionGenerator(pd-> pd.toString());
 			operation.setEmptySelectionAllowed(false);
-			operation.addSelectionListener(this::operationSelected);
-			addComponent(field);
-			
-			remove = new Button();
-			remove.setIcon(VaadinIcons.CLOSE);
-			if (removeListener!=null)
-				remove.addClickListener(removeListener);
+			operation.addSelectionListener(this::operationSelected);			
 		}
 		built = true;
 	}	
@@ -82,7 +90,7 @@ public class FilterFieldComponent extends CssLayout {
     	OperationListFactory olf = new OperationListFactory();
     	operation.setDataProvider(new ListDataProvider<>(olf.retrive(event.getValue().getPropertyType())));
     	operation.clear();
-    	addComponent(operation);
+    	addComponent(operation, 3);
     }
     public void operationSelected(SingleSelectionEvent<Operation> event) {
     	if (value1!=null)
@@ -91,6 +99,9 @@ public class FilterFieldComponent extends CssLayout {
     		removeComponent(value2);
     	value1 = null;
     	value2 = null;
+    	
+    	if (event.getValue()==null)
+    		return;
     	
     	Class<?> propertyType = field.getValue().getPropertyType();
     	
@@ -108,7 +119,7 @@ public class FilterFieldComponent extends CssLayout {
 		case IN:
 		case NOT_IN:
 			value1 = (Component) DefaultFieldProvider.buildField(propertyType);
-			addComponent(value1, 2);
+			addComponent(value1, 4);
 			break;
 	
 		case EMPTY:
@@ -118,8 +129,8 @@ public class FilterFieldComponent extends CssLayout {
 		case RANGE:
 			value1 = (Component) DefaultFieldProvider.buildField(propertyType);
 			value2 = (Component) DefaultFieldProvider.buildField(propertyType);
-			addComponent(value1, 2);
-			addComponent(value2, 3);
+			addComponent(value1, 4);
+			addComponent(value2, 5);
 			break;
 
 		default:
@@ -132,13 +143,24 @@ public class FilterFieldComponent extends CssLayout {
 	}
 
 	public void setRemoveListener(ClickListener removeListener) {
-		if (addClickListener!=null) {
-			addClickListener.remove();
+		if (removeClickListener!=null) {
+			removeClickListener.remove();
+			removeComponent(remove);
 		}
 		this.removeListener = removeListener;
-		addClickListener = remove.addClickListener(removeListener);
+		removeClickListener = remove.addClickListener(removeListener);
+	}
+
+	public void setAddListener(ClickListener addListener) {
+		if (addClickListener!=null) {
+			addClickListener.remove();
+			removeComponent(add);
+		}
+		this.addListener = addListener;
+		addClickListener = add.addClickListener(addListener);
 	}
 	
+	@SuppressWarnings("rawtypes")
 	public FilterValue getValue() {
 		if (operation.getValue()==null || field.getValue()==null)
 			return null;

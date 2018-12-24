@@ -15,10 +15,8 @@ import java.util.Date;
  *
  */
 public class OperationListFactory {
-
-	public Collection<Operation> retrive(Class<?> clazz) {
-		ArrayList<Operation> list = new ArrayList<>();
-		
+	
+	public Class<?> toBoxedClass (Class<?> clazz) {
 		if (clazz.isPrimitive()) {
 			if (clazz == byte.class) {
 				clazz = Byte.class;
@@ -39,6 +37,14 @@ public class OperationListFactory {
 			}
 
 		}
+		
+		return clazz;
+	}
+
+	public Collection<Operation> retrive(Class<?> clazz) {
+		ArrayList<Operation> list = new ArrayList<>();
+		
+		clazz = toBoxedClass(clazz);
 
 		if (String.class.isAssignableFrom(clazz)) {
 			list.add(Operation.CONTAINS);
@@ -56,6 +62,7 @@ public class OperationListFactory {
 			list.add(Operation.IN);
 			list.add(Operation.NOT_IN);
 			list.add(Operation.RANGE);
+			list.add(Operation.NOT_RANGE);
 		}
 		else if (Number.class.isAssignableFrom(clazz) || Character.class.isAssignableFrom(clazz) || Byte.class.isAssignableFrom(clazz)) {
 			list.add(Operation.EQUALS);

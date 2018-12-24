@@ -3,15 +3,11 @@
  */
 package org.vaadin.bread.example;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-
 import org.vaadin.bread.core.ui.bread.ItemListListener;
 import org.vaadin.bread.core.ui.bread.impl.GridBread;
 import org.vaadin.bread.core.ui.filter.FilterComponent;
 import org.vaadin.bread.core.ui.form.CrudOperation;
 import org.vaadin.bread.core.ui.form.FilterOperation;
-import org.vaadin.bread.core.ui.form.OperationAction;
 import org.vaadin.bread.core.ui.form.impl.field.provider.ComboBoxProvider;
 import org.vaadin.bread.core.ui.form.impl.form.factory.FormFactoryBuilder;
 import org.vaadin.bread.core.ui.form.impl.form.factory.GridLayoutFormFactory;
@@ -27,7 +23,6 @@ import org.vaadin.bread.example.model.UserFilter;
 import com.vaadin.data.provider.CallbackDataProvider;
 import com.vaadin.data.provider.ConfigurableFilterDataProvider;
 import com.vaadin.ui.Component;
-import com.vaadin.ui.ComponentContainer;
 import com.vaadin.ui.DateField;
 import com.vaadin.ui.Notification;
 import com.vaadin.ui.PasswordField;
@@ -102,7 +97,7 @@ public class UserCrud extends GridBread<User> implements ItemListListener<User> 
         formFactory.setButtonCaption(CrudOperation.ADD, "Add new user");
 
         
-        getGridItemList().getGrid().setColumns("name", "birthDate", "email", "phoneNumber", "mainGroup", "active");
+        getGridItemList().getGrid().setColumns("name", "birthDate", "email", "phoneNumber", "mainGroup", "active","gender");
         getGridItemList().getGrid().getColumn("mainGroup").setRenderer(group -> group == null ? "" : ((Group) group).getName(), new TextRenderer());
 //        ((Grid.Column<User, Date>) crud.getGrid().getColumn("birthDate")).setRenderer(new DateRenderer("%1$tY-%1$tm-%1$te"));
         setRowCountCaption("%d user(s) found");

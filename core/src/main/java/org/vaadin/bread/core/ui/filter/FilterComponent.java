@@ -17,13 +17,15 @@ import com.vaadin.ui.VerticalLayout;
  *
  */
 public class FilterComponent extends VerticalLayout {
-
+	private static final long serialVersionUID = 1L;
+	
 	private Class<?> clazz;
 	private ArrayList<FilterFieldComponent> filters = new ArrayList<>(); 
 	boolean built=false;
 	
 	public FilterComponent(Class<?> clazz) {
 		this.clazz = clazz;
+		setWidth(100, Unit.PERCENTAGE);
 	}
 
 	@Override
@@ -45,12 +47,17 @@ public class FilterComponent extends VerticalLayout {
 			addFilter();
 		}
 	}
+	
+	private void addListener(ClickEvent e) {
+		addFilter();
+	}
 
 	private void addFilter() {		
 		FilterFieldComponent filterFieldComponent = new FilterFieldComponent(clazz);
 		addComponent(filterFieldComponent);
 		filters.add(filterFieldComponent);
 		filterFieldComponent.setRemoveListener(this::removeListener);
+		filterFieldComponent.setAddListener(this::addListener);
 	}
 	
 	public List<FilterValue> getValue() {

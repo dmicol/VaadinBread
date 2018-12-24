@@ -31,7 +31,7 @@
 	  <dependency>
 			<groupId>org.vaadin.addons</groupId>
 			<artifactId>bread-core</artifactId>
-			<version>0.12-SNAPSHOT</version>
+			<version>0.13-SNAPSHOT</version>
 	  </dependency>
   
           <dependency>
