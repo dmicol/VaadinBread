@@ -1,5 +1,6 @@
 package org.vaadin.bread.core.ui.form.impl.form.factory;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Set;
 
@@ -19,7 +20,8 @@ import com.vaadin.ui.Layout;
 import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.themes.ValoTheme;
 
-public class ReflectionFilterFormFactory {
+public class ReflectionFilterFormFactory implements Serializable {
+	private static final long serialVersionUID = 1L;
 	
 	private FormConfiguration conf = new FormConfiguration();
 	
